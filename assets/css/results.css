@@ -1,0 +1,12 @@
+.mainStage {
+    margin-top: 1.5rem;
+}
+
+.brand-logo {
+    letter-spacing: .5rem;
+    font-style: italic;
+}
+
+#recipeSubName {
+    font-weight: bold;
+}
