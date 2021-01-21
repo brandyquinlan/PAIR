@@ -43,7 +43,7 @@ $(document).ready(function () {
                   : acc
                 , [])
           }
-          var ingredients = findAllByKey(response.results[i], 'ingredients');
+          var ingredients = findAllByKey(response.results[i], 'name');
           let ingredientsNOdupes = [...new Set(ingredients)]
           console.log(ingredientsNOdupes);
           // end of this little test function
