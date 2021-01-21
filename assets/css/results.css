@@ -10,3 +10,7 @@
 #recipeSubName {
     font-weight: bold;
 }
+
+.top {
+    display: hide;
+}
