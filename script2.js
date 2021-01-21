@@ -10,11 +10,25 @@ $(document).ready(function() {
     $.ajax({
         url: "https://api.spoonacular.com/recipes/complexSearch?query=" + searchQuery + "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=a1307173fd1545b38ed82223156955bd",
         type: "GET",
-        // dataType: "jsonp",
+
     })
     .then(function(response) {
         console.log(response);
+        // console.log(response.results[0].analyzedInstructions[0].steps[0].step);
+
+        function findAllByKey(obj, keyToFind) {
+            return Object.entries(obj)
+              .reduce((acc, [key, value]) => (key === keyToFind)
+                ? acc.concat(value)
+                : (typeof value === 'object')
+                ? acc.concat(findAllByKey(value, keyToFind))
+                : acc
+              , [])
+          }
+          // USAGE
+          console.log(findAllByKey(response, 'name'));
     })
+    
 })
 
     // Materialize Autocomplete
