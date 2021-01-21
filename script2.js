@@ -8,19 +8,6 @@ $(document).ready(function () {
         searchQuery = $("#autocomplete-input").val();
         console.log(searchQuery);
 
-<<<<<<< HEAD
-        if (searchQuery) {
-
-            $.ajax({
-                url: "https://api.spoonacular.com/recipes/complexSearch?query=" + searchQuery + "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=a1307173fd1545b38ed82223156955bd",
-                type: "GET",
-            })
-                .then(function (response) {
-                    console.log(response);
-                })
-        }
-    })
-=======
     $.ajax({
         url: "https://api.spoonacular.com/recipes/complexSearch?query=" + searchQuery + "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=a1307173fd1545b38ed82223156955bd",
         type: "GET",
@@ -44,7 +31,6 @@ $(document).ready(function () {
     })
     
 })
->>>>>>> 539f30f1e46b7c2c57808653c0cb04a2ad9fe9be
 
     // Materialize Autocomplete
     $('.autocomplete').autocomplete({
