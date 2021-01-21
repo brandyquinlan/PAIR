@@ -1,0 +1,37 @@
+.section-search {
+    height: 300px !important;
+}
+
+.section-search input {
+    width: 90% !important;
+    border: #f4f4f4 !important;
+}
+
+#autocomplete-input {
+    padding-left: 10px !important;
+}
+
+.section-follow .fa-3x {
+    margin: 5px 10px;
+}
+
+.btn {
+    top: -5px !important;
+    margin-right: 15px !important;
+}
+
+.btn-search {
+    margin-left: 5rem !important;
+}
+
+.nav-wrapper {
+    padding: 5px;
+}
+
+i.material-icons {
+    font-size: 36px !important;
+}
+
+ul.hide-on-med-and-down {
+    font-size: 36px !important;
+}
