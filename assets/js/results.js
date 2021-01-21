@@ -25,6 +25,20 @@ $(document).ready(function () {
       .then(function (response) {
         console.log(response);
         
+        function findAllByKey(obj, keyToFind) {
+          return Object.entries(obj)
+            .reduce((acc, [key, value]) => (key === keyToFind)
+              ? acc.concat(value)
+              : (typeof value === 'object')
+              ? acc.concat(findAllByKey(value, keyToFind))
+              : acc
+            , [])
+        }
+        // ingredients array
+        console.log(findAllByKey(response, 'localizedName'));
+
+
+
         for (let i = 0; i < response.results.length; i++) {
           var col = $('<div>').attr('class', 'col s6'),
             card = $('<div>').attr('class', 'card'),
@@ -40,7 +54,7 @@ $(document).ready(function () {
             cardReveal = $('<div>').attr('class', 'card-reveal'),
             revealSpan = $('<span>').attr('class', 'card-title grey-text text-darken-4').text('Quick Look'),
             revealSpanI = $('<i>').attr('class', 'material-icons right').text('close'),
-            recipeNameH = $('<h6>').attr('id', 'recipeName'),
+            recipeNameH = $('<h6>').attr('id', 'recipeName').text(response.results[i].title),
             hr = $('<hr>'),
             ul = $('<ul>'),
             prepTime = $('<li>').attr('id', 'prepTimeReveal').text('Total time: ' + response.results[i].readyInMinutes + ' minutes'),
