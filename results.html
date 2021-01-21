@@ -4,15 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet"
-          href="./assets/css/results.css">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="./assets/css/results.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAIR | Results</title>
     <a id="top"></a>
 </head>
@@ -22,11 +18,8 @@
     <nav class="navbar-fixed lime darken-3">
         <div class="container">
             <div class="nav-wrapper">
-                <a href="#"
-                   class="brand-logo">PAIR</a>
-                <a href="#"
-                   data-target="mobile-nav"
-                   class="sidenav-trigger">
+                <a href="#" class="brand-logo">PAIR</a>
+                <a href="#" data-target="mobile-nav" class="sidenav-trigger">
                     <i class="material-icons">menu</i>
                 </a>
                 <ul class="right hide-on-med-and-down">
@@ -43,8 +36,7 @@
             </div>
         </div>
     </nav>
-    <ul class="sidenav"
-        id="mobile-nav">
+    <ul class="sidenav" id="mobile-nav">
         <li>
             <a href="#home">Home</a>
         </li>
@@ -59,44 +51,13 @@
 
 <body>
     <main>
-        <div class="container mainStage">
-            <div class="row">
-                <div class="col s6">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator"
-                                 src="./assets/img/ramen.jpg">
-                        </div>
-                        <!--Card Content Teaser-->
-                        <div class="card-content">
-                            <span class="card-title activator truncate grey-text text-darken-4"
-                                  id="recipeName">Recipe Name<i class="material-icons right">more_vert</i></span>
-                            <p id="jumpLink"><a href="#">Jump to Article</a></p>
-                        </div>
-                        <!--Revealed Card Body Content-->
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Quick Look<i
-                                   class="material-icons right">close</i></span>
-                            <h6 class="truncate" id="recipeSubName">Recipe Name</h6>
-                            <hr>
-                            <ul>
-                                Prep Time: <li id="prepTimeReveal"></li>
-                                <br>
-                                Ingredients: <li id="ingredientReveal"></li>
-                                <br>
-                                Description: <li id="blurbReveal"></li>
-                            </ul>
-                            <!--Button to Add Favorite to Local Storage-->
-                            <a class="waves-effect waves-light lime darken-3 btn-small right">Add Favorite</a>
-                        </div>
-                    </div>
-                </div>
-                    <!--Button to Scroll Back to Top-->
-                    <div>
-                        <a href="#top"
-                           class="waves-effect waves-light lime darken-3 btn-small right hide">Back to Top</a>
-                    </div>
-                </div>
+        <form>
+            <input type="text" placeholder="Search">
+            <button type="submit" id="search">Search</button>
+        </form>
+        
+        <div id="results" class="container mainStage">
+            <div class="row" id="populate-results">
             </div>
         </div>
     </main>
@@ -105,7 +66,7 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Compiled and Minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="./assets/js/results.js"></script>
+    <script src="assets/js/results.js"></script>
 
 </body>
 

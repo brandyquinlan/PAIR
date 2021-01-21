@@ -1,8 +1,22 @@
 // Materialize css Side Navbar
+var sideNav = document.querySelector('.sidenav');
+var instance = new M.Sidenav(sideNav);
 $(document).ready(function() {
-    var sideNav = document.querySelector(".sidenav");
-    var instance = new M.Sidenav('.sidenav');
     $('.sidenav').sideNav();
+});
+
+
+// Materialize css Slider
+var slider = document.querySelector('.slider');
+var instance = new M.Slider(slider);
+$(document).ready(function() {
+    $('.slider').slider({
+        full_width: true,
+        indicators: false,
+        height: 650,
+        interval: 6000,
+        transition: 500
+    });
 });
 
 // Materialize Autocomplete
