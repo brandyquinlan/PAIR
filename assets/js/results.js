@@ -16,10 +16,14 @@ $(document).ready(function () {
 
   
 
-  function getResults() {
+  function getResults(event) {
+    event.preventDefault();
 
+    $('#populate-results').empty();
+
+    var searchVal = $('input').val();
     $.ajax({
-      url: "https://api.spoonacular.com/recipes/complexSearch?query=pizza&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=a1307173fd1545b38ed82223156955bd",
+      url: "https://api.spoonacular.com/recipes/complexSearch?query="+searchVal+"&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=a1307173fd1545b38ed82223156955bd",
       type: "GET",
     })
       .then(function (response) {
@@ -47,7 +51,7 @@ $(document).ready(function () {
             br1 = $('<br>'),
             ingredients = $('<li>').attr('id', 'ingredientReveal').text('Ingredients: ' + "var here"),
             br2 = $('<br>'),
-            description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + 'var here'),
+            description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + response.results[i].summary),
     
             addFav = $('<a>').attr('class', 'waves-effect waves-light lime darken-3 btn-small right').text('Add Favorite');
     
@@ -68,10 +72,10 @@ $(document).ready(function () {
         var backtotop = $('<a>').attr({'href':'#top','class':'waves-effect waves-light lime darken-3 btn-small right'}).text('Back to Top'),
             buttonDiv = $('<div>').append(backtotop);
 
-            $('#results').append(buttonDiv);
+            $('#populate-results').append(buttonDiv);
       })
    
   }
 
-  getResults();
+  $('#search').on('click', getResults)
 });
