@@ -43,7 +43,7 @@ $(document).ready(function () {
                   : acc
                 , [])
           }
-          var ingredients = findAllByKey(response.results[i], 'ingredients');
+          var ingredients = findAllByKey(response.results[i], 'name');
           let ingredientsNOdupes = [...new Set(ingredients)]
           console.log(ingredientsNOdupes);
           // end of this little test function
@@ -88,6 +88,8 @@ $(document).ready(function () {
           col.append(card);
           $('#populate-results').append(col);
         }
+
+        // Return to top button
         var backtotop = $('<a>').attr({ 'href': '#top', 'class': 'waves-effect waves-light lime darken-3 btn-small right' }).text('Back to Top'),
           buttonDiv = $('<div>').append(backtotop);
 
