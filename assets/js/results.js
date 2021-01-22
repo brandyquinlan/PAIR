@@ -35,13 +35,12 @@ $(document).ready(function () {
 
           // Working on getting this to parse out any duplicate ingredients
           function findAllByKey(obj, keyToFind) {
-            return Object.entries(obj)
-              .reduce((acc, [key, value]) => (key === keyToFind)
+            return Object.entries(obj).reduce((acc, [key, value]) => (key === keyToFind)
                 ? acc.concat(value)
                 : (typeof value === 'object')
                   ? acc.concat(findAllByKey(value, keyToFind))
-                  : acc
-                , [])
+                  : acc, 
+                  [])
           }
           var ingredients = findAllByKey(response.results[i], 'name');
           let ingredientsNOdupes = [...new Set(ingredients)]
@@ -51,14 +50,14 @@ $(document).ready(function () {
 
           var col = $('<div>').attr('class', 'col s6'),
             card = $('<div>').attr('class', 'card'),
-            cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
+            cardImageDiv = $('<div>').attr('class', 'card-image activator waves-effect waves-block waves-light'),
             cardImage = $('<img>').attr({ 'src': response.results[i].image, 'alt': 'image of food' }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.results[i].title),
             spanI = $('<i>').attr('class', 'material-icons right'),
-            contentJlink = $('<p>').attr('id', 'jumplink').text("Jump to Atricle"),
-            jLinkHREF = $('<a>').attr('href', '#'),
+            contentJlink = $('<a>').attr({'id':'jumplink','href':response.results[i].sourceUrl,'target':'blank'}).text("Jump to Atricle"),
+
 
             cardReveal = $('<div>').attr('class', 'card-reveal'),
             revealSpan = $('<span>').attr('class', 'card-title grey-text text-darken-4').text('Quick Look'),
@@ -68,7 +67,7 @@ $(document).ready(function () {
             ul = $('<ul>'),
             prepTime = $('<li>').attr('id', 'prepTimeReveal').text('Total time: ' + response.results[i].readyInMinutes + ' minutes'),
             br1 = $('<br>'),
-            ingredients = $('<li>').attr('id', 'ingredientReveal').text('Ingredients: ' + 'var'),
+            ingredients = $('<li>').attr('id', 'ingredientReveal').text('Ingredients: ' + ingredientsNOdupes),
             br2 = $('<br>'),
             description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + response.results[i].summary),
 
@@ -77,7 +76,7 @@ $(document).ready(function () {
           cardImageDiv.append(cardImage);
 
           contentSpan.append(spanI);
-          contentJlink.append(jLinkHREF);
+
           cardContent.append(contentSpan, contentJlink);
 
           ul.append(prepTime, br1, ingredients, br2, description);
