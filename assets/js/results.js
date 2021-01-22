@@ -16,12 +16,12 @@ $(document).ready(function () {
 
 
 
-  function getResults(event) {
+  function getCuisines(event) {
     event.preventDefault();
 
     $('#populate-results').empty();
 
-    var searchVal = $('input').val();
+    var searchVal = $('#search-value').val();
     $.ajax({
       url: "https://api.spoonacular.com/recipes/complexSearch?query=" + searchVal + "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=a1307173fd1545b38ed82223156955bd",
       type: "GET",
@@ -55,7 +55,7 @@ $(document).ready(function () {
 
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.results[i].title),
-            spanI = $('<i>').attr('class', 'material-icons right').text('drag_handle'),
+            spanI = $('<i>').attr('class', 'material-icons right').text('expand_less'),
             contentJlink = $('<a>').attr({'id':'jumplink','href':response.results[i].sourceUrl,'target':'blank'}).text("Jump to Atricle"),
 
 
@@ -97,5 +97,5 @@ $(document).ready(function () {
 
   }
 
-  $('#search').on('click', getResults)
+  $('#search-cuisines').on('click', getCuisines)
 });
