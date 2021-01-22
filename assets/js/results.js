@@ -50,12 +50,12 @@ $(document).ready(function () {
 
           var col = $('<div>').attr('class', 'col s6'),
             card = $('<div>').attr('class', 'card'),
-            cardImageDiv = $('<div>').attr('class', 'card-image activator waves-effect waves-block waves-light'),
-            cardImage = $('<img>').attr({ 'src': response.results[i].image, 'alt': 'image of food' }),
+            cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
+            cardImage = $('<img>').attr({'class':'activator', 'src': response.results[i].image, 'alt': 'image of food' }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.results[i].title),
-            spanI = $('<i>').attr('class', 'material-icons right'),
+            spanI = $('<i>').attr('class', 'material-icons right').text('drag_handle'),
             contentJlink = $('<a>').attr({'id':'jumplink','href':response.results[i].sourceUrl,'target':'blank'}).text("Jump to Atricle"),
 
 
