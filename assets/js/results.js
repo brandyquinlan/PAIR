@@ -43,8 +43,13 @@ $(document).ready(function () {
                   : acc
                 , [])
           }
+<<<<<<< HEAD
           var ingredients = findAllByKey(response.results[i], 'ingredients');
           const ingredientsNOdupes = Array.from(new Set(ingredients));
+=======
+          var ingredients = findAllByKey(response.results[i], 'name');
+          let ingredientsNOdupes = [...new Set(ingredients)]
+>>>>>>> 30df520750f07f07ceef2a7419926c8acc616a5c
           console.log(ingredientsNOdupes);
           // end of this little test function
 
@@ -63,7 +68,7 @@ $(document).ready(function () {
             cardReveal = $('<div>').attr('class', 'card-reveal'),
             revealSpan = $('<span>').attr('class', 'card-title grey-text text-darken-4').text('Quick Look'),
             revealSpanI = $('<i>').attr('class', 'material-icons right').text('close'),
-            recipeNameH = $('<h6>').attr('id', 'recipeName'),
+            recipeNameH = $('<h6>').attr('id', 'recipeName').text(response.results[i].title),
             hr = $('<hr>'),
             ul = $('<ul>'),
             prepTime = $('<li>').attr('id', 'prepTimeReveal').text('Total time: ' + response.results[i].readyInMinutes + ' minutes'),
