@@ -33,7 +33,7 @@ $(document).ready(function () {
 
 
 
-          // Working on getting this to parse out any duplicate ingredients
+          // This seems to be working now, to filter out the ingredients from each recipe pulled
           function findAllByKey(obj, keyToFind) {
             return Object.entries(obj).reduce((acc, [key, value]) => (key === keyToFind)
                 ? acc.concat(value)
@@ -45,7 +45,7 @@ $(document).ready(function () {
           var ingredients = findAllByKey(response.results[i], 'name');
           let ingredientsNOdupes = [...new Set(ingredients)]
           console.log(ingredientsNOdupes);
-          // end of this little test function
+
 
 
           var col = $('<div>').attr('class', 'col s6'),
