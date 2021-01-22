@@ -1,28 +1,26 @@
-// Materialize css Side Navbar
 $(document).ready(function() {
-    var sideNav = document.querySelector(".sidenav");
-    var instance = new M.Sidenav('.sidenav');
-    $('.sidenav').sideNav();
-});
 
-// Materialize Autocomplete
-var ac = document.querySelector('.autocomplete');
-var instance = new M.Autocomplete(ac);
-$(document).ready(function() {
-    $('.autocomplete').autocomplete({
-        data: {
-            "Mexican": null,
-            "Margarita": null,
-            "Italian": null,
-            "Wine": null,
-            "Chinese": null
-        }
+    // Image slider
+    $('.slider').slider({
+        full_width: true,
+        'height': 500
     });
-});
 
-// Material Boxed
-var mb = document.querySelectorAll('.materialboxed');
-var instance = new M.Materialbox(mb);
-$(document).ready(function() {
-    $('.mb').mb();
+    // Sidenav for mobile screens
+    $('.sidenav').sidenav();
+
+    // Materialbox zoom feature for gallery images
+    $('.materialboxed').materialbox();
+
+    // Autocomplete for search box
+    // $('.autocomplete').autocomplete({
+    //     data: {
+    //         "Mexican": null,
+    //         "Margarita": null,
+    //         "Italian": null,
+    //         "Wine": null,
+    //         "Chinese": null
+    //     }
+    // });
+
 });
