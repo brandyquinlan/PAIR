@@ -45,6 +45,7 @@ $(document).ready(function () {
           }
           var ingredients = findAllByKey(response.results[i], 'name');
           let ingNoDupes = [...new Set(ingredients)];
+          // formatedING not working yet
           let formatedING = (ingNoDupes) => {for (let i = 0; i < ingNoDupes.length; i++){
             // TRYING TO FIND A WAY TO FORMAT THE LIST OF INGREDIENTS
           }}
