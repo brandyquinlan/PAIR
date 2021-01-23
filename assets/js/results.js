@@ -56,7 +56,7 @@ $(document).ready(function () {
           var col = $('<div>').attr('class', 'col s6'),
             card = $('<div>').attr('class', 'card'),
             cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
-            cardImage = $('<img>').attr({'class':'activator', 'src': response.results[i].image, 'alt': 'image of food' }),
+            cardImage = $('<img>').attr({'class':'activator', 'src': response.results[i].image, 'alt': 'image of ' + response.results[i].title }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.results[i].title),
