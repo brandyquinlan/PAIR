@@ -1,0 +1,90 @@
+.section-gallery {
+    margin-top: 6rem;
+}
+
+.section-follow .fa-3x {
+    margin: 5px 10px;
+}
+
+nav ul li a {
+    font-size: 18px;
+}
+
+ul li a {
+    font-size: 18px !important;
+}
+
+.btn {
+    height: 7rem;
+    width: 30rem;
+    font-size: 2rem;
+    margin-right: 7rem;
+    margin-left: 7rem;
+    margin-top: -7rem;
+    margin-bottom: 10rem;
+}
+
+.btn-cuisine {
+    padding-top: 1rem;
+    padding-left: 3rem;
+    background-image: url('assets/img/cuisine.png');
+    background-repeat: no-repeat;
+    background-size: 200px;
+    size: 1rem;
+}
+
+.btn-drinks {
+    padding-top: 1rem;
+    padding-left: 3rem;
+    background-image: url('assets/img/drinks.png');
+    background-repeat: no-repeat;
+    background-size: 200px;
+    size: 1rem;
+}
+
+.btn-submit {
+    font-size: .8rem;
+    height: 3rem;
+    margin: 1rem;
+}
+
+.nav-wrapper {
+    padding: 5px;
+}
+
+i.material-icons {
+    font-size: 36px !important;
+}
+
+ul.hide-on-med-and-down {
+    font-size: 36px !important;
+}
+
+.buttons-wrapper {
+    position: absolute;
+    height: calc(100vh);
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 997;
+    top: 0;
+    pointer-events: none;
+    width: 100%;
+}
+
+.buttons-wrapper a {
+    pointer-events: auto;
+}
+
+.mg-rg {
+    margin-right: 1rem;
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+
+.flow-text {
+    margin: 0;
+    padding: .5rem;
+}
