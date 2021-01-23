@@ -32,47 +32,54 @@ $(document).ready(function () {
 
         for (let i = 0; i < response.results.length; i++) {
 
+          
+
 
 
           // This seems to be working now, to filter out the ingredients from each recipe pulled
           function findAllByKey(obj, keyToFind) {
             return Object.entries(obj).reduce((acc, [key, value]) => (key === keyToFind)
-                ? acc.concat(value)
-                : (typeof value === 'object')
-                  ? acc.concat(findAllByKey(value, keyToFind))
-                  : acc, 
-                  [])
+              ? acc.concat(value)
+              : (typeof value === 'object')
+                ? acc.concat(findAllByKey(value, keyToFind))
+                : acc,
+              [])
           }
-          var ingredients = findAllByKey(response.results[i], 'name');
+          var ingredientsList = findAllByKey(response.results[i], 'ingredients');
+          // need to filter for ingredients first, and then use name
+          // was getting an issue where other things in the main object with the key 'name' came up.
+          var ingredients = findAllByKey(ingredientsList, 'name');
           let ingNoDupes = [...new Set(ingredients)];
-          // formatedING not working yet
-          let formatedING = (ingNoDupes) => {for (let i = 0; i < ingNoDupes.length; i++){
-            // TRYING TO FIND A WAY TO FORMAT THE LIST OF INGREDIENTS
-          }}
-          console.log(ingNoDupes);
+          // formatting the list of ingredients. 
+          let ingredientsArr = [];
+          for (let j = 0; j < ingNoDupes.length; j++) {
+            ingredientsArr.push(ingNoDupes[j]);
+            console.log(ingredientsArr);
+          }
+
 
 
 
           var col = $('<div>').attr('class', 'col s6'),
             card = $('<div>').attr('class', 'card'),
             cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
-            cardImage = $('<img>').attr({'class':'activator', 'src': response.results[i].image, 'alt': 'image of ' + response.results[i].title }),
+            cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.results[i].image, 'alt': 'image of ' + response.results[i].title }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.results[i].title),
             spanI = $('<i>').attr('class', 'material-icons').text('expand_less'),
-            contentJlink = $('<a>').attr({'id':'jumplink','href':response.results[i].sourceUrl,'target':'blank'}).text("Jump to Atricle"),
+            contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': response.results[i].sourceUrl, 'target': 'blank' }).text("Jump to Atricle"),
 
 
             cardReveal = $('<div>').attr('class', 'card-reveal'),
             revealSpan = $('<span>').attr('class', 'card-title grey-text text-darken-4').text('Quick Look'),
             revealSpanI = $('<i>').attr('class', 'material-icons right').text('close'),
-            recipeNameH = $('<h6>').attr({'id':'recipeName'}).text(response.results[i].title),
+            recipeNameH = $('<h6>').attr({ 'id': 'recipeName' }).text(response.results[i].title),
             hr = $('<hr>'),
             ul = $('<ul>'),
             prepTime = $('<li>').attr('id', 'prepTimeReveal').text('Total time: ' + response.results[i].readyInMinutes + ' minutes'),
             br1 = $('<br>'),
-            ingredients = $('<li>').attr('id', 'ingredientReveal').text('Ingredients: ' + ingNoDupes),
+            ingredients = $('<li>').attr('id', 'ingredientReveal').text('Ingredients: ' + ingredientsArr),
             br2 = $('<br>'),
             description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + response.results[i].summary),
 
@@ -91,6 +98,9 @@ $(document).ready(function () {
           card.append(cardImageDiv, cardContent, cardReveal);
           col.append(card);
           $('#populate-results').append(col);
+
+          // clear out the ingredients array so they don't overflow to the next item
+          ingredientsArr = [];
         }
 
         // Return to top button
@@ -117,7 +127,6 @@ $(document).ready(function () {
         for (let i = 0; i < response.drinks.length; i++) {
 
 
-
           // This seems to be working now, to filter out the ingredients from each recipe pulled
           // function findAllByKey(obj, keyToFind) {
           //   return Object.entries(obj).reduce((acc, [key, value]) => (key === keyToFind)
@@ -136,12 +145,12 @@ $(document).ready(function () {
           var col = $('<div>').attr('class', 'col s6'),
             card = $('<div>').attr('class', 'card'),
             cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
-            cardImage = $('<img>').attr({'class':'activator', 'src': response.drinks[i].strDrinkThumb, 'alt': 'image of food' }),
+            cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.drinks[i].strDrinkThumb, 'alt': 'image of food' }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.drinks[i].strDrink),
             spanI = $('<i>').attr('class', 'material-icons right').text('expand_less'),
-            contentJlink = $('<a>').attr({'id':'jumplink','href':'#','target':'blank'}).text("Jump to Atricle (cannot find hyperlink in API object)"),
+            contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': '#', 'target': 'blank' }).text("Jump to Atricle (cannot find hyperlink in API object)"),
 
 
             cardReveal = $('<div>').attr('class', 'card-reveal'),
@@ -169,6 +178,8 @@ $(document).ready(function () {
           card.append(cardImageDiv, cardContent, cardReveal);
           col.append(card);
           $('#populate-results').append(col);
+
+
         }
 
         // Return to top button
