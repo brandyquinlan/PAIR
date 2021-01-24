@@ -31,7 +31,7 @@ ul.hide-on-med-and-down {
     padding: 5%;
     width: 90vw;
     height: 6vh;
-    margin: 1em 1em 3em 1em;
+    margin: 1em 3em 3em 1em;
 }
 
 .btn {
@@ -49,6 +49,11 @@ ul.hide-on-med-and-down {
 .flow-text {
     margin: 0;
     padding: .5rem;
+}
+
+.modal-content {
+    height: 20vh;
+    width: 70vh;
 }
 
 @media only screen and (min-width: 4px) {
