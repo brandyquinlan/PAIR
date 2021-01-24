@@ -108,18 +108,15 @@ $(document).ready(function () {
 
 
 
-
   // function for creating the html for the results obtained from the search for DRINKS
   function getDrinks(event) {
     event.preventDefault();
-
-
 
     $('#populate-results').empty();
 
     var searchVal = $('#search-value').val();
     $.ajax({
-      url: "https://www.thecocktaildb.com/api/json/v1/1/search.php?"+ searchFilter + searchVal,
+      url: "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + searchVal,
       type: "GET",
     })
       .then(function (response) {
@@ -158,7 +155,7 @@ $(document).ready(function () {
             cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
             cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.drinks[i].strDrinkThumb, 'alt': 'image of food' }),
 
-            cardContent = $('<div>').attr('class', 'card-content'),
+            cardContent = $('<div>').attr('class', 'activator card-content'),
             contentSpan = $('<span>').attr({ 'class': 'activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.drinks[i].strDrink),
             // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
             spanI = $('<i>').attr('class', 'material-icons right').text('expand_less'),
