@@ -113,6 +113,14 @@ $(document).ready(function () {
   function getDrinks(event) {
     event.preventDefault();
 
+
+
+
+
+
+
+
+
     $('#populate-results').empty();
 
     var searchVal = $('#search-value').val();
