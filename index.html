@@ -9,7 +9,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     <!-- Google Fonts -->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Materialize Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Custom stylesheet -->
@@ -94,6 +94,19 @@
                     <img class="img-btn" id="btn-drinks" src="assets/img/drinks.png" alt="Drinks Icon"></button>
         </div>
     </section>
+
+    <!-- From Results.html -->
+    <form>
+        <input id='search-value' type="text" placeholder="Search">
+        <button type="submit" id="search-cuisines">Search Cuisines</button>
+        <button type="submit" id="search-drinks">Search drinks</button>
+    </form>
+
+
+    <div id="results" class="container mainStage">
+        <div class="row" id="populate-results">
+        </div>
+    </div>
 
     <!-- Section: Gallery -->
     <section id="gallery" class="section section-gallery scrollspy">
@@ -229,9 +242,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Custom Javascript -->
     <script src="assets/js/script.js"></script>
+    <script src="assets/js/results.js"></script>
 
-    <script>
-    </script>
 </body>
 
 </html>
