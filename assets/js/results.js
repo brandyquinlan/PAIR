@@ -5,7 +5,21 @@ $(document).ready(function () {
   var instance = M.Sidenav.getInstance('.sidenav');
 
   function saveForLater(item) {
-    console.log(item);
+    localStorage.setItem(JSON.stringify(item));
+
+
+    $.ajax({
+      url: "https://api.spoonacular.com/recipes/complexSearch?titleMatch=" + item + '&apiKey=a1307173fd1545b38ed82223156955bd',
+      type: "GET",
+      success: function (response) {
+        console.log(response);
+
+
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
   };
 
   // function for creating the html for the results obtained from the search for FOOD
@@ -33,7 +47,7 @@ $(document).ready(function () {
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr({ 'class': 'activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.results[i].title),
             // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
-            saveBtn = $('<button>').attr({ 'id': 'saveForLaterBtn', 'data-id': response.results[i].id, 'class': 'waves-effect btn-flat' }),
+            saveBtn = $('<button>').attr({ 'id': 'saveForLaterBtn', 'data-id': response.results[i].title, 'name': response.results[i].title, 'class': 'waves-effect btn-flat' }),
             btnI = $('<i>').attr({ 'class': 'material-icons' }).text('bookmark'),
             contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': response.results[i].sourceUrl, 'target': 'blank' }).text("See full recipe"),
 
@@ -191,10 +205,11 @@ $(document).ready(function () {
 
 
 
-  
+
   $('#results').on('click', 'button', function (event) {
     event.preventDefault();
-    var id = $(this).attr('data-id');
+    var id = $(this).attr('data-id'),
+      name = $(this).attr('name');
     saveForLater(id);
     var badge = $('<span>').attr({ 'class': 'new badge blue', 'id': 'saved-badge', 'data-badge-caption': 'SAVED!' });
     $(this).append(badge);
