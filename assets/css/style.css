@@ -52,8 +52,8 @@ ul.hide-on-med-and-down {
 }
 
 .modal-content {
-    height: 20vh;
-    width: 70vh;
+    height: 100%;
+    width: 100%;
 }
 
 @media only screen and (min-width: 4px) {
