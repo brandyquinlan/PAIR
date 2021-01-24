@@ -4,23 +4,120 @@ $(document).ready(function () {
   // Sets up Materialize Navbar + Mobile Toggle
   var instance = M.Sidenav.getInstance('.sidenav');
 
-  function saveForLater(item) {
-    localStorage.setItem(JSON.stringify(item));
 
+
+
+
+
+
+
+  function saveForLater(item, name) {
+    localStorage.setItem(name, JSON.stringify(item));
 
     $.ajax({
-      url: "https://api.spoonacular.com/recipes/complexSearch?titleMatch=" + item + '&apiKey=a1307173fd1545b38ed82223156955bd',
+      url: 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + item,
       type: "GET",
       success: function (response) {
-        console.log(response);
 
+        let filtered_keys = (obj, filter) => {
+          let key, keys = []
+          for (key in obj)
+            if (obj.hasOwnProperty(key) && filter.test(key))
+              keys.push(key)
+          return keys;
+        };
 
+          let possibleIngredients = filtered_keys(response.drinks[0], /strIngredient/);
+          var actualIngredients = [];
+          for (var o = 0; o < possibleIngredients.length; o++) {
+            if (response.drinks[0][possibleIngredients[o]] !== null) {
+              actualIngredients.push(response.drinks[0][possibleIngredients[o]]);
+            };
+          };
+          //getting measurements
+          let possibleMeasurements = filtered_keys(response.drinks[0], /strMeasure/);
+          var actualMeasurements = [];
+          for (var l = 0; l < possibleMeasurements.length; l++) {
+            if (response.drinks[0][possibleMeasurements[l]] !== null) {
+              actualMeasurements.push(response.drinks[0][possibleMeasurements[l]]);
+            };
+          };
+
+          // Begin creating all the elements with the necessary information
+          var col = $('<div>').attr('class', 'col s4 l2'),
+            card = $('<div>').attr({ 'class': 'card' }),
+            cardImageDiv = $('<div>').attr({ 'class': 'card-image waves-effect waves-block waves-light' }),
+            cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.drinks[0].strDrinkThumb, 'alt': 'image of food' }),
+
+            cardContent = $('<div>').attr('class', 'card-content'),
+            contentSpan = $('<span>').attr({ 'class': 'activator grey-text text-darken-4 truncate', 'style': 'font-size: 16pt' }).text(response.drinks[0].strDrink),
+
+            cardReveal = $('<div>').attr('class', 'card-reveal'),
+            revealSpan = $('<span>').attr('class', 'card-title grey-text text-darken-4').text('Quick Look'),
+            revealSpanI = $('<i>').attr('class', 'material-icons right').text('close'),
+            recipeNameH = $('<h6>').attr('id', 'recipeName').text(response.drinks[0].strDrink),
+            hr = $('<hr>'),
+            ul = $('<ul>'),
+            ingredients = $('<ul>').attr({ 'id': 'ingredientReveal' + item, 'style': 'font-weight: bold' }).text('Ingredients: '),
+            br1 = $('<br>'),
+            instructions = $('<li>').attr({ 'id': 'blurbReveal', 'style': 'font-weight: bold' }).text('Instructions: '),
+            instructionsSpan = $('<span>').attr({ 'style': 'font-weight: lighter' }).text(response.drinks[0].strInstructions);
+
+          // Begin appending everything together
+          cardImageDiv.append(cardImage);
+          cardContent.append(contentSpan);
+          instructions.append(instructionsSpan);
+          ul.append(ingredients, br1, instructions);
+          revealSpan.append(revealSpanI);
+          cardReveal.append(revealSpan, recipeNameH, hr, ul);
+          card.append(cardImageDiv, cardContent, cardReveal);
+          col.append(card);
+
+          $('#saved-for-later').append(col);
+
+          // formatting and listing the ingredients for each drink
+          for (let n = 0; n < actualMeasurements.length; n++) {
+            // have to check that null measurements do not show up
+            if (actualMeasurements[n] == null) {
+              var ingredientToList = $('<li>').attr({ 'style': 'font-weight: lighter' }).text(actualIngredients[n]);
+              $('#ingredientReveal' + item).append(ingredientToList);
+            } else {
+              var ingredientToList = $('<li>').attr({ 'style': 'font-weight: lighter' }).text(actualMeasurements[n] + " " + actualIngredients[n]);
+              $('#ingredientReveal' + item).append(ingredientToList);
+            };
+          };
+          // Accounting for any ingredients that do not have a measurement
+          if (actualIngredients.length > actualMeasurements.length) {
+            for (let _ = actualMeasurements.length; _ < actualIngredients.length; _++) {
+              var otherIngredient = $('<li>').attr({ 'style': 'font-weight: lighter' }).text(actualIngredients[_]);
+              $('#ingredientReveal' + item).append(otherIngredient);
+            };
+          };
       },
       error: function (error) {
         console.log(error);
       }
     });
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // function for creating the html for the results obtained from the search for FOOD
   function getCuisines(event) {
@@ -39,13 +136,13 @@ $(document).ready(function () {
         for (var i = 0; i < response.results.length; i++) {
 
           // Create all the elements with the information pulled
-          var col = $('<div>').attr('class', 'col s6 l4'),
+          var col = $('<div>').attr('class', 'col s6 l3'),
             card = $('<div>').attr('class', 'card'),
             cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
             cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.results[i].image, 'alt': 'image of ' + response.results[i].title }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
-            contentSpan = $('<span>').attr({ 'class': 'activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.results[i].title),
+            contentSpan = $('<span>').attr({ 'class': 'activator grey-text text-darken-4 truncate', 'style': 'font-size: 16pt' }).text(response.results[i].title),
             // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
             saveBtn = $('<button>').attr({ 'id': 'saveForLaterBtn', 'data-id': response.results[i].title, 'name': response.results[i].title, 'class': 'waves-effect btn-flat' }),
             btnI = $('<i>').attr({ 'class': 'material-icons' }).text('bookmark'),
@@ -104,6 +201,23 @@ $(document).ready(function () {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // function for creating the html for the results obtained from the search for DRINKS
   function getDrinks(event) {
     event.preventDefault();
@@ -146,7 +260,7 @@ $(document).ready(function () {
           };
 
           // Begin creating all the elements with the necessary information
-          var col = $('<div>').attr('class', 'col s6 l4'),
+          var col = $('<div>').attr('class', 'col s6 l3'),
             card = $('<div>').attr({ 'class': 'card' }),
             cardImageDiv = $('<div>').attr({ 'class': 'card-image waves-effect waves-block waves-light' }),
             cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.drinks[i].strDrinkThumb, 'alt': 'image of food' }),
@@ -154,7 +268,7 @@ $(document).ready(function () {
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr({ 'class': 'activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.drinks[i].strDrink),
             // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
-            saveBtn = $('<button>').attr({ 'id': 'saveForLaterBtn', 'data-id': response.drinks[i].idDrink, 'class': 'waves-effect btn-flat' }),
+            saveBtn = $('<button>').attr({ 'id': 'saveForLaterBtn', 'data-id': response.drinks[i].idDrink, 'name': response.drinks[i].strDrink, 'class': 'waves-effect btn-flat' }),
             btnI = $('<i>').attr({ 'class': 'material-icons' }).text('bookmark'),
 
             cardReveal = $('<div>').attr('class', 'card-reveal'),
@@ -206,11 +320,15 @@ $(document).ready(function () {
 
 
 
+
+
+
+
   $('#results').on('click', 'button', function (event) {
     event.preventDefault();
-    var id = $(this).attr('data-id'),
+    var item = $(this).attr('data-id'),
       name = $(this).attr('name');
-    saveForLater(id);
+    saveForLater(item, name);
     var badge = $('<span>').attr({ 'class': 'new badge blue', 'id': 'saved-badge', 'data-badge-caption': 'SAVED!' });
     $(this).append(badge);
     setTimeout(() => {
