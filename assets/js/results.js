@@ -80,20 +80,14 @@ $(document).ready(function () {
             br1 = $('<br>'),
             ingredients = $('<li>').attr('id', 'ingredientReveal').text('Ingredients: ' + ingredientsArr),
             br2 = $('<br>'),
-            description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + response.results[i].summary),
-
-            addFav = $('<a>').attr('class', 'waves-effect waves-light lime darken-3 btn-small right').text('Add Favorite');
+            description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + response.results[i].summary);
 
           cardImageDiv.append(cardImage);
-
           contentSpan.append(spanI);
-
           cardContent.append(contentSpan, contentJlink);
-
           ul.append(prepTime, br1, ingredients, br2, description);
           revealSpan.append(revealSpanI);
-          cardReveal.append(revealSpan, recipeNameH, hr, ul, addFav);
-
+          cardReveal.append(revealSpan, recipeNameH, hr, ul);
           card.append(cardImageDiv, cardContent, cardReveal);
           col.append(card);
           $('#populate-results').append(col);
@@ -110,6 +104,12 @@ $(document).ready(function () {
       })
   }
 
+
+
+
+
+
+  // Function to get drink results
   function getDrinks(event) {
     event.preventDefault();
 
@@ -190,8 +190,6 @@ $(document).ready(function () {
             instructions = $('<li>').attr({ 'id': 'blurbReveal', 'style': 'font-weight: bold' }).text('Instructions: '),
             instructionsSpan = $('<span>').attr({ 'style': 'font-weight: lighter' }).text(response.drinks[i].strInstructions);
 
-          addFav = $('<a>').attr('class', 'waves-effect waves-light lime darken-3 btn-small right').text('Add Favorite');
-
           // Begin appending everything together
           cardImageDiv.append(cardImage);
           contentSpan.append(spanI);
@@ -199,8 +197,7 @@ $(document).ready(function () {
           instructions.append(instructionsSpan);
           ul.append(ingredients, br1, instructions);
           revealSpan.append(revealSpanI);
-          cardReveal.append(revealSpan, recipeNameH, hr, ul, addFav);
-
+          cardReveal.append(revealSpan, recipeNameH, hr, ul);
           card.append(cardImageDiv, cardContent, cardReveal);
           col.append(card);
 
@@ -208,8 +205,14 @@ $(document).ready(function () {
 
           // formatting and listing the ingredients for each drink
           for (let n = 0; n < actualMeasurements.length; n++) {
+            // have to check that null measurements do not show up
+            if (actualMeasurements[n] == null) {
+              var ingredientToList = $('<li>').attr({ 'style': 'font-weight: lighter' }).text(actualIngredients[n]);
+              $('#ingredientReveal' + i).append(ingredientToList);
+            } else {
             var ingredientToList = $('<li>').attr({ 'style': 'font-weight: lighter' }).text(actualMeasurements[n] + " " + actualIngredients[n]);
             $('#ingredientReveal' + i).append(ingredientToList);
+            };
           };
           // Accounting for any ingredients that do not have a measurement
           if (actualIngredients.length > actualMeasurements.length) {
