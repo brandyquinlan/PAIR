@@ -66,7 +66,7 @@ $(document).ready(function () {
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr({ 'class': ' activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.results[i].title),
             // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
-            spanI = $('<i>').attr('class', 'material-icons').text('expand_less'),
+            saveBtn = $('<button>').attr({'class': 'material-icons right'}).text('bookmark'),
             contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': response.results[i].sourceUrl, 'target': 'blank' }).text("See full recipe"),
 
 
@@ -83,8 +83,7 @@ $(document).ready(function () {
             description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + response.results[i].summary);
 
           cardImageDiv.append(cardImage);
-          contentSpan.append(spanI);
-          cardContent.append(contentSpan, contentJlink);
+          cardContent.append(contentSpan, contentJlink, saveBtn);
           ul.append(prepTime, br1, ingredients, br2, description);
           revealSpan.append(revealSpanI);
           cardReveal.append(revealSpan, recipeNameH, hr, ul);
@@ -158,7 +157,7 @@ $(document).ready(function () {
             cardContent = $('<div>').attr('class', 'activator card-content'),
             contentSpan = $('<span>').attr({ 'class': 'activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.drinks[i].strDrink),
             // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
-            spanI = $('<i>').attr('class', 'material-icons right').text('expand_less'),
+            saveBtn = $('<button>').attr({'class': 'material-icons'}).text('bookmark'),
 
 
             cardReveal = $('<div>').attr('class', 'card-reveal'),
@@ -174,8 +173,7 @@ $(document).ready(function () {
 
           // Begin appending everything together
           cardImageDiv.append(cardImage);
-          contentSpan.append(spanI);
-          cardContent.append(contentSpan);
+          cardContent.append(contentSpan, saveBtn);
           instructions.append(instructionsSpan);
           ul.append(ingredients, br1, instructions);
           revealSpan.append(revealSpanI);
