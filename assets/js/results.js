@@ -152,7 +152,6 @@ $(document).ready(function () {
           };
           // example:
           let possibleIngredients = filtered_keys(response.drinks[i], /strIngredient/);
-          // console.log(possibleIngredients);
           var actualIngredients = [];
           for (var o = 0; o < possibleIngredients.length; o++) {
             if (response.drinks[0][possibleIngredients[o]] !== null) {
@@ -161,7 +160,6 @@ $(document).ready(function () {
           };
           //getting measurements
           let possibleMeasurements = filtered_keys(response.drinks[i], /strMeasure/);
-          //   console.log(possibleMeasurements);
           var actualMeasurements = [];
           for (var l = 0; l < possibleMeasurements.length; l++) {
             if (response.drinks[0][possibleMeasurements[l]] !== null) {
@@ -208,8 +206,6 @@ $(document).ready(function () {
 
           $('#populate-results').append(col);
 
-
-          console.log(actualIngredients.length, actualMeasurements.length);
           // formatting and listing the ingredients for each drink
           for (let n = 0; n < actualMeasurements.length; n++) {
             var ingredientToList = $('<li>').attr({ 'style': 'font-weight: lighter' }).text(actualMeasurements[n] + " " + actualIngredients[n]);
