@@ -65,7 +65,8 @@ $(document).ready(function () {
             cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.results[i].image, 'alt': 'image of ' + response.results[i].title }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
-            contentSpan = $('<span>').attr({'class': ' activator grey-text text-darken-4 truncate','style':'font-size: 12pt'}).text(response.results[i].title),
+            contentSpan = $('<span>').attr({ 'class': ' activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.results[i].title),
+            // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
             spanI = $('<i>').attr('class', 'material-icons').text('expand_less'),
             contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': response.results[i].sourceUrl, 'target': 'blank' }).text("See full recipe"),
 
@@ -115,12 +116,6 @@ $(document).ready(function () {
 
 
 
-
-
-
-
-
-
     $('#populate-results').empty();
 
     var searchVal = $('#search-value').val();
@@ -157,36 +152,32 @@ $(document).ready(function () {
             return keys;
           };
           // example:
-          let possibleIngredients = filtered_keys(response.drinks[0], /strIngredient/);
+          let possibleIngredients = filtered_keys(response.drinks[i], /strIngredient/);
           // console.log(possibleIngredients);
           var actualIngredients = [];
           for (var o = 0; o < possibleIngredients.length; o++) {
             if (response.drinks[0][possibleIngredients[o]] !== null) {
-              actualIngredients.push(response.drinks[0][possibleIngredients[o]]);
+              actualIngredients.push(response.drinks[i][possibleIngredients[o]]);
             };
           };
-          console.log(actualIngredients);
-
           //getting measurements
-          let possibleMeasurements = filtered_keys(response.drinks[0], /strMeasure/);
+          let possibleMeasurements = filtered_keys(response.drinks[i], /strMeasure/);
           //   console.log(possibleMeasurements);
           var actualMeasurements = [];
           for (var l = 0; l < possibleMeasurements.length; l++) {
             if (response.drinks[0][possibleMeasurements[l]] !== null) {
-              actualMeasurements.push(response.drinks[0][possibleMeasurements[l]]);
+              actualMeasurements.push(response.drinks[i][possibleMeasurements[l]]);
             };
           };
-          console.log(actualMeasurements);
 
-
-
-          var col = $('<div>').attr('class', 'col s6'),
+          var col = $('<div>').attr('class', 'col s6 l4'),
             card = $('<div>').attr('class', 'card'),
             cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
             cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.drinks[i].strDrinkThumb, 'alt': 'image of food' }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
-            contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.drinks[i].strDrink),
+            contentSpan = $('<span>').attr({ 'class': 'activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.drinks[i].strDrink),
+            // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
             spanI = $('<i>').attr('class', 'material-icons right').text('expand_less'),
 
 
@@ -196,19 +187,8 @@ $(document).ready(function () {
             recipeNameH = $('<h6>').attr('id', 'recipeName').text(response.drinks[i].strDrink),
             hr = $('<hr>'),
             ul = $('<ul>'),
-            ingredients = $('<ul>').attr('id', 'ingredientReveal').text('Ingredients: ');
-
-          // write out ingredients to list here
-
-          for (let n = 0; n < actualMeasurements.length; n++) {
-              var ingredientToList = $('<li>')
-          };
-
-
-
-
-
-          var br1 = $('<br>'),
+            ingredients = $('<ul>').attr({ 'id': 'ingredientReveal' + i, 'style': 'font-weight: bold' }).text('Ingredients: '),
+            br1 = $('<br>'),
             description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + 'summary here'),
 
             addFav = $('<a>').attr('class', 'waves-effect waves-light lime darken-3 btn-small right').text('Add Favorite');
@@ -225,8 +205,15 @@ $(document).ready(function () {
 
           card.append(cardImageDiv, cardContent, cardReveal);
           col.append(card);
+
           $('#populate-results').append(col);
 
+
+          // formatting and listing the ingredients for each drink
+          for (let n = 0; n < actualMeasurements.length; n++) {
+            var ingredientToList = $('<p>').attr({ 'style': 'font-weight: lighter' }).text(actualMeasurements[n] + actualIngredients[n]);
+            $('#ingredientReveal' + i).append(ingredientToList);
+          };
 
         }
 
