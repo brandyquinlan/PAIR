@@ -221,18 +221,21 @@ $(document).ready(function () {
               $('#ingredientReveal' + i).append(otherIngredient);
             };
           };
-
-
-        }
+        };
 
         // Return to top button
         var backtotop = $('<a>').attr({ 'href': '#top', 'class': 'waves-effect waves-light lime darken-3 btn-small right' }).text('Back to Top'),
           buttonDiv = $('<div>').append(backtotop);
 
         $('#populate-results').append(buttonDiv);
-      })
-  }
+      });
+  };
 
+
+
+  
   $('#search-cuisines').on('click', getCuisines);
   $('#search-drinks').on('click', getDrinks);
+
+
 });
