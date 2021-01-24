@@ -109,7 +109,7 @@ $(document).ready(function () {
 
 
 
-  // Function to get drink results
+  // function for creating the html for the results obtained from the search for DRINKS
   function getDrinks(event) {
     event.preventDefault();
 
@@ -119,28 +119,13 @@ $(document).ready(function () {
 
     var searchVal = $('#search-value').val();
     $.ajax({
-      url: "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + searchVal,
+      url: "https://www.thecocktaildb.com/api/json/v1/1/search.php?"+ searchFilter + searchVal,
       type: "GET",
     })
       .then(function (response) {
         console.log(response);
 
         for (let i = 0; i < response.drinks.length; i++) {
-
-
-          // This seems to be working now, to filter out the ingredients from each recipe pulled
-          // function findAllByKey(obj, keyToFind) {
-          //   return Object.entries(obj).reduce((acc, [key, value]) => (key === keyToFind)
-          //       ? acc.concat(value)
-          //       : (typeof value === 'object')
-          //         ? acc.concat(findAllByKey(value, keyToFind))
-          //         : acc, 
-          //         [])
-          // }
-          // var ingredients = findAllByKey(response.drinks[i], 'name');
-          // let ingNoDupes = [...new Set(ingredients)]
-          // console.log(ingNoDupes);
-
 
           // getting ingredients
           let filtered_keys = (obj, filter) => {
@@ -233,7 +218,7 @@ $(document).ready(function () {
 
 
 
-  
+
   $('#search-cuisines').on('click', getCuisines);
   $('#search-drinks').on('click', getDrinks);
 

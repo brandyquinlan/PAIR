@@ -89,19 +89,33 @@
     <section class="buttons-wrapper search-buttons scrollspy">
         <div class="row col s8 m4">
             <button type="submit" class="waves-effect btn btn-cuisine z-depth-2 hoverable grey lighten-3 black-text">
-                    <img class="img-btn" id="btn-cuisine" src="assets/img/cuisine.png" alt="Cuisine Icon"></button>
-            <button type="submit" class="waves-effect btn btn-drinks z-depth-2 hoverable grey lighten-3 black-text right">
-                    <img class="img-btn" id="btn-drinks" src="assets/img/drinks.png" alt="Drinks Icon"></button>
+                <img class="img-btn" id="btn-cuisine" src="assets/img/cuisine.png" alt="Cuisine Icon"></button>
+            <button type="submit"
+                class="waves-effect btn btn-drinks z-depth-2 hoverable grey lighten-3 black-text right">
+                <img class="img-btn" id="btn-drinks" src="assets/img/drinks.png" alt="Drinks Icon"></button>
         </div>
     </section>
 
     <!-- From Results.html -->
-    <form>
+    <form action="#">
         <input id='search-value' type="text" placeholder="Search">
         <button type="submit" id="search-cuisines">Search Cuisines</button>
         <button type="submit" id="search-drinks">Search drinks</button>
+        <form action="#">
+            <p>
+                <label>
+                    <input name="group1" type="radio" class="with-gap" id="searchByName" checked />
+                    <span>search by name</span>
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input name="group1" type="radio" class="with-gap" id="searchByIngredient" />
+                    <span>search by ingredient</span>
+                </label>
+            </p>
+        </form>
     </form>
-
 
     <div id="results" class="container mainStage">
         <div class="row" id="populate-results">
@@ -119,10 +133,12 @@
                     <img src="https://source.unsplash.com/1600x900/?pie" alt="" class="materialboxed responsive-img">
                 </div>
                 <div class="col s12 m3">
-                    <img src="https://source.unsplash.com/1600x900/?chinese,food" alt="" class="materialboxed responsive-img">
+                    <img src="https://source.unsplash.com/1600x900/?chinese,food" alt=""
+                        class="materialboxed responsive-img">
                 </div>
                 <div class="col s12 m3">
-                    <img src="https://source.unsplash.com/1600x900/?italian food" alt="" class="materialboxed responsive-img">
+                    <img src="https://source.unsplash.com/1600x900/?italian food" alt=""
+                        class="materialboxed responsive-img">
                 </div>
                 <div class="col s12 m3">
                     <img src="https://source.unsplash.com/1600x900/?pizza" alt="" class="materialboxed responsive-img">
@@ -134,7 +150,8 @@
                     <img src="https://source.unsplash.com/1600x900/?bacon" alt="" class="materialboxed responsive-img">
                 </div>
                 <div class="col s12 m3">
-                    <img src="https://source.unsplash.com/1600x900/?cheeseburger" alt="" class="materialboxed responsive-img">
+                    <img src="https://source.unsplash.com/1600x900/?cheeseburger" alt=""
+                        class="materialboxed responsive-img">
                 </div>
                 <div class="col s12 m3">
                     <img src="https://source.unsplash.com/1600x900/?nachos" alt="" class="materialboxed responsive-img">
@@ -146,13 +163,15 @@
             <!-- row 3 -->
             <div class="row">
                 <div class="col s12 m3">
-                    <img src="https://source.unsplash.com/1600x900/?cocktail" alt="" class="materialboxed responsive-img">
+                    <img src="https://source.unsplash.com/1600x900/?cocktail" alt=""
+                        class="materialboxed responsive-img">
                 </div>
                 <div class="col s12 m3">
                     <img src="https://source.unsplash.com/1600x900/?salad" alt="" class="materialboxed responsive-img">
                 </div>
                 <div class="col s12 m3">
-                    <img src="https://source.unsplash.com/1600x900/?noodles" alt="" class="materialboxed responsive-img">
+                    <img src="https://source.unsplash.com/1600x900/?noodles" alt=""
+                        class="materialboxed responsive-img">
                 </div>
                 <div class="col s12 m3">
                     <img src="https://source.unsplash.com/1600x900/?steak" alt="" class="materialboxed responsive-img">
