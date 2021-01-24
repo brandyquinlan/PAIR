@@ -32,10 +32,6 @@ $(document).ready(function () {
 
         for (let i = 0; i < response.results.length; i++) {
 
-
-
-
-
           // This seems to be working now, to filter out the ingredients from each recipe pulled
           function findAllByKey(obj, keyToFind) {
             return Object.entries(obj).reduce((acc, [key, value]) => (key === keyToFind)
@@ -57,7 +53,7 @@ $(document).ready(function () {
           }
 
 
-
+          // Create all the elements with the information pulled
           var col = $('<div>').attr('class', 'col s6 l4'),
             card = $('<div>').attr('class', 'card'),
             cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
@@ -66,7 +62,8 @@ $(document).ready(function () {
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr({ 'class': ' activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.results[i].title),
             // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
-            saveBtn = $('<button>').attr({'class': 'material-icons right'}).text('bookmark'),
+            saveBtn = $('<a>').attr({'class': 'waves-effect right btn-flat','href':'#','onclick':'return false;'}),
+            btnI = $('<i>').attr({'class':'material-icons'}).text('bookmark'),
             contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': response.results[i].sourceUrl, 'target': 'blank' }).text("See full recipe"),
 
 
@@ -80,10 +77,14 @@ $(document).ready(function () {
             br1 = $('<br>'),
             ingredients = $('<li>').attr('id', 'ingredientReveal').text('Ingredients: ' + ingredientsArr),
             br2 = $('<br>'),
-            description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + response.results[i].summary);
+            description = $('<li>').attr('id', 'blurbReveal').text('Description: '),
+            descriptionSpan = $('<span>'+response.results[i].summary+'</span>');
 
+          // Append all the elements together for presentation
           cardImageDiv.append(cardImage);
+          saveBtn.append(btnI);
           cardContent.append(contentSpan, contentJlink, saveBtn);
+          description.append(descriptionSpan);
           ul.append(prepTime, br1, ingredients, br2, description);
           revealSpan.append(revealSpanI);
           cardReveal.append(revealSpan, recipeNameH, hr, ul);
@@ -93,15 +94,9 @@ $(document).ready(function () {
 
           // clear out the ingredients array so they don't overflow to the next item
           ingredientsArr = [];
-        }
-
-        // Return to top button
-        var backtotop = $('<a>').attr({ 'href': '#top', 'class': 'waves-effect waves-light lime darken-3 btn-small right' }).text('Back to Top'),
-          buttonDiv = $('<div>').append(backtotop);
-
-        $('#populate-results').append(buttonDiv);
-      })
-  }
+        };
+      });
+  };
 
 
 
@@ -154,11 +149,11 @@ $(document).ready(function () {
             cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
             cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.drinks[i].strDrinkThumb, 'alt': 'image of food' }),
 
-            cardContent = $('<div>').attr('class', 'activator card-content'),
+            cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr({ 'class': 'activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.drinks[i].strDrink),
             // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
-            saveBtn = $('<button>').attr({'class': 'material-icons'}).text('bookmark'),
-
+            saveBtn = $('<a>').attr({'class': 'waves-effect btn-flat','href':'#','onclick':'return false;'}),
+            btnI = $('<i>').attr({'class':'material-icons'}).text('bookmark'),
 
             cardReveal = $('<div>').attr('class', 'card-reveal'),
             revealSpan = $('<span>').attr('class', 'card-title grey-text text-darken-4').text('Quick Look'),
@@ -173,6 +168,7 @@ $(document).ready(function () {
 
           // Begin appending everything together
           cardImageDiv.append(cardImage);
+          saveBtn.append(btnI);
           cardContent.append(contentSpan, saveBtn);
           instructions.append(instructionsSpan);
           ul.append(ingredients, br1, instructions);
@@ -202,12 +198,6 @@ $(document).ready(function () {
             };
           };
         };
-
-        // Return to top button
-        var backtotop = $('<a>').attr({ 'href': '#top', 'class': 'waves-effect waves-light lime darken-3 btn-small right' }).text('Back to Top'),
-          buttonDiv = $('<div>').append(backtotop);
-
-        $('#populate-results').append(buttonDiv);
       });
   };
 
