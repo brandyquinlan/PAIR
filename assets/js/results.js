@@ -191,6 +191,7 @@ $(document).ready(function () {
 
 
 
+  
   $('#results').on('click', 'button', function (event) {
     event.preventDefault();
     var id = $(this).attr('data-id');
