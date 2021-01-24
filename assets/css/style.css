@@ -75,3 +75,12 @@ p {
         max-width: 300px;
     }
 }
+
+.modal-form {
+    height: 11vh;
+    width: 50vh;       
+}
+
+.modal-form p {
+    font-size: 1.5rem;
+}
