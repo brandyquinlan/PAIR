@@ -4,6 +4,9 @@ $(document).ready(function () {
   // Sets up Materialize Navbar + Mobile Toggle
   var instance = M.Sidenav.getInstance('.sidenav');
 
+  function saveForLater(item) {
+    console.log(item);
+  };
 
   // function for creating the html for the results obtained from the search for FOOD
   function getCuisines(event) {
@@ -28,9 +31,9 @@ $(document).ready(function () {
             cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.results[i].image, 'alt': 'image of ' + response.results[i].title }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
-            contentSpan = $('<span>').attr({ 'class': ' activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.results[i].title),
+            contentSpan = $('<span>').attr({ 'class': 'activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.results[i].title),
             // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
-            saveBtn = $('<a>').attr({ 'data-id': response.results[i].id, 'class': 'waves-effect right btn-flat', 'href': '#', 'onclick': 'return false;' }),
+            saveBtn = $('<button>').attr({ 'id': 'saveForLaterBtn', 'data-id': response.results[i].id, 'class': 'waves-effect btn-flat' }),
             btnI = $('<i>').attr({ 'class': 'material-icons' }).text('bookmark'),
             contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': response.results[i].sourceUrl, 'target': 'blank' }).text("See full recipe"),
 
@@ -52,12 +55,12 @@ $(document).ready(function () {
           // Append all the elements together for presentation
           cardImageDiv.append(cardImage);
           saveBtn.append(btnI);
-          cardContent.append(contentSpan, contentJlink, saveBtn);
+          cardContent.append(contentSpan, saveBtn);
           prepTime.append(prepTimeSpan);
           description.append(descriptionSpan);
           ul.append(prepTime, br1, ingredients, br2, description);
           revealSpan.append(revealSpanI);
-          cardReveal.append(revealSpan, recipeNameH, hr, ul);
+          cardReveal.append(revealSpan, recipeNameH, contentJlink, hr, ul);
           card.append(cardImageDiv, cardContent, cardReveal);
           col.append(card);
           $('#populate-results').append(col);
@@ -84,8 +87,6 @@ $(document).ready(function () {
         };
       });
   };
-
-
 
 
 
@@ -132,14 +133,14 @@ $(document).ready(function () {
 
           // Begin creating all the elements with the necessary information
           var col = $('<div>').attr('class', 'col s6 l4'),
-            card = $('<div>').attr('class', 'card'),
-            cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
+            card = $('<div>').attr({ 'class': 'card' }),
+            cardImageDiv = $('<div>').attr({ 'class': 'card-image waves-effect waves-block waves-light' }),
             cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.drinks[i].strDrinkThumb, 'alt': 'image of food' }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr({ 'class': 'activator grey-text text-darken-4 truncate', 'style': 'font-size: 12pt' }).text(response.drinks[i].strDrink),
             // NEED TO PUT 'SAVE FOR LATER' BUTTON HERE
-            saveBtn = $('<a>').attr({ 'data-id': response.drinks[i].idDrink, 'class': 'waves-effect btn-flat', 'href': '#', 'onclick': 'return false;' }),
+            saveBtn = $('<button>').attr({ 'id': 'saveForLaterBtn', 'data-id': response.drinks[i].idDrink, 'class': 'waves-effect btn-flat' }),
             btnI = $('<i>').attr({ 'class': 'material-icons' }).text('bookmark'),
 
             cardReveal = $('<div>').attr('class', 'card-reveal'),
@@ -190,6 +191,16 @@ $(document).ready(function () {
 
 
 
+  $('#results').on('click', 'button', function (event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+    saveForLater(id);
+    var badge = $('<span>').attr({ 'class': 'new badge blue', 'id': 'saved-badge', 'data-badge-caption': 'SAVED!' });
+    $(this).append(badge);
+    setTimeout(() => {
+      $('#saved-badge').remove();
+    }, 2000);
+  });
 
   $('#search-cuisines').on('click', getCuisines);
   $('#search-drinks').on('click', getDrinks);
