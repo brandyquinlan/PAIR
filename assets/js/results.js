@@ -54,7 +54,6 @@ $(document).ready(function () {
           let ingredientsArr = [];
           for (let j = 0; j < ingNoDupes.length; j++) {
             ingredientsArr.push(ingNoDupes[j]);
-            console.log(ingredientsArr);
           }
 
 
@@ -170,6 +169,7 @@ $(document).ready(function () {
             };
           };
 
+          // Begin creating all the elements with the necessary information
           var col = $('<div>').attr('class', 'col s6 l4'),
             card = $('<div>').attr('class', 'card'),
             cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
@@ -189,17 +189,17 @@ $(document).ready(function () {
             ul = $('<ul>'),
             ingredients = $('<ul>').attr({ 'id': 'ingredientReveal' + i, 'style': 'font-weight: bold' }).text('Ingredients: '),
             br1 = $('<br>'),
-            description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + 'summary here'),
+            instructions = $('<li>').attr({ 'id': 'blurbReveal', 'style': 'font-weight: bold' }).text('Instructions: '),
+            instructionsSpan = $('<span>').attr({ 'style': 'font-weight: lighter' }).text(response.drinks[i].strInstructions);
 
-            addFav = $('<a>').attr('class', 'waves-effect waves-light lime darken-3 btn-small right').text('Add Favorite');
+          addFav = $('<a>').attr('class', 'waves-effect waves-light lime darken-3 btn-small right').text('Add Favorite');
 
+          // Begin appending everything together
           cardImageDiv.append(cardImage);
-
           contentSpan.append(spanI);
-
           cardContent.append(contentSpan);
-
-          ul.append(br1, ingredients, description);
+          instructions.append(instructionsSpan);
+          ul.append(ingredients, br1, instructions);
           revealSpan.append(revealSpanI);
           cardReveal.append(revealSpan, recipeNameH, hr, ul, addFav);
 
@@ -209,11 +209,20 @@ $(document).ready(function () {
           $('#populate-results').append(col);
 
 
+          console.log(actualIngredients.length, actualMeasurements.length);
           // formatting and listing the ingredients for each drink
           for (let n = 0; n < actualMeasurements.length; n++) {
-            var ingredientToList = $('<p>').attr({ 'style': 'font-weight: lighter' }).text(actualMeasurements[n] + actualIngredients[n]);
+            var ingredientToList = $('<li>').attr({ 'style': 'font-weight: lighter' }).text(actualMeasurements[n] + " " + actualIngredients[n]);
             $('#ingredientReveal' + i).append(ingredientToList);
           };
+          // Accounting for any ingredients that do not have a measurement
+          if (actualIngredients.length > actualMeasurements.length) {
+            for (let _ = actualMeasurements.length; _ < actualIngredients.length; _++) {
+              var otherIngredient = $('<li>').attr({ 'style': 'font-weight: lighter' }).text(actualIngredients[_]);
+              $('#ingredientReveal' + i).append(otherIngredient);
+            };
+          };
+
 
         }
 
