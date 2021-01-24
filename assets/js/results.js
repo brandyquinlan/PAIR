@@ -44,8 +44,6 @@ $(document).ready(function () {
                 ? acc.concat(findAllByKey(value, keyToFind))
                 : acc,
               [])
-<<<<<<< HEAD
-=======
           }
           var ingredientsList = findAllByKey(response.results[i], 'ingredients');
           // need to filter for ingredients first, and then use name
@@ -57,7 +55,6 @@ $(document).ready(function () {
           for (let j = 0; j < ingNoDupes.length; j++) {
             ingredientsArr.push(ingNoDupes[j]);
             console.log(ingredientsArr);
->>>>>>> keaton-branch
           }
 
           // getting ingredients
@@ -93,21 +90,12 @@ $(document).ready(function () {
           var col = $('<div>').attr('class', 'col s6 l4'),
             card = $('<div>').attr('class', 'card'),
             cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
-<<<<<<< HEAD
-            cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.results[i].image, 'alt': 'image of food' }),
-
-            cardContent = $('<div>').attr('class', 'card-content'),
-            contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.results[i].title),
-            spanI = $('<i>').attr('class', 'material-icons right').text('expand_less'),
-            contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': response.results[i].sourceUrl, 'target': 'blank' }).text("Jump to Atricle"),
-=======
             cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.results[i].image, 'alt': 'image of ' + response.results[i].title }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr({'class': ' activator grey-text text-darken-4 truncate','style':'font-size: 12pt'}).text(response.results[i].title),
             spanI = $('<i>').attr('class', 'material-icons').text('expand_less'),
             contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': response.results[i].sourceUrl, 'target': 'blank' }).text("See full recipe"),
->>>>>>> keaton-branch
 
 
             cardReveal = $('<div>').attr('class', 'card-reveal'),
