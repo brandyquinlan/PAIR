@@ -32,7 +32,7 @@ $(document).ready(function () {
 
         for (let i = 0; i < response.results.length; i++) {
 
-          
+
 
 
 
@@ -59,16 +59,15 @@ $(document).ready(function () {
 
 
 
-
-          var col = $('<div>').attr('class', 'col s6'),
+          var col = $('<div>').attr('class', 'col s6 l4'),
             card = $('<div>').attr('class', 'card'),
             cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
             cardImage = $('<img>').attr({ 'class': 'activator', 'src': response.results[i].image, 'alt': 'image of ' + response.results[i].title }),
 
             cardContent = $('<div>').attr('class', 'card-content'),
-            contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.results[i].title),
+            contentSpan = $('<span>').attr({'class': ' activator grey-text text-darken-4 truncate','style':'font-size: 12pt'}).text(response.results[i].title),
             spanI = $('<i>').attr('class', 'material-icons').text('expand_less'),
-            contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': response.results[i].sourceUrl, 'target': 'blank' }).text("Jump to Atricle"),
+            contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': response.results[i].sourceUrl, 'target': 'blank' }).text("See full recipe"),
 
 
             cardReveal = $('<div>').attr('class', 'card-reveal'),
@@ -141,6 +140,37 @@ $(document).ready(function () {
           // console.log(ingNoDupes);
 
 
+          // getting ingredients
+          let filtered_keys = (obj, filter) => {
+            let key, keys = []
+            for (key in obj)
+              if (obj.hasOwnProperty(key) && filter.test(key))
+                keys.push(key)
+            return keys;
+          };
+          // example:
+          let possibleIngredients = filtered_keys(response.drinks[0], /strIngredient/);
+          // console.log(possibleIngredients);
+          var actualIngredients = [];
+          for (var o = 0; o < possibleIngredients.length; o++) {
+            if (response.drinks[0][possibleIngredients[o]] !== null) {
+              actualIngredients.push(response.drinks[0][possibleIngredients[o]]);
+            };
+          };
+          console.log(actualIngredients);
+
+          //getting measurements
+          let possibleMeasurements = filtered_keys(response.drinks[0], /strMeasure/);
+          //   console.log(possibleMeasurements);
+          var actualMeasurements = [];
+          for (var l = 0; l < possibleMeasurements.length; l++) {
+            if (response.drinks[0][possibleMeasurements[l]] !== null) {
+              actualMeasurements.push(response.drinks[0][possibleMeasurements[l]]);
+            };
+          };
+          console.log(actualMeasurements);
+
+
 
           var col = $('<div>').attr('class', 'col s6'),
             card = $('<div>').attr('class', 'card'),
@@ -150,7 +180,6 @@ $(document).ready(function () {
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.drinks[i].strDrink),
             spanI = $('<i>').attr('class', 'material-icons right').text('expand_less'),
-            contentJlink = $('<a>').attr({ 'id': 'jumplink', 'href': '#', 'target': 'blank' }).text("Jump to Atricle (cannot find hyperlink in API object)"),
 
 
             cardReveal = $('<div>').attr('class', 'card-reveal'),
@@ -159,8 +188,19 @@ $(document).ready(function () {
             recipeNameH = $('<h6>').attr('id', 'recipeName').text(response.drinks[i].strDrink),
             hr = $('<hr>'),
             ul = $('<ul>'),
-            ingredients = $('<li>').attr('id', 'ingredientReveal').text('Ingredients: '),
-            br1 = $('<br>'),
+            ingredients = $('<ul>').attr('id', 'ingredientReveal').text('Ingredients: ');
+
+          // write out ingredients to list here
+
+          for (let n = 0; n < actualMeasurements.length; n++) {
+              var ingredientToList = $('<li>')
+          };
+
+
+
+
+
+          var br1 = $('<br>'),
             description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + 'summary here'),
 
             addFav = $('<a>').attr('class', 'waves-effect waves-light lime darken-3 btn-small right').text('Add Favorite');
@@ -169,7 +209,7 @@ $(document).ready(function () {
 
           contentSpan.append(spanI);
 
-          cardContent.append(contentSpan, contentJlink);
+          cardContent.append(contentSpan);
 
           ul.append(br1, ingredients, description);
           revealSpan.append(revealSpanI);
