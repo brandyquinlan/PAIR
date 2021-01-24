@@ -88,19 +88,42 @@
     <!-- Section: Buttons Wrapper -->
     <section class="buttons-wrapper search-buttons scrollspy">
         <div class="row col s8 m4">
-            <button type="submit" class="waves-effect btn btn-cuisine z-depth-2 hoverable grey lighten-3 black-text">
-                    <img class="img-btn" id="btn-cuisine" src="assets/img/cuisine.png" alt="Cuisine Icon"></button>
-            <button type="submit" class="waves-effect btn btn-drinks z-depth-2 hoverable grey lighten-3 black-text right">
-                    <img class="img-btn" id="btn-drinks" src="assets/img/drinks.png" alt="Drinks Icon"></button>
+
+            <!-- Cuisine Modal -->
+            <button class="modal-trigger modal-button show-modal-button col-s4 waves-effect btn btn-cuisine z-depth-2 hoverable grey lighten-3 black-text left" data-type="Cuisines" aria-haspopup="true" a href="#cuisine-modal"><img class="img-btn" id="btn-cuisine" src="assets/img/cuisine.png" alt="Cuisine Button"></button>
+            <div id="cuisine-modal" class="modal">
+                <div class="modal-content modal-background">
+                    <h4>Search for a Cuisine. Pair it with a drink.</h4>
+                    <form>
+                        <input class="search-value input" type="text" placeholder="e.g. Margaritas">
+                        <button type="submit" id="search-cuisines">Search Cuisines</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Drinks Modal -->
+            <button class="modal-trigger modal-button show-modal-button waves-effect btn btn-drinks z-depth-2 hoverable grey lighten-3 black-text right" data-type="Drinks" aria-haspopup="true" a href="#drinks-modal"><img class="img-btn" id="btn-drinks" src="assets/img/drinks.png" alt="Drinks Button"></button>
+            <div id="drinks-modal" class="modal">
+                <div class="modal-content modal-background">
+                    <h4>Search for a Drink. Pair it with a Cuisine.</h4>
+                    <!-- <div class="field black-text"> -->
+                    <form>
+                        <input class="search-value input" type="text" placeholder="e.g. Margaritas">
+                        <button type="submit" id="search-drinks">Search Drinks</button>
+                    </form>
+                    <!-- </div> -->
+                </div>
+            </div>
         </div>
     </section>
 
+
     <!-- From Results.html -->
-    <form>
+    <!-- <form>
         <input id='search-value' type="text" placeholder="Search">
         <button type="submit" id="search-cuisines">Search Cuisines</button>
         <button type="submit" id="search-drinks">Search drinks</button>
-    </form>
+    </form> -->
 
 
     <div id="results" class="container mainStage">
@@ -236,14 +259,12 @@
     </footer>
 
     <!-- JQuery - Import before Materialize -->
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- Custom Javascript -->
     <script src="assets/js/script.js"></script>
     <script src="assets/js/results.js"></script>
-
 </body>
 
 </html>
