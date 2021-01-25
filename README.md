@@ -9,7 +9,7 @@
 
 ---
 ## Method and Approach
----
+
 This project was a collaborative effort between the listed contributors. Using Agile software development techniques and version control, we adapted to changes in our end product by always aiming to choose the most lightweight, user-friendly option.
 
 One of the most important parts of a collaborative project is setting, following and regularly comparing against a User Story and Acceptance Criteria. Pair's build criteria is listed as follows:
@@ -65,12 +65,12 @@ Results Page Concept            |  Favorites Page Concept
 
 ---
 ## Usage and Functionality
----
+
 (insert screenshots and walk-through of final product)
 
 ---
 ## Contributors
----
+
 ```
 Steve Babb
 Keaton Brewster
@@ -80,7 +80,7 @@ Brandy Quinlan
 
 ---
 ## Credits
----
+
 
 ### :sparkles: [Materialize CSS](https://materializecss.com/)
 ### :fork_and_knife: [Spoonacular API](https://spoonacular.com/)
