@@ -484,27 +484,24 @@ $(document).ready(function () {
 
   function init() {
     for (let i = 0; i < history.length; i++) {
-      if (history[i].type === 'food') {
+      if (history[i].type === "food") {
         appendFoodtoSaved(history[i].searchVal);
       } else {
         appendDrinktoSaved(history[i].searchVal);
       }
     }
   }
-  
 
   function populateSaved(searchVal) {
     function checkType(arr) {
       return arr.some(function (el) {
         if (el.type === "food") {
           appendFoodtoSaved(searchVal);
-        } else if (
-          el.type ==='drink'
-        ) {
+        } else if (el.type === "drink") {
           appendDrinktoSaved(searchVal);
-        };
+        }
       });
-    };
+    }
     checkType(history);
   }
 
