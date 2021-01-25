@@ -52,6 +52,7 @@ $(document).ready(function () {
             "data-name": response.results[i].id,
             name: "food",
             class: "waves-effect btn-flat",
+            onclick: "M.toast({html:'Saved!'})"
           }),
           btnI = $("<i>").attr({ class: "material-icons" }).text("bookmark"),
           contentJlink = $("<a>")
@@ -186,6 +187,7 @@ $(document).ready(function () {
             "data-name": response.drinks[i].strDrink,
             name: "drink",
             class: "waves-effect btn-flat",
+            onclick: "M.toast({html:'Saved!'})"
           }),
           btnI = $("<i>").attr({ class: "material-icons" }).text("bookmark"),
           cardReveal = $("<div>").attr("class", "card-reveal"),
@@ -553,21 +555,10 @@ $(document).ready(function () {
 
   $("#results").on("click", "button", function (event) {
     event.preventDefault();
-
-    // NEED TO ADD BIG IF HERE
     var reSearchVal = $(this).attr("data-id"),
       unique = $(this).attr("data-name").replace(/ /g, ""),
       type = $(this).attr("name");
     saveForLater(reSearchVal, unique, type);
-    var badge = $("<span>").attr({
-      class: "new badge blue",
-      id: "saved-badge",
-      "data-badge-caption": "SAVED!",
-    });
-    $(this).append(badge);
-    setTimeout(() => {
-      $("#saved-badge").remove();
-    }, 2000);
   });
 
   $("#search-cuisines").on("click", getCuisines);
