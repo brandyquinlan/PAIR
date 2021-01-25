@@ -9,6 +9,7 @@ $(document).ready(function () {
   $(".fixed-action-btn").floatingActionButton();
 
   var history = JSON.parse(localStorage.getItem("Saved")) || [];
+  var foodapi = 'ed1d451c0e1e41a4a55cd937bbada22d';
 
   // function for creating the html for the results obtained from the search for FOOD
   function getCuisines(event) {
@@ -21,7 +22,7 @@ $(document).ready(function () {
       url:
         "https://api.spoonacular.com/recipes/complexSearch?query=" +
         searchVal +
-        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=a1307173fd1545b38ed82223156955bd",
+        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey="+foodapi,
       type: "GET",
     }).then(function (response) {
       console.log(response);
@@ -388,7 +389,7 @@ $(document).ready(function () {
       url:
         "https://api.spoonacular.com/recipes/complexSearch?query&titleMatch=" +
         reSearchVal +
-        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=a1307173fd1545b38ed82223156955bd",
+        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=" + foodapi,
       success: function (response) {
         console.log(response);
 
@@ -497,9 +498,9 @@ $(document).ready(function () {
   function populateSaved(searchVal) {
     function checkType(arr) {
       return arr.some(function (el) {
-        if (el.type === "food") {
+        if (el.type === "food" && el.searchVal === searchVal) {
           appendFoodtoSaved(searchVal);
-        } else if (el.type === "drink") {
+        } else if (el.type === "drink" && el.searchVal === searchVal) {
           appendDrinktoSaved(searchVal);
         }
       });
