@@ -256,13 +256,13 @@ $(document).ready(function () {
         // Accounting for any ingredients that do not have a measurement
         if (actualIngredients.length > actualMeasurements.length) {
           for (
-            let _ = actualMeasurements.length;
-            _ < actualIngredients.length;
-            _++
+            let v = actualMeasurements.length;
+            v < actualIngredients.length;
+            v++
           ) {
             var otherIngredient = $("<li>")
               .attr({ style: "font-weight: lighter" })
-              .text(actualIngredients[_]);
+              .text(actualIngredients[v]);
             $("#ingredientReveal" + i).append(otherIngredient);
           }
         }
@@ -270,19 +270,20 @@ $(document).ready(function () {
     });
   }
 
-  function saveForLater(item, name) {
-    localStorage.setItem(name, JSON.stringify(item));
+  function saveForLater(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
 
-    if (name === "drink") {
-      appendDrinktoSaved(item);
-    } else if (name === "food") {
-      appendFoodtoSaved(item);
+    if (key === "drink") {
+      appendDrinktoSaved(value);
+    } else if (key === "food") {
+      appendFoodtoSaved(value);
     }
   }
 
-  function appendDrinktoSaved(item) {
+  // function that takes an object value and puts in into the card creation function to append to the saved for later div
+  function appendDrinktoSaved(value) {
     $.ajax({
-      url: "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + item,
+      url: "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + value,
       type: "GET",
       success: function (response) {
         let filtered_keys = (obj, filter) => {
@@ -348,7 +349,7 @@ $(document).ready(function () {
           hr = $("<hr>"),
           ul = $("<ul>"),
           ingredients = $("<ul>")
-            .attr({ id: "ingredientReveal" + item, style: "font-weight: bold" })
+            .attr({ id: "ingredientReveal" + value, style: "font-weight: bold" })
             .text("Ingredients: "),
           br1 = $("<br>"),
           instructions = $("<li>")
@@ -377,25 +378,25 @@ $(document).ready(function () {
             var ingredientToList = $("<li>")
               .attr({ style: "font-weight: lighter" })
               .text(actualIngredients[n]);
-            $("#ingredientReveal" + item).append(ingredientToList);
+            $("#ingredientReveal" + value).append(ingredientToList);
           } else {
             var ingredientToList = $("<li>")
               .attr({ style: "font-weight: lighter" })
               .text(actualMeasurements[n] + " " + actualIngredients[n]);
-            $("#ingredientReveal" + item).append(ingredientToList);
+            $("#ingredientReveal" + value).append(ingredientToList);
           }
         }
         // Accounting for any ingredients that do not have a measurement
         if (actualIngredients.length > actualMeasurements.length) {
           for (
-            let _ = actualMeasurements.length;
-            _ < actualIngredients.length;
-            _++
+            let v = actualMeasurements.length;
+            v < actualIngredients.length;
+            v++
           ) {
             var otherIngredient = $("<li>")
               .attr({ style: "font-weight: lighter" })
-              .text(actualIngredients[_]);
-            $("#ingredientReveal" + item).append(otherIngredient);
+              .text(actualIngredients[v]);
+            $("#ingredientReveal" + value).append(otherIngredient);
           }
         }
       },
@@ -405,17 +406,19 @@ $(document).ready(function () {
     });
   }
 
-  function appendFoodtoSaved(item) {
+
+  // function that takes an object value and puts in into the card creation function to append to the saved for later div
+  function appendFoodtoSaved(value) {
     $.ajax({
       type: "GET",
       url:
         "https://api.spoonacular.com/recipes/complexSearch?query&titleMatch=" +
-        item +
-        "&apiKey=a1307173fd1545b38ed82223156955bd",
+        value +
+        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=a1307173fd1545b38ed82223156955bd",
       success: function (response) {
         console.log(response);
 
-        var col = $("<div>").attr("class", "col s6 l3"),
+        var col = $("<div>").attr("class", "col s4 l2"),
           card = $("<div>").attr("class", "card"),
           cardImageDiv = $("<div>").attr(
             "class",
@@ -467,7 +470,7 @@ $(document).ready(function () {
             .text(response.results[0].readyInMinutes + " minutes"),
           br1 = $("<br>"),
           ingredients = $("<ul>")
-            .attr({ id: "ingredientReveal" + item, style: "font-weight: bold" })
+            .attr({ id: "ingredientReveal" + value.replace(/ /g,''), style: "font-weight: bold" })
             .text("Ingredients:"),
           br2 = $("<br>"),
           description = $("<li>")
@@ -505,14 +508,14 @@ $(document).ready(function () {
         var ingredientsList = findAllByKey(response.results[0], "ingredients");
         // need to filter for ingredients first, and then use 'name'
         // was getting an issue where other things in the main object with the key 'name' came up.
-        var ingredients = findAllByKey(ingredientsList, "name");
-        let ingNoDupes = [...new Set(ingredients)];
+        var ingredients = findAllByKey(ingredientsList, "name"),
+            ingNoDupes = [...new Set(ingredients)];
         // formatting the list of ingredients.
         for (let j = 0; j < ingNoDupes.length; j++) {
           var ingredientToList = $("<li>")
             .attr({ style: "font-weight: lighter" })
             .text(ingNoDupes[j]);
-          $("#ingredientReveal" + item).append(ingredientToList);
+          $("#ingredientReveal" + value.replace(/ /g,'')).append(ingredientToList);
         }
       },
       error: function (error) {
@@ -523,9 +526,9 @@ $(document).ready(function () {
 
   $("#results").on("click", "button", function (event) {
     event.preventDefault();
-    var item = $(this).attr("data-id"),
-      name = $(this).attr("name");
-    saveForLater(item, name);
+    var value = $(this).attr("data-id"),
+      key = $(this).attr("name");
+    saveForLater(key, value);
     var badge = $("<span>").attr({
       class: "new badge blue",
       id: "saved-badge",
