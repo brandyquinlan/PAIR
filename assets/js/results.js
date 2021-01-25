@@ -1,7 +1,4 @@
 $(document).ready(function () {
-  $('.sidenav').sidenav();
-  // Sets up Materialize Navbar + Mobile Toggle
-  var instance = M.Sidenav.getInstance('.sidenav');
 
   /* ID names in HTML for tracking:
   
