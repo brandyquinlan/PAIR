@@ -7,7 +7,9 @@
           content="width=device-width, initial-scale=1.0">
 
     <title>PAIR</title>
-    <link rel='icon' href='favicon.ico' type='image/x-icon'/>
+    <link rel='icon'
+          href='favicon.ico'
+          type='image/x-icon' />
     <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
@@ -102,13 +104,14 @@
 
     <div class="fixed-action-btn">
         <a class="btn-floating btn-large lime darken-3">
-          <i class="large material-icons">menu</i>
+            <i class="large material-icons">menu</i>
         </a>
         <ul>
-          <li><a href="#jumpContainer" class="btn-floating lime darken-1"><i class="material-icons">search</i></a></li>
-          <li><a class="btn-floating indigo lighten-3"><i class="material-icons">bookmark</i></a></li>
+            <li><a href="#jumpContainer"
+                   class="btn-floating lime darken-1"><i class="material-icons">search</i></a></li>
+            <li><a class="btn-floating indigo lighten-3"><i class="material-icons">bookmark</i></a></li>
         </ul>
-      </div>
+    </div>
 
     <!--Results Container-->
     <section>
@@ -171,7 +174,11 @@
                         <li class="collection-item">Kansas City, MO 64107</li>
                     </ul>
                 </div>
-                <div class="col s12 m7">
+                <form class="col s12 m7"
+                      action='mailto:pairfeedback@gmail.com'
+                      method='POST'
+                      enctype='multipart/form-data'
+                      name='EmailForm'>
                     <div class="card-panel grey lighten-3">
                         <h5>Get In Touch</h5>
                         <div class="input-field">
@@ -179,11 +186,11 @@
                                    placeholder="Name">
                         </div>
                         <div class="input-field">
-                            <input type="text"
+                            <input type="email"
                                    placeholder="Email">
                         </div>
                         <div class="input-field">
-                            <input type="text"
+                            <input type="tel"
                                    placeholder="Phone">
                         </div>
                         <div class="input-field">
@@ -194,8 +201,8 @@
                                value="Submit"
                                class="btn brown lighten-4 waves-effect btn-submit">
                     </div>
-                </div>
-            </div>
+                </form>
+        </div>
         </div>
     </section>
 

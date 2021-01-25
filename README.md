@@ -1,16 +1,27 @@
-# Food and Drink Recipe Planner
-```
-This is a sorely needed app to help our fans find great recipes and drinks that pair together.  This app is an essential tool for anyone trying to satisfy the taste buds.
-```
+![Wireframe: Version 1](assets/img/pair-test.png)
 
-## User Story
+# Your Launching Pad for At-Home Culinary Curation
+
+### Pair is an in-browser application that lets a user search and browse food and cocktail recipes to pair together. Pair is an essential tool for anyone looking for inspiration in the kitchen or behind the bar.
+
+### Link to Deployed Project:
+* https://brandyquinlan.github.io/Project1/
+
+---
+## Method and Approach
+---
+This project was a collaborative effort between the listed contributors. This section will walk through the brainstorming process we underwent to create our final product, Pair.
+One of the most important parts of a collaborative project is setting, following and regularly comparing against a User Story and Acceptance Criteria. Pair's build criteria is listed as follows:
+
+
+### User Story
 ```
 AS AN authenticated user
 I WANT to use an app to locate food and drink recipes
 SO THAT I can do meal planning
 ```
 
-## Aceptance Criteria
+### Aceptance Criteria
 ```
 As an authenticated user...
 WHEN I log into the app
@@ -39,19 +50,39 @@ WHEN I find a recipe that I want to use again
     THEN I can save that recipe in the app
 ```
 
-## APIs utilized
-```
-For food recipes:
-https://developer.edamam.com/edamam-docs-recipe-api
+### Wireframe Examples: Early Creative Processing
 
-For drink recipes:
-https://www.thecocktaildb.com/api.php
-```
+![Wireframe: Version 1](assets/wireframes/wireframe_v1.png)
 
+Creating a wireframe to mock up UI design for the initial build helps nail down the main components and functionality a project requires. We start with Version 1, a simple concept of a single page. In our following development sessions we decided to build out secondary pages for generated results and saved "favorites." The Version 2 wireframes below demonstrate these changes. 
+
+![Wireframe: Version 2: Landing Page](assets/wireframes/wireframe_v2_landing.jpg)
+
+Results Page Concept            |  Favorites Page Concept
+:-------------------------:|:-------------------------:
+![Wireframe: Version 2: Results Page](assets/wireframes/wireframe_v2_results.jpg)  |  ![Wireframe: Version 2: Favorites Page](assets/wireframes/wireframe_v2_favorites.jpg)
+
+---
+## Usage and Functionality
+---
+(insert screenshots and walk-through of final product)
+
+---
 ## Contributors
+---
 ```
 Steve Babb
 Keaton Brewster
 Kat Buchanan
 Brandy Quinlan
 ```
+
+---
+## Credits
+---
+
+### :sparkles: [Materialize CSS](https://materializecss.com/)
+### :fork_and_knife: [Spoonacular API](https://spoonacular.com/)
+### :tropical_drink: [The Cocktail DB API](https://www.thecocktaildb.com/)
+### :blue_book: [Google Fonts](https://code.jquery.com/)
+### :globe_with_meridians: [jQuery CDN](https://fonts.google.com/)

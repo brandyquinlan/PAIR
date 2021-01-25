@@ -107,7 +107,7 @@ $(document).ready(function() {
     
         var searchVal = $('#search-value').val();
         $.ajax({
-          url: "https://api.spoonacular.com/recipes/complexSearch?query=" + searchVal + "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=ed1d451c0e1e41a4a55cd937bbada22d",
+          url: "https://api.spoonacular.com/recipes/complexSearch?query=" + searchVal + "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=b6ca4825fa75485c96dd5f81979fac6b",
           type: "GET",
         })
           .then(function (response) {
