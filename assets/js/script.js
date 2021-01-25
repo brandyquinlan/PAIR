@@ -482,15 +482,41 @@ $(document).ready(function () {
     });
   }
 
-  // for use in the save for later function
-  function checkValue(unique, arr) {
-    return arr.some(function (el) {
-      return el.uniqueID === unique;
-    });
+  function init() {
+    for (let i = 0; i < history.length; i++) {
+      if (history[i].type === 'food') {
+        appendFoodtoSaved(history[i].searchVal);
+      } else {
+        appendDrinktoSaved(history[i].searchVal);
+      }
+    }
   }
+  
+
+  function populateSaved(searchVal) {
+    function checkType(arr) {
+      return arr.some(function (el) {
+        if (el.type === "food") {
+          appendFoodtoSaved(searchVal);
+        } else if (
+          el.type ==='drink'
+        ) {
+          appendDrinktoSaved(searchVal);
+        };
+      });
+    };
+    checkType(history);
+  }
+
+  // for use in the save for later function
 
   // function that saves things for later
   function saveForLater(reSearchVal, unique, type) {
+    function checkValue(unique, arr) {
+      return arr.some(function (el) {
+        return el.uniqueID === unique;
+      });
+    }
     if (!checkValue(unique, history)) {
       var obj = {
         searchVal: reSearchVal,
@@ -500,6 +526,7 @@ $(document).ready(function () {
       history.push(obj);
       console.log(history);
       localStorage.setItem("Saved", JSON.stringify(history));
+      populateSaved(reSearchVal);
     }
   }
 
@@ -515,7 +542,7 @@ $(document).ready(function () {
       []
     );
   }
-
+  // more object sorting functions
   let filtered_keys = (obj, filter) => {
     let key,
       keys = [];
@@ -523,6 +550,9 @@ $(document).ready(function () {
       if (obj.hasOwnProperty(key) && filter.test(key)) keys.push(key);
     return keys;
   };
+
+  // called on page load to load all previously saved items
+  init();
 
   $("#results").on("click", "button", function (event) {
     event.preventDefault();
