@@ -303,6 +303,7 @@ $(document).ready(function () {
             alt: "image of food",
           }),
           cardContent = $("<div>").attr("class", "card-content"),
+          unSaveItem = $("<a>").text("Unsave").attr("class", "hoverable unSave")
           contentSpan = $("<span>")
             .attr({
               class: "activator grey-text text-darken-4 truncate",
@@ -337,7 +338,7 @@ $(document).ready(function () {
 
         // Begin appending everything together
         cardImageDiv.append(cardImage);
-        cardContent.append(contentSpan);
+        cardContent.append(contentSpan, unSaveItem);
         instructions.append(instructionsSpan);
         ul.append(ingredients, br1, instructions);
         revealSpan.append(revealSpanI);
@@ -405,6 +406,7 @@ $(document).ready(function () {
             alt: "image of " + response.results[0].title,
           }),
           cardContent = $("<div>").attr("class", "card-content"),
+          unSaveItem = $("<a>").text("Unsave").attr("class", "hoverable unSave")
           contentSpan = $("<span>")
             .attr({
               class: "activator grey-text text-darken-4 truncate",
@@ -453,7 +455,7 @@ $(document).ready(function () {
 
         // Append all the elements together for presentation
         cardImageDiv.append(cardImage);
-        cardContent.append(contentSpan);
+        cardContent.append(contentSpan, unSaveItem);
         prepTime.append(prepTimeSpan);
         description.append(descriptionSpan);
         ul.append(prepTime, br1, ingredients, br2, description);
