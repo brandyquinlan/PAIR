@@ -7,6 +7,8 @@ $(document).ready(function() {
         height : 333,
     });
 
+    $('.fixed-action-btn').floatingActionButton();
+
     function saveForLater(item, name) {
         localStorage.setItem(name, JSON.stringify(item));
 
