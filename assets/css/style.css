@@ -51,6 +51,15 @@ ul.hide-on-med-and-down {
     padding: .5rem;
 }
 
+.modal-content {
+    height: 50vh;
+    width: 50vh;
+}
+
+p {
+    font-size: 2rem;
+}
+
 @media only screen and (min-width: 4px) {
     .buttons-wrapper {
         width: 80vw;
@@ -65,4 +74,13 @@ ul.hide-on-med-and-down {
         min-width: 140px;
         max-width: 300px;
     }
+}
+
+.modal-form {
+    height: 11vh;
+    width: 50vh;       
+}
+
+.modal-form p {
+    font-size: 1.5rem;
 }
