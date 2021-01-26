@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet"
+          href="./assets/css/results.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>PAIR | Results</title>
+</head>
+
+<header>
+    <!-- Navbar -->
+    <nav class="navbar-fixed lime darken-3">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="#"
+                   class="brand-logo">PAIR</a>
+                <a href="#"
+                   data-target="mobile-nav"
+                   class="sidenav-trigger">
+                    <i class="material-icons">menu</i>
+                </a>
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a href="#home">Home</a>
+                    </li>
+                    <li>
+                        <a href="#search">Search</a>
+                    </li>
+                    <li>
+                        <a href="#favorites">My Favorites</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <ul class="sidenav"
+        id="mobile-nav">
+        <li>
+            <a href="#home">Home</a>
+        </li>
+        <li>
+            <a href="#search">Search</a>
+        </li>
+        <li>
+            <a href="#favorites">My Favorites</a>
+        </li>
+    </ul>
+</header>
+
+<body>
+    <main>
+        <div class="container mainStage">
+            <div class="row">
+                <div class="col s6">
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <button class="btn-floating btn-large fixed-action-btn1 halfway-fab waves-effect waves-light red"><i class="material-icons">save</i></button>
+                            <button class="btn-floating btn-large fixed-action-btn2 halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></button>
+                            <img class="activator"
+                                 src="./assets/img/ramen.jpg">
+                                 
+                        </div>
+                        <!--Card Content Teaser-->
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4" id="drinkName">Drink Name<i
+                                   class="material-icons right">more_vert</i></span>
+                            <p id="jumpLink"><a href="#">Jump to Article</a></p>
+                            
+                        </div>
+                        <!--Revealed Card Body Content-->
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">Quick Look<i
+                                   class="material-icons right">close</i></span>
+                            <h6 id="drinkName">Drink Name</h6>
+                            <hr>
+                            <ul>
+                                Ingredients: <li id="ingredientReveal"></li>
+                                <br>
+                                Prep: <li id="prepReveal"></li>
+                                <br>
+                                Build: <li id="buildReveal"></li>
+                                <br>
+                                Garnish: <li id="garnishReveal"></li>
+                            </ul>
+                            <!--Button to Add Favorite to Local Storage-->
+                            <a class="waves-effect waves-light lime darken-3 btn-small right">Add Favorite</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!--Current IDs for tracking elements in JS:
+            <span id="drinkName">
+            <p id="jumpLink">
+            <h6 id="drinkName">
+            <li id="ingredientReveal">
+            <li id="prepReveal">
+            <li id="buildReveal">
+            <li id="garnishReveal>"
+    -->
+
+
+    <!-- jQuery script tag -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./assets/js/drinksapi.js"></script>
+
+</body>
+
+</html>
