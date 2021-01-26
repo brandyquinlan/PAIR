@@ -9,7 +9,7 @@ $(document).ready(function () {
   $(".fixed-action-btn").floatingActionButton();
 
   var history = JSON.parse(localStorage.getItem("Saved")) || [];
-  var foodapi = 'ed1d451c0e1e41a4a55cd937bbada22d';
+  var foodapi = 'b6ca4825fa75485c96dd5f81979fac6b';
 
   // function for creating the html for the results obtained from the search for FOOD
   function getCuisines(event) {
