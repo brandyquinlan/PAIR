@@ -29,7 +29,7 @@ $(document).ready(function () {
 
       for (var i = 0; i < response.results.length; i++) {
         // Create all the elements with the information pulled
-        var col = $("<div>").attr("class", "col s6 l3"),
+        var col = $("<div>").attr("class", "col s12 l3"),
           card = $("<div>").attr("class", "card"),
           cardImageDiv = $("<div>").attr(
             "class",
@@ -165,7 +165,7 @@ $(document).ready(function () {
         }
 
         // Begin creating all the elements with the necessary information
-        var col = $("<div>").attr("class", "col s6 l3"),
+        var col = $("<div>").attr("class", "col s12 l3"),
           card = $("<div>").attr({ class: "card" }),
           cardImageDiv = $("<div>").attr({
             class: "card-image waves-effect waves-block waves-light",
@@ -292,7 +292,7 @@ $(document).ready(function () {
         }
 
         // Begin creating all the elements with the necessary information
-        var col = $("<div>").attr("class", "col s4 l2"),
+        var col = $("<div>").attr("class", "col s12 l2"),
           card = $("<div>").attr({ class: "card" }),
           cardImageDiv = $("<div>").attr({
             class: "card-image waves-effect waves-block waves-light",
@@ -393,7 +393,7 @@ $(document).ready(function () {
       success: function (response) {
         console.log(response);
 
-        var col = $("<div>").attr("class", "col s4 l2"),
+        var col = $("<div>").attr("class", "col s12 l2"),
           card = $("<div>").attr("class", "card"),
           cardImageDiv = $("<div>").attr(
             "class",
@@ -471,7 +471,7 @@ $(document).ready(function () {
           ingNoDupes = [...new Set(ingredients)];
         // formatting the list of ingredients.
         for (let j = 0; j < ingNoDupes.length; j++) {
-          var ingredientToList = $("<li>")
+          var ingredientToList = $("<p>")
             .attr({ style: "font-weight: lighter" })
             .text(ingNoDupes[j]);
           $("#ingredientReveal" + reSearchVal.replace(/ /g, "")).append(
@@ -524,7 +524,6 @@ $(document).ready(function () {
         type: type,
       };
       history.push(obj);
-      console.log(history);
       localStorage.setItem("Saved", JSON.stringify(history));
       populateSaved(reSearchVal);
     }
