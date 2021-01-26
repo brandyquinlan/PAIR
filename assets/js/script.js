@@ -187,7 +187,8 @@ $(document).ready(function () {
             "data-id": response.drinks[i].idDrink,
             "data-name": response.drinks[i].strDrink,
             name: "drink",
-            class: "waves-effect btn-flat",
+            // class: "waves-effect btn-flat",
+            class: "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light red",
             onclick: "M.toast({html:'Saved!'})"
           }),
           btnI = $("<i>").attr({ class: "material-icons" }).text("bookmark"),

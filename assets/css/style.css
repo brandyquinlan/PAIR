@@ -38,3 +38,8 @@ input:focus {
    border-bottom: 1px solid black !important;
    box-shadow: 0 1px 0 0 black !important;
  }
+
+ .fixed-action-btn1 {
+     top: 20px;
+     right: 25px;
+ }
