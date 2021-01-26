@@ -1,9 +1,5 @@
 $(document).ready(function () {
 
-  $('.sidenav').sidenav();
-  // Sets up Materialize Navbar + Mobile Toggle
-  var instance = M.Sidenav.getInstance('.sidenav');
-
   /* ID names in HTML for tracking:
   
   // Card elements that need targeted API data:
@@ -16,7 +12,7 @@ $(document).ready(function () {
   */
 
 
-  // function for creating the html for the results obtained from the search for FOOD
+
   function getCuisines(event) {
     event.preventDefault();
 
@@ -24,7 +20,7 @@ $(document).ready(function () {
 
     var searchVal = $('#search-value').val();
     $.ajax({
-      url: "https://api.spoonacular.com/recipes/complexSearch?query=" + searchVal + "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=a1307173fd1545b38ed82223156955bd",
+      url: "https://api.spoonacular.com/recipes/complexSearch?query=" + searchVal + "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=ed1d451c0e1e41a4a55cd937bbada22d",
       type: "GET",
     })
       .then(function (response) {
@@ -44,12 +40,8 @@ $(document).ready(function () {
                   [])
           }
           var ingredients = findAllByKey(response.results[i], 'name');
-          let ingNoDupes = [...new Set(ingredients)];
-          // formatedING not working yet
-          let formatedING = (ingNoDupes) => {for (let i = 0; i < ingNoDupes.length; i++){
-            // TRYING TO FIND A WAY TO FORMAT THE LIST OF INGREDIENTS
-          }}
-          console.log(ingNoDupes);
+          let ingredientsNOdupes = [...new Set(ingredients)]
+          console.log(ingredientsNOdupes);
 
 
 
@@ -60,19 +52,19 @@ $(document).ready(function () {
 
             cardContent = $('<div>').attr('class', 'card-content'),
             contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.results[i].title),
-            spanI = $('<i>').attr('class', 'material-icons').text('expand_less'),
+            spanI = $('<i>').attr('class', 'material-icons right').text('expand_less'),
             contentJlink = $('<a>').attr({'id':'jumplink','href':response.results[i].sourceUrl,'target':'blank'}).text("Jump to Atricle"),
 
 
             cardReveal = $('<div>').attr('class', 'card-reveal'),
             revealSpan = $('<span>').attr('class', 'card-title grey-text text-darken-4').text('Quick Look'),
             revealSpanI = $('<i>').attr('class', 'material-icons right').text('close'),
-            recipeNameH = $('<h6>').attr({'id':'recipeName'}).text(response.results[i].title),
+            recipeNameH = $('<h6>').attr('id', 'recipeName').text(response.results[i].title),
             hr = $('<hr>'),
             ul = $('<ul>'),
             prepTime = $('<li>').attr('id', 'prepTimeReveal').text('Total time: ' + response.results[i].readyInMinutes + ' minutes'),
             br1 = $('<br>'),
-            ingredients = $('<li>').attr('id', 'ingredientReveal').text('Ingredients: ' + ingNoDupes),
+            ingredients = $('<li>').attr('id', 'ingredientReveal').text('Ingredients: ' + ingredientsNOdupes),
             br2 = $('<br>'),
             description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + response.results[i].summary),
 
@@ -99,86 +91,8 @@ $(document).ready(function () {
 
         $('#populate-results').append(buttonDiv);
       })
+
   }
 
-  function getDrinks(event) {
-    event.preventDefault();
-
-    $('#populate-results').empty();
-
-    var searchVal = $('#search-value').val();
-    $.ajax({
-      url: "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + searchVal,
-      type: "GET",
-    })
-      .then(function (response) {
-        console.log(response);
-
-        for (let i = 0; i < response.drinks.length; i++) {
-
-
-
-          // This seems to be working now, to filter out the ingredients from each recipe pulled
-          // function findAllByKey(obj, keyToFind) {
-          //   return Object.entries(obj).reduce((acc, [key, value]) => (key === keyToFind)
-          //       ? acc.concat(value)
-          //       : (typeof value === 'object')
-          //         ? acc.concat(findAllByKey(value, keyToFind))
-          //         : acc, 
-          //         [])
-          // }
-          // var ingredients = findAllByKey(response.drinks[i], 'name');
-          // let ingNoDupes = [...new Set(ingredients)]
-          // console.log(ingNoDupes);
-
-
-
-          var col = $('<div>').attr('class', 'col s6'),
-            card = $('<div>').attr('class', 'card'),
-            cardImageDiv = $('<div>').attr('class', 'card-image waves-effect waves-block waves-light'),
-            cardImage = $('<img>').attr({'class':'activator', 'src': response.drinks[i].strDrinkThumb, 'alt': 'image of food' }),
-
-            cardContent = $('<div>').attr('class', 'card-content'),
-            contentSpan = $('<span>').attr('class', 'card-title activator grey-text text-darken-4 truncate').text(response.drinks[i].strDrink),
-            spanI = $('<i>').attr('class', 'material-icons right').text('expand_less'),
-            contentJlink = $('<a>').attr({'id':'jumplink','href':'#','target':'blank'}).text("Jump to Atricle (cannot find hyperlink in API object)"),
-
-
-            cardReveal = $('<div>').attr('class', 'card-reveal'),
-            revealSpan = $('<span>').attr('class', 'card-title grey-text text-darken-4').text('Quick Look'),
-            revealSpanI = $('<i>').attr('class', 'material-icons right').text('close'),
-            recipeNameH = $('<h6>').attr('id', 'recipeName').text(response.drinks[i].strDrink),
-            hr = $('<hr>'),
-            ul = $('<ul>'),
-            ingredients = $('<li>').attr('id', 'ingredientReveal').text('Ingredients: '),
-            br1 = $('<br>'),
-            description = $('<li>').attr('id', 'blurbReveal').text('Description: ' + 'summary here'),
-
-            addFav = $('<a>').attr('class', 'waves-effect waves-light lime darken-3 btn-small right').text('Add Favorite');
-
-          cardImageDiv.append(cardImage);
-
-          contentSpan.append(spanI);
-
-          cardContent.append(contentSpan, contentJlink);
-
-          ul.append(br1, ingredients, description);
-          revealSpan.append(revealSpanI);
-          cardReveal.append(revealSpan, recipeNameH, hr, ul, addFav);
-
-          card.append(cardImageDiv, cardContent, cardReveal);
-          col.append(card);
-          $('#populate-results').append(col);
-        }
-
-        // Return to top button
-        var backtotop = $('<a>').attr({ 'href': '#top', 'class': 'waves-effect waves-light lime darken-3 btn-small right' }).text('Back to Top'),
-          buttonDiv = $('<div>').append(backtotop);
-
-        $('#populate-results').append(buttonDiv);
-      })
-  }
-
-  $('#search-cuisines').on('click', getCuisines);
-  $('#search-drinks').on('click', getDrinks);
+  $('#search-cuisines').on('click', getCuisines)
 });
