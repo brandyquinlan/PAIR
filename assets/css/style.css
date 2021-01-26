@@ -39,7 +39,7 @@
     height: 77px;
     margin: .5rem;
 }
-input {
+input, textarea {
     font-family: 'Roboto', sans-serif;
 }
 input:focus, textarea:focus {
