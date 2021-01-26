@@ -11,6 +11,12 @@
     margin-top: 2rem;
     margin-right: .5rem;
 }
+.heading {
+    font-size: 20px;
+}
+.subhead {
+    font-size: 14px;
+}
 .section-follow .fa-3x {
     margin: 5px 10px;
 }
