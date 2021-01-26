@@ -114,7 +114,7 @@ $(document).ready(function () {
         let ingNoDupes = [...new Set(ingredients)];
         // formatting the list of ingredients.
         for (let j = 0; j < ingNoDupes.length; j++) {
-          var ingredientToList = $("<li>")
+          var ingredientToList = $("<span>")
             .attr({ style: "font-weight: lighter" })
             .text(ingNoDupes[j]);
           $("#ingredientReveal" + i).append(ingredientToList);
@@ -465,7 +465,7 @@ $(document).ready(function () {
               id: "ingredientReveal" + reSearchVal.replace(/ /g, ""),
               style: "font-weight: bold",
             })
-            .text("Ingredients:"),
+            .text("Ingredients: "),
           br2 = $("<br>"),
           description = $("<li>")
             .attr({ id: "blurbReveal", style: "font-weight: bold" })
@@ -495,7 +495,7 @@ $(document).ready(function () {
           ingNoDupes = [...new Set(ingredients)];
         // formatting the list of ingredients.
         for (let j = 0; j < ingNoDupes.length; j++) {
-          var ingredientToList = $("<p>")
+          var ingredientToList = $("<span>")
             .attr({ style: "font-weight: lighter" })
             .text(ingNoDupes[j]);
           $("#ingredientReveal" + reSearchVal.replace(/ /g, "")).append(
