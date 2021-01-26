@@ -12,10 +12,12 @@
     margin-right: .5rem;
 }
 .heading {
-    font-size: 20px;
+    font-size: 40px;
+   
 }
 .subhead {
-    font-size: 14px;
+    font-size: 16px;
+    ;
 }
 .section-follow .fa-3x {
     margin: 5px 10px;
@@ -46,6 +48,7 @@ input:focus, textarea:focus {
  }
 
  .fixed-action-btn1 {
-     top: 20px;
-     right: 25px;
- }
+    top: 20px;
+    right: 25px;
+}
+
