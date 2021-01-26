@@ -26,29 +26,29 @@ One of the most important parts of a collaborative project is setting, following
 
 > As an authenticated user...  
 > WHEN I log into the app  
->    THEN I can explore food or drink recipes  
+>>    THEN I can explore food or drink recipes  
 >     
 > WHEN I am looking for a specific dish   
->    THEN I can use a search box to pull recipes related to my search terms   
-> WHEN I am looking for new meal ideas   
->    THEN I can use a filter dropdown to select from a list cuisines   
+>>    THEN I can use a search box to pull recipes related to my search terms     
 > WHEN I select a cuisine  
->    THEN I can see an image and short descriptions for 10 different results for that cuisine  
+>>    THEN I can see an image and short descriptions for 10 different results for that cuisine  
 > WHEN I select a specific dish  
->    THEN I see a the ingredients, prep-time estimate, and instructions  
+>>    THEN I see a the ingredients, prep-time estimate, and instructions  
 > WHEN I find a recipe that I want to use again  
->    THEN I can save that recipe in the app   
+>>    THEN I can save that recipe in the app
+> WHEN I am done with a saved recipe
+>>  THEN I can click a delete button to remove it from the list    
 >    
 > WHEN I am looking for a specific drink   
->    THEN I can use a search box to pull recipes related to my search terms  
-> WHEN I am looking for new drink ideas  
->    THEN I can use a filter dropdown to select from drink categories  
+>>    THEN I can use a search box to pull recipes related to my search terms  
 > WHEN I select a category  
->    THEN I can see an image and short descriptions for 10 different results for that drink category  
+>>    THEN I can see an image and short descriptions for 10 different results for that drink category  
 > WHEN I select a specific drink  
->    THEN I see a the ingredients, prep-time estimate, and instructions  
+>>    THEN I see a the ingredients, prep-time estimate, and instructions  
 > WHEN I find a recipe that I want to use again  
->    THEN I can save that recipe in the app  
+>>    THEN I can save that recipe in the app 
+> WHEN I am done with a saved drink
+>>  THEN I can click a delete button to remove it from the list 
 
 
 ### Wireframe Examples: Early Creative Processing
