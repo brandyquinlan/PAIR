@@ -24,8 +24,6 @@ SO THAT I can do meal planning
 
 ### Aceptance Criteria
 ```
-## Aceptance Criteria
-```
 As an authenticated user...
 WHEN I log into the app
     THEN I can explore food or drink recipes
