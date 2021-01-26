@@ -22,7 +22,7 @@ $(document).ready(function () {
       url:
         "https://api.spoonacular.com/recipes/complexSearch?query=" +
         searchVal +
-        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey="+foodapi,
+        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=" + foodapi,
       type: "GET",
     }).then(function (response) {
       console.log(response);
@@ -179,7 +179,7 @@ $(document).ready(function () {
           contentSpan = $("<span>")
             .attr({
               class: "activator grey-text text-darken-4 truncate",
-              style: "font-size: 12pt",
+              style: "font-size: 16pt",
             })
             .text(response.drinks[i].strDrink),
           saveBtn = $("<button>").attr({
@@ -529,6 +529,17 @@ $(document).ready(function () {
     }
   }
 
+  function deleteFromHistory(deleteID) {
+    history = history.filter(function (obj) {
+      return obj.uniqueID !== deleteID;
+    });
+    localStorage.setItem('Saved', JSON.stringify(history));
+    $('#saved-for-later').empty();
+    init();
+  }
+
+
+
   // handy functions for sorting through objects
   function findAllByKey(obj, keyToFind) {
     return Object.entries(obj).reduce(
@@ -536,8 +547,8 @@ $(document).ready(function () {
         key === keyToFind
           ? acc.concat(value)
           : typeof value === "object"
-          ? acc.concat(findAllByKey(value, keyToFind))
-          : acc,
+            ? acc.concat(findAllByKey(value, keyToFind))
+            : acc,
       []
     );
   }
@@ -560,6 +571,15 @@ $(document).ready(function () {
       type = $(this).attr("name");
     saveForLater(reSearchVal, unique, type);
   });
+
+  $("#saved-for-later").on("click", "button", function (event) {
+    event.preventDefault();
+    console.log($(this).attr('data-id'));
+    var deleteID = $(this).attr('data-name').replace(/ /g, '');
+    var itemType = $(this).attr('name');
+    deleteFromHistory(deleteID, itemType);
+  });
+
 
   $("#search-cuisines").on("click", getCuisines);
   $("#search-drinks").on("click", getDrinks);
