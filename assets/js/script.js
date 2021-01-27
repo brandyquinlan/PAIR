@@ -155,31 +155,14 @@ $(document).ready(function () {
         for (let i = 0; i < response.drinks.length; i++) {
           // getting ingredients
           // example:
-          let possibleIngredients = filtered_keys(
-            response.drinks[i],
-            /strIngredient/
-          );
+          let possibleIngredients = filterKeys(response.drinks[i], /strIngredient/);
           var actualIngredients = [];
-          for (var o = 0; o < possibleIngredients.length; o++) {
-            if (response.drinks[0][possibleIngredients[o]] !== null) {
-              actualIngredients.push(
-                response.drinks[i][possibleIngredients[o]]
-              );
-            }
-          }
+          filterDrinkIngredients(possibleIngredients, actualIngredients, response, i);
+
           //getting measurements
-          let possibleMeasurements = filtered_keys(
-            response.drinks[i],
-            /strMeasure/
-          );
+          let possibleMeasurements = filterKeys(response.drinks[i], /strMeasure/);
           var actualMeasurements = [];
-          for (var l = 0; l < possibleMeasurements.length; l++) {
-            if (response.drinks[0][possibleMeasurements[l]] !== null) {
-              actualMeasurements.push(
-                response.drinks[i][possibleMeasurements[l]]
-              );
-            }
-          }
+          filterDrinkIngredients(possibleMeasurements, actualMeasurements, response, i);
 
           // Begin creating all the elements with the necessary information
           var col = $("<div>").attr("class", "col s12 m6 l4"),
@@ -287,34 +270,21 @@ $(document).ready(function () {
         "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + apiRecall,
       type: "GET",
       success: function (response) {
-        let possibleIngredients = filtered_keys(
-          response.drinks[0],
-          /strIngredient/
-        );
+
+        // getting ingredients
+        let possibleIngredients = filterKeys(response.drinks[0], /strIngredient/);
         var actualIngredients = [];
-        for (var o = 0; o < possibleIngredients.length; o++) {
-          if (response.drinks[0][possibleIngredients[o]] !== null) {
-            actualIngredients.push(response.drinks[0][possibleIngredients[o]]);
-          }
-        }
+        filterDrinkIngredients(possibleIngredients, actualIngredients, response, 0);
+
         //getting measurements
-        let possibleMeasurements = filtered_keys(
-          response.drinks[0],
-          /strMeasure/
-        );
+        let possibleMeasurements = filterKeys(response.drinks[0], /strMeasure/);
         var actualMeasurements = [];
-        for (var l = 0; l < possibleMeasurements.length; l++) {
-          if (response.drinks[0][possibleMeasurements[l]] !== null) {
-            actualMeasurements.push(
-              response.drinks[0][possibleMeasurements[l]]
-            );
-          }
-        }
+        filterDrinkIngredients(possibleMeasurements, actualMeasurements, response, 0);
 
         // Begin creating all the elements with the necessary information
         var col = $("<div>").attr({
           class: "col s12 m6 l4",
-          id: response.drinks[0].strDrink.replace(/ /g, ''),
+          id: response.drinks[0].strDrink.replace(/ /g, ""),
         }),
           card = $("<div>").attr({ class: "card" }),
           cardImageDiv = $("<div>").attr({
@@ -527,38 +497,36 @@ $(document).ready(function () {
   // INIT AND POPULATE SAVED MAY BE ABLE TO M
   function init() {
     // Init checks local storage (assigned to the var 'history') and then sends any past saved items to the corresponding api call for the saved for later section)
-    for (let i = 0; i < history.length; i++) {
-      if (history[i].type === "food") {
-        appendFoodtoSaved(history[i].APIcall);
-      } else {
-        appendDrinktoSaved(history[i].APIcall);
-      }
-    }
+    $.each(history, function (i, value) { 
+      switch (value.type) {
+        case "food":
+          appendFoodtoSaved(value.APIcall);
+          break;
+        case "drink":
+          appendDrinktoSaved(value.APIcall);
+          break;
+      };
+    });
   }
 
   function populateSaved(searchVal) {
-    function checkType(arr) {
-      return arr.some(function (el) {
-        if (el.type === "food" && el.APIcall === searchVal) {
-          appendFoodtoSaved(searchVal);
-        } else if (el.type === "drink" && el.APIcall === searchVal) {
-          appendDrinktoSaved(searchVal);
-        }
-      });
-    }
-    checkType(history);
+    return history.forEach(function (el) {
+      if (el.type === "food" && el.APIcall === searchVal) {
+        appendFoodtoSaved(searchVal);
+      } else if (el.type === "drink" && el.APIcall === searchVal) {
+        appendDrinktoSaved(searchVal);
+      }
+    });
   }
-
-  // for use in the save for later function
 
   // function that saves things for later
   function saveForLater(apiRecall, cardID, type) {
-    function checkValue(cardID, arr) {
+    function checkValue(arr, objValue) {
       return arr.some(function (el) {
-        return el.cardID === cardID;
+        return el.cardID === objValue;
       });
     }
-    if (!checkValue(cardID, history)) {
+    if (!checkValue(history, cardID)) {
       M.toast({ html: "Saved!" });
       var obj = {
         APIcall: apiRecall,
@@ -593,14 +561,23 @@ $(document).ready(function () {
       []
     );
   }
+
   // more object sorting functions
-  let filtered_keys = (obj, filter) => {
-    let key,
-      keys = [];
+  function filterKeys(obj, filter) {
+    let keys = [];
     for (key in obj)
       if (obj.hasOwnProperty(key) && filter.test(key)) keys.push(key);
     return keys;
-  };
+  }
+
+  // for filtering the ingredients and measurements for the drinks
+  function filterDrinkIngredients(poss, act, res, z) {
+    for (let i = 0; i < poss.length; i++) {
+      if (res.drinks[z][poss[i]] !== null) {
+        act.push(res.drinks[z][poss[i]])
+      }
+    }
+  }
 
   // called on page load to load all previously saved items
   init();
