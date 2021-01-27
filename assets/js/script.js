@@ -555,14 +555,14 @@ $(document).ready(function () {
   function saveForLater(apiRecall, cardID, type) {
     function checkValue(cardID, arr) {
       return arr.some(function (el) {
-        return el.uniqueID === cardID;
+        return el.cardID === cardID;
       });
     }
     if (!checkValue(cardID, history)) {
       M.toast({ html: "Saved!" });
       var obj = {
         APIcall: apiRecall,
-        uniqueID: cardID,
+        cardID: cardID,
         type: type,
       };
       history.push(obj);
@@ -573,7 +573,7 @@ $(document).ready(function () {
 
   function deleteFromHistory(deleteID) {
     history = history.filter(function (obj) {
-      return obj.uniqueID !== deleteID;
+      return obj.cardID !== deleteID;
     });
     localStorage.setItem("Saved", JSON.stringify(history));
     // Might be able to assign delete ID to the cards themselves and the use .remove()
