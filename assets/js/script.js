@@ -529,9 +529,9 @@ $(document).ready(function () {
     // Init checks local storage (assigned to the var 'history') and then sends any past saved items to the corresponding api call for the saved for later section)
     for (let i = 0; i < history.length; i++) {
       if (history[i].type === "food") {
-        appendFoodtoSaved(history[i].searchVal);
+        appendFoodtoSaved(history[i].APIcall);
       } else {
-        appendDrinktoSaved(history[i].searchVal);
+        appendDrinktoSaved(history[i].APIcall);
       }
     }
   }
@@ -539,9 +539,9 @@ $(document).ready(function () {
   function populateSaved(searchVal) {
     function checkType(arr) {
       return arr.some(function (el) {
-        if (el.type === "food" && el.searchVal === searchVal) {
+        if (el.type === "food" && el.APIcall === searchVal) {
           appendFoodtoSaved(searchVal);
-        } else if (el.type === "drink" && el.searchVal === searchVal) {
+        } else if (el.type === "drink" && el.APIcall === searchVal) {
           appendDrinktoSaved(searchVal);
         }
       });
@@ -561,7 +561,7 @@ $(document).ready(function () {
     if (!checkValue(cardID, history)) {
       M.toast({ html: "Saved!" });
       var obj = {
-        searchVal: apiRecall,
+        APIcall: apiRecall,
         uniqueID: cardID,
         type: type,
       };
