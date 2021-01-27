@@ -9,7 +9,7 @@ $(document).ready(function () {
   $(".fixed-action-btn").floatingActionButton();
 
   var history = JSON.parse(localStorage.getItem("Saved")) || [];
-  var foodapi = "2363a262f60e4280bebafc985ee630d9";
+  var foodapi = "ed1d451c0e1e41a4a55cd937bbada22d";
 
   // function for creating the html for the results obtained from the search for FOOD
   function getCuisines(event) {
@@ -28,7 +28,7 @@ $(document).ready(function () {
       success: function (response) {
         // if there are no results for the searched value, alert and leave the function
         if (response.results.length < 1) {
-          M.toast({html: 'Sorry, no results..'});
+          M.toast({ html: "Sorry, no results.." });
           return;
         }
 
@@ -147,9 +147,8 @@ $(document).ready(function () {
         "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + searchVal,
       type: "GET",
       success: function (response) {
-
         if (response.drinks === null) {
-          M.toast({html:'Sorry, no results..'});
+          M.toast({ html: "Sorry, no results.." });
           return;
         }
 
@@ -277,16 +276,15 @@ $(document).ready(function () {
       },
       failure: function (error) {
         console.log(error);
-      }
+      },
     });
   }
 
-  // function that takes an object reSearchVal and puts in into the card creation function to append to the saved for later div
-  function appendDrinktoSaved(reSearchVal) {
+  // function that takes an object apiRecall and puts in into the card creation function to append to the saved for later div
+  function appendDrinktoSaved(apiRecall) {
     $.ajax({
       url:
-        "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" +
-        reSearchVal,
+        "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + apiRecall,
       type: "GET",
       success: function (response) {
         let possibleIngredients = filtered_keys(
@@ -314,7 +312,10 @@ $(document).ready(function () {
         }
 
         // Begin creating all the elements with the necessary information
-        var col = $("<div>").attr("class", "col s12 m6 l4"),
+        var col = $("<div>").attr({
+            class: "col s12 m6 l4",
+            id: response.drinks[0].strDrink.replace(/ /g, ''),
+          }),
           card = $("<div>").attr({ class: "card" }),
           cardImageDiv = $("<div>").attr({
             class: "card-image waves-effect waves-block waves-light",
@@ -354,7 +355,7 @@ $(document).ready(function () {
           ul = $("<ul>"),
           ingredients = $("<ul>")
             .attr({
-              id: "ingredientReveal" + reSearchVal,
+              id: "ingredientReveal" + apiRecall,
               style: "font-weight: bold",
             })
             .text("Ingredients: "),
@@ -386,12 +387,12 @@ $(document).ready(function () {
             var ingredientToList = $("<li>")
               .attr({ style: "font-weight: lighter" })
               .text(actualIngredients[n]);
-            $("#ingredientReveal" + reSearchVal).append(ingredientToList);
+            $("#ingredientReveal" + apiRecall).append(ingredientToList);
           } else {
             var ingredientToList = $("<li>")
               .attr({ style: "font-weight: lighter" })
               .text(actualMeasurements[n] + " " + actualIngredients[n]);
-            $("#ingredientReveal" + reSearchVal).append(ingredientToList);
+            $("#ingredientReveal" + apiRecall).append(ingredientToList);
           }
         }
         // Accounting for any ingredients that do not have a measurement
@@ -404,24 +405,27 @@ $(document).ready(function () {
             var otherIngredient = $("<li>")
               .attr({ style: "font-weight: lighter" })
               .text(actualIngredients[v]);
-            $("#ingredientReveal" + reSearchVal).append(otherIngredient);
+            $("#ingredientReveal" + apiRecall).append(otherIngredient);
           }
         }
       },
     });
   }
 
-  // function that takes an object reSearchVal and puts in into the card creation function to append to the saved for later div
-  function appendFoodtoSaved(reSearchVal) {
+  // function that takes an object apiRecall and puts in into the card creation function to append to the saved for later div
+  function appendFoodtoSaved(apiRecall) {
     $.ajax({
       type: "GET",
       url:
         "https://api.spoonacular.com/recipes/complexSearch?query&titleMatch=" +
-        reSearchVal +
+        apiRecall +
         "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=" +
         foodapi,
       success: function (response) {
-        var col = $("<div>").attr("class", "col s12 m6 l4"),
+        var col = $("<div>").attr({
+            class: "col s12 m6 l4",
+            id: response.results[0].id,
+          }),
           card = $("<div>").attr("class", "card"),
           cardImageDiv = $("<div>").attr(
             "class",
@@ -476,7 +480,7 @@ $(document).ready(function () {
           br1 = $("<br>"),
           ingredients = $("<ul>")
             .attr({
-              id: "ingredientReveal" + reSearchVal.replace(/ /g, ""),
+              id: "ingredientReveal" + apiRecall.replace(/ /g, ""),
               style: "font-weight: bold",
             })
             .text("Ingredients: "),
@@ -512,7 +516,7 @@ $(document).ready(function () {
           var ingredientToList = $("<span>")
             .attr({ style: "font-weight: lighter" })
             .text(ingNoDupes[j]);
-          $("#ingredientReveal" + reSearchVal.replace(/ /g, "")).append(
+          $("#ingredientReveal" + apiRecall.replace(/ /g, "")).append(
             ingredientToList
           );
         }
@@ -520,6 +524,7 @@ $(document).ready(function () {
     });
   }
 
+  // INIT AND POPULATE SAVED MAY BE ABLE TO M
   function init() {
     // Init checks local storage (assigned to the var 'history') and then sends any past saved items to the corresponding api call for the saved for later section)
     for (let i = 0; i < history.length; i++) {
@@ -547,22 +552,22 @@ $(document).ready(function () {
   // for use in the save for later function
 
   // function that saves things for later
-  function saveForLater(reSearchVal, unique, type) {
-    function checkValue(unique, arr) {
+  function saveForLater(apiRecall, cardID, type) {
+    function checkValue(cardID, arr) {
       return arr.some(function (el) {
-        return el.uniqueID === unique;
+        return el.uniqueID === cardID;
       });
     }
-    if (!checkValue(unique, history)) {
-      M.toast({html: 'Saved!'})
+    if (!checkValue(cardID, history)) {
+      M.toast({ html: "Saved!" });
       var obj = {
-        searchVal: reSearchVal,
-        uniqueID: unique,
+        searchVal: apiRecall,
+        uniqueID: cardID,
         type: type,
       };
       history.push(obj);
       localStorage.setItem("Saved", JSON.stringify(history));
-      populateSaved(reSearchVal);
+      populateSaved(apiRecall);
     }
   }
 
@@ -572,9 +577,8 @@ $(document).ready(function () {
     });
     localStorage.setItem("Saved", JSON.stringify(history));
     // Might be able to assign delete ID to the cards themselves and the use .remove()
-    $("#saved-for-later").empty();
-    init();
-    M.toast({html:'Deleted.'});
+    $("#"+deleteID).remove();
+    M.toast({ html: "Deleted." });
   }
 
   // handy functions for sorting through objects
@@ -603,17 +607,16 @@ $(document).ready(function () {
 
   $("#results").on("click", "button", function (event) {
     event.preventDefault();
-    var reSearchVal = $(this).attr("data-id"),
-      unique = $(this).attr("data-name").replace(/ /g, ""),
+    var apiRecall = $(this).attr("data-id"),
+      cardID = $(this).attr("data-name").replace(/ /g, ""),
       type = $(this).attr("name");
-    saveForLater(reSearchVal, unique, type);
+    saveForLater(apiRecall, cardID, type);
   });
 
   $("#saved-for-later").on("click", "button", function (event) {
     event.preventDefault();
     var deleteID = $(this).attr("data-name").replace(/ /g, "");
-    var itemType = $(this).attr("name");
-    deleteFromHistory(deleteID, itemType);
+    deleteFromHistory(deleteID);
   });
 
   $("#search-cuisines").on("click", getCuisines);
