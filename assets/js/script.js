@@ -313,9 +313,9 @@ $(document).ready(function () {
 
         // Begin creating all the elements with the necessary information
         var col = $("<div>").attr({
-            class: "col s12 m6 l4",
-            id: response.drinks[0].strDrink.replace(/ /g, ''),
-          }),
+          class: "col s12 m6 l4",
+          id: response.drinks[0].strDrink.replace(/ /g, ''),
+        }),
           card = $("<div>").attr({ class: "card" }),
           cardImageDiv = $("<div>").attr({
             class: "card-image waves-effect waves-block waves-light",
@@ -423,9 +423,9 @@ $(document).ready(function () {
         foodapi,
       success: function (response) {
         var col = $("<div>").attr({
-            class: "col s12 m6 l4",
-            id: response.results[0].id,
-          }),
+          class: "col s12 m6 l4",
+          id: response.results[0].id,
+        }),
           card = $("<div>").attr("class", "card"),
           cardImageDiv = $("<div>").attr(
             "class",
@@ -577,7 +577,7 @@ $(document).ready(function () {
     });
     localStorage.setItem("Saved", JSON.stringify(history));
     // Might be able to assign delete ID to the cards themselves and the use .remove()
-    $("#"+deleteID).remove();
+    $("#" + deleteID).remove();
     M.toast({ html: "Deleted." });
   }
 
@@ -588,8 +588,8 @@ $(document).ready(function () {
         key === keyToFind
           ? acc.concat(value)
           : typeof value === "object"
-          ? acc.concat(findAllByKey(value, keyToFind))
-          : acc,
+            ? acc.concat(findAllByKey(value, keyToFind))
+            : acc,
       []
     );
   }
