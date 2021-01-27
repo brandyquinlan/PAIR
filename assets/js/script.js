@@ -9,7 +9,7 @@ $(document).ready(function () {
   $(".fixed-action-btn").floatingActionButton();
 
   var history = JSON.parse(localStorage.getItem("Saved")) || [];
-  var foodapi = '2363a262f60e4280bebafc985ee630d9';
+  var foodapi = "2363a262f60e4280bebafc985ee630d9";
 
   // function for creating the html for the results obtained from the search for FOOD
   function getCuisines(event) {
@@ -22,11 +22,10 @@ $(document).ready(function () {
       url:
         "https://api.spoonacular.com/recipes/complexSearch?query=" +
         searchVal +
-        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=" + foodapi,
+        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=" +
+        foodapi,
       type: "GET",
     }).then(function (response) {
-      console.log(response);
-
       for (var i = 0; i < response.results.length; i++) {
         // Create all the elements with the information pulled
         var col = $("<div>").attr("class", "col s12 m6 l4"),
@@ -52,8 +51,9 @@ $(document).ready(function () {
             "data-id": response.results[i].title,
             "data-name": response.results[i].id,
             name: "food",
-            class: "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light indigo lighten-3",
-            onclick: "M.toast({html:'Saved!'})"
+            class:
+              "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light indigo lighten-3",
+            onclick: "M.toast({html:'Saved!'})",
           }),
           btnI = $("<i>").attr({ class: "material-icons" }).text("bookmark"),
           contentJlink = $("<a>")
@@ -135,8 +135,6 @@ $(document).ready(function () {
         "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + searchVal,
       type: "GET",
     }).then(function (response) {
-      console.log(response);
-
       for (let i = 0; i < response.drinks.length; i++) {
         // getting ingredients
         // example:
@@ -187,8 +185,9 @@ $(document).ready(function () {
             "data-id": response.drinks[i].idDrink,
             "data-name": response.drinks[i].strDrink,
             name: "drink",
-            class: "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light indigo lighten-3",
-            onclick: "M.toast({html:'Saved!'})"
+            class:
+              "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light indigo lighten-3",
+            onclick: "M.toast({html:'Saved!'})",
           }),
           btnI = $("<i>").attr({ class: "material-icons" }).text("bookmark"),
           cardReveal = $("<div>").attr("class", "card-reveal activator"),
@@ -309,17 +308,16 @@ $(document).ready(function () {
               style: "font-size: 16pt",
             })
             .text(response.drinks[0].strDrink),
-
           deleteBtn = $("<button>").attr({
             id: "saveForLaterBtn",
             "data-id": response.drinks[0].idDrink,
             "data-name": response.drinks[0].strDrink,
             name: "food",
-            class: "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light red",
-            onclick: "M.toast({html:'Bye!'})"
+            class:
+              "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light red",
+            onclick: "M.toast({html:'Bye!'})",
           }),
           btnI = $("<i>").attr({ class: "material-icons" }).text("delete"),
-
           cardReveal = $("<div>").attr("class", "card-reveal"),
           revealSpan = $("<span>")
             .attr("class", "card-title grey-text text-darken-4")
@@ -388,9 +386,6 @@ $(document).ready(function () {
           }
         }
       },
-      error: function (error) {
-        console.log(error);
-      },
     });
   }
 
@@ -401,9 +396,9 @@ $(document).ready(function () {
       url:
         "https://api.spoonacular.com/recipes/complexSearch?query&titleMatch=" +
         reSearchVal +
-        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=" + foodapi,
+        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=" +
+        foodapi,
       success: function (response) {
-        console.log(response);
 
         var col = $("<div>").attr("class", "col s12 m6 l4"),
           card = $("<div>").attr("class", "card"),
@@ -423,17 +418,16 @@ $(document).ready(function () {
               style: "font-size: 16pt",
             })
             .text(response.results[0].title),
-
           deleteBtn = $("<button>").attr({
             id: "saveForLaterBtn",
             "data-id": response.results[0].title,
             "data-name": response.results[0].id,
             name: "food",
-            class: "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light red",
-            onclick: "M.toast({html:'Bye!'})"
+            class:
+              "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light red",
+            onclick: "M.toast({html:'Bye!'})",
           }),
           btnI = $("<i>").attr({ class: "material-icons" }).text("delete"),
-
           contentJlink = $("<a>")
             .attr({
               id: "jumplink",
@@ -502,10 +496,7 @@ $(document).ready(function () {
             ingredientToList
           );
         }
-      },
-      error: function (error) {
-        console.log(error);
-      },
+      }
     });
   }
 
@@ -557,12 +548,10 @@ $(document).ready(function () {
     history = history.filter(function (obj) {
       return obj.uniqueID !== deleteID;
     });
-    localStorage.setItem('Saved', JSON.stringify(history));
-    $('#saved-for-later').empty();
+    localStorage.setItem("Saved", JSON.stringify(history));
+    $("#saved-for-later").empty();
     init();
   }
-
-
 
   // handy functions for sorting through objects
   function findAllByKey(obj, keyToFind) {
@@ -571,8 +560,8 @@ $(document).ready(function () {
         key === keyToFind
           ? acc.concat(value)
           : typeof value === "object"
-            ? acc.concat(findAllByKey(value, keyToFind))
-            : acc,
+          ? acc.concat(findAllByKey(value, keyToFind))
+          : acc,
       []
     );
   }
@@ -598,12 +587,10 @@ $(document).ready(function () {
 
   $("#saved-for-later").on("click", "button", function (event) {
     event.preventDefault();
-    console.log($(this).attr('data-id'));
-    var deleteID = $(this).attr('data-name').replace(/ /g, '');
-    var itemType = $(this).attr('name');
+    var deleteID = $(this).attr("data-name").replace(/ /g, "");
+    var itemType = $(this).attr("name");
     deleteFromHistory(deleteID, itemType);
   });
-
 
   $("#search-cuisines").on("click", getCuisines);
   $("#search-drinks").on("click", getDrinks);
