@@ -15,10 +15,6 @@
     margin-right: .5rem;
 }
 
-.heading {
-    font-size: 40px;
-}
-
 .section-follow .fa-3x {
     margin: 5px 10px;
 }
@@ -92,3 +88,12 @@ textarea:focus {
         font-size: 24px;
     }
 }
+
+/* Messing with card image formatting for Saved section... 
+@media (min-width: 600px) {
+    .card-image {
+        max-height: 174px;
+    }
+
+}
+*/
