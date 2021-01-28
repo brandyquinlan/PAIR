@@ -89,11 +89,16 @@ textarea:focus {
     }
 }
 
-/* Messing with card image formatting for Saved section... 
+/* Responsive card image formatting for Saved section */
 @media (min-width: 600px) {
-    .card-image {
-        max-height: 174px;
-    }
-
+    .card-image { max-height: 174px; }
 }
-*/
+@media (min-width: 750px) {
+    .card-image { max-height: 217px; }
+}
+@media (min-width: 992px) {
+    .card-image { max-height: 155px; }
+}
+@media screen and ( min-width: 1450px) {
+    .card-image { max-height: 235px;}
+}
