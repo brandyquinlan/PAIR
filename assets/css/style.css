@@ -67,3 +67,28 @@ textarea:focus {
 .toast {
     background-color: gray;
 }
+
+#saved-for-later-heading {
+    font-size: 28px;
+}
+
+@media only screen and (max-width:500px) {
+    .section-follow h5 {
+        padding-top: 15px;
+    }
+    .section-follow {
+        padding: 2px;
+    }
+    .section-follow h4 {
+        font-size: 28px;
+    }
+    .social-icon {
+        font-size: 8px;
+    }
+    .card-panel .lime {
+        padding: 10px;
+    }
+    #saved-for-later-heading {
+        font-size: 24px;
+    }
+}
