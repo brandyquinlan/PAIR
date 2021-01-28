@@ -68,3 +68,7 @@ textarea:focus {
 .btn-submit {
     margin-top: -2em;
 }
+
+.toast {
+    background-color: gray;
+}

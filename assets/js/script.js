@@ -580,7 +580,7 @@ $(document).ready(function () {
       }
     }
   }
-
+  
   // called on page load to load all previously saved items
   init();
 
