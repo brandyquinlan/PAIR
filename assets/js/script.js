@@ -8,8 +8,9 @@ $(document).ready(function () {
 
   $(".fixed-action-btn").floatingActionButton();
 
-  var history = JSON.parse(localStorage.getItem("Saved")) || [];
-  var foodapi = "c83823571c724b7d87b5779bec163f14";
+  var history = JSON.parse(localStorage.getItem("Saved")) || [],
+    currentResults = JSON.parse(localStorage.getItem("currentResults")) || [],
+    foodapi = "2363a262f60e4280bebafc985ee630d9";
 
   // function for creating the html for the results obtained from the search for FOOD
   function getCuisines(event) {
@@ -26,6 +27,9 @@ $(document).ready(function () {
         foodapi,
       type: "GET",
       success: function (response) {
+        //ADDED FOR TESTING
+        currentResults = [];
+        localStorage.setItem("currentResults", JSON.stringify(currentResults));
         // if there are no results for the searched value, alert and leave the function
         switch (response.results.length) {
           case 0:
@@ -34,6 +38,7 @@ $(document).ready(function () {
         }
 
         for (var i = 0; i < response.results.length; i++) {
+          currentResults.push(response.results[i]);
           // Create all the elements with the information pulled
           var col = $("<div>").attr("class", "col s12 m6 l4"),
             card = $("<div>").attr("class", "card"),
@@ -55,8 +60,8 @@ $(document).ready(function () {
               .text(response.results[i].title),
             saveBtn = $("<button>").attr({
               id: "saveForLaterBtn",
-              "data-id": response.results[i].title,
-              "data-name": response.results[i].id,
+              "data-id": response.results[i].id,
+              "data-name": response.results[i].title,
               name: "food",
               class:
                 "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light indigo lighten-3",
@@ -132,6 +137,7 @@ $(document).ready(function () {
             $("#ingredientReveal" + i).append(ingredientToList);
           });
         }
+        localStorage.setItem("currentResults", JSON.stringify(currentResults));
         var clearResultsBtn = $("<a>")
           .attr({
             class: "btn waves-effect red darken-4 right",
@@ -158,6 +164,10 @@ $(document).ready(function () {
         "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + searchVal,
       type: "GET",
       success: function (response) {
+        // Clear our the results from the storage before getting the new ones
+        currentResults = [];
+        localStorage.setItem("currentResults", JSON.stringify(currentResults));
+
         switch (response.drinks) {
           case null:
             M.toast({ html: "Sorry, no results..", classes: "rounded toast" });
@@ -165,6 +175,7 @@ $(document).ready(function () {
         }
 
         for (let i = 0; i < response.drinks.length; i++) {
+          currentResults.push(response.drinks[i]);
           // getting ingredients
           // example:
           let possibleIngredients = filterKeys(
@@ -276,6 +287,7 @@ $(document).ready(function () {
             });
           }
         }
+        localStorage.setItem("currentResults", JSON.stringify(currentResults));
         var clearResultsBtn = $("<a>")
           .attr({
             class: "btn waves-effect red darken-4 right",
@@ -291,291 +303,377 @@ $(document).ready(function () {
   }
 
   // function that takes an object apiRecall and puts in into the card creation function to append to the saved for later div
-  function appendDrinktoSaved(apiRecall) {
-    $.ajax({
-      url:
-        "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + apiRecall,
-      type: "GET",
-      success: function (response) {
-        // getting ingredients
-        let possibleIngredients = filterKeys(
-          response.drinks[0],
-          /strIngredient/
-        );
-        var actualIngredients = [];
-        filterDrinkIngredients(
-          possibleIngredients,
-          actualIngredients,
-          response,
-          0
-        );
+  function appendDrinktoSaved(localObj) {
+    // $.ajax({
+    //   url:
+    //     "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + apiRecall,
+    //   type: "GET",
+    //   success: function (response) {
+    let drink = localObj[0];
+    // getting ingredients
+    let possibleIngredients = filterKeys(
+      drink,
+      // response.drinks[0],
+      /strIngredient/
+    );
+    var actualIngredients = [];
+    filterDrinkIngredients(possibleIngredients, actualIngredients, drink, 0);
 
-        //getting measurements
-        let possibleMeasurements = filterKeys(response.drinks[0], /strMeasure/);
-        var actualMeasurements = [];
-        filterDrinkIngredients(
-          possibleMeasurements,
-          actualMeasurements,
-          response,
-          0
-        );
+    //getting measurements
+    let possibleMeasurements = filterKeys(
+      drink,
+      // response.drinks[0],
+      /strMeasure/
+    );
+    var actualMeasurements = [];
+    filterDrinkIngredients(
+      possibleMeasurements,
+      actualMeasurements,
+      // response
+      drink,
+      0
+    );
 
-        // Begin creating all the elements with the necessary information
-        var col = $("<div>").attr({
-            class: "col s12 m6 l4",
-            id: response.drinks[0].strDrink.replace(/ /g, ""),
-          }),
-          card = $("<div>").attr({ class: "card" }),
-          cardImageDiv = $("<div>").attr({
-            class: "card-image waves-effect waves-block waves-light",
-          }),
-          cardImage = $("<img>").attr({
-            class: "activator responsive-img",
-            src: response.drinks[0].strDrinkThumb,
-            alt: "image of food",
-          }),
-          cardContent = $("<div>").attr("class", "card-content"),
-          contentSpan = $("<span>")
-            .attr({
-              class: "activator grey-text text-darken-4 truncate",
-              style: "font-size: 16pt",
-            })
-            .text(response.drinks[0].strDrink),
-          deleteBtn = $("<button>").attr({
-            id: "saveForLaterBtn",
-            "data-id": response.drinks[0].idDrink,
-            "data-name": response.drinks[0].strDrink,
-            name: "food",
-            class:
-              "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light red",
-          }),
-          btnI = $("<i>").attr({ class: "material-icons" }).text("delete"),
-          cardReveal = $("<div>").attr("class", "card-reveal"),
-          revealSpan = $("<span>")
-            .attr("class", "card-title grey-text text-darken-4")
-            .text("Quick Look"),
-          revealSpanI = $("<i>")
-            .attr("class", "material-icons right")
-            .text("close"),
-          recipeNameH = $("<h6>")
-            .attr("id", "recipeName")
-            .text(response.drinks[0].strDrink),
-          hr = $("<hr>"),
-          ul = $("<ul>"),
-          ingredients = $("<ul>")
-            .attr({
-              id: "ingredientReveal" + apiRecall,
-              style: "font-weight: bold",
-            })
-            .text("Ingredients: "),
-          br1 = $("<br>"),
-          instructions = $("<li>")
-            .attr({ id: "blurbReveal", style: "font-weight: bold" })
-            .text("Instructions: "),
-          instructionsSpan = $("<span>")
-            .attr({ style: "font-weight: lighter" })
-            .text(response.drinks[0].strInstructions);
+    // Begin creating all the elements with the necessary information
+    var col = $("<div>").attr({
+        class: "col s12 m6 l4",
+        // id: response.drinks[0].strDrink.replace(/ /g, ""),
+        id: drink.idDrink,
+      }),
+      card = $("<div>").attr({ class: "card" }),
+      cardImageDiv = $("<div>").attr({
+        class: "card-image waves-effect waves-block waves-light",
+      }),
+      cardImage = $("<img>").attr({
+        class: "activator responsive-img",
+        // src: response.drinks[0].strDrinkThumb,
+        src: drink.strDrinkThumb,
+        alt: "image of food",
+      }),
+      cardContent = $("<div>").attr("class", "card-content"),
+      contentSpan = $("<span>")
+        .attr({
+          class: "activator grey-text text-darken-4 truncate",
+          style: "font-size: 16pt",
+        })
+        // .text(response.drinks[0].strDrink),
+        .text(drink.strDrink),
+      deleteBtn = $("<button>").attr({
+        id: "deleteBtn",
+        // "data-id": response.drinks[0].idDrink,
+        "data-id": drink.idDrink,
 
-        // Begin appending everything together
-        cardImageDiv.append(cardImage);
-        deleteBtn.append(btnI);
-        cardContent.append(contentSpan, deleteBtn);
-        instructions.append(instructionsSpan);
-        ul.append(ingredients, br1, instructions);
-        revealSpan.append(revealSpanI);
-        cardReveal.append(revealSpan, recipeNameH, hr, ul);
-        card.append(cardImageDiv, cardContent, cardReveal);
-        col.append(card);
+        // "data-name": response.drinks[0].strDrink,
+        "data-name": drink.strDrink.replace(/ /g, ""),
 
-        $("#saved-for-later").append(col);
+        name: "drink",
+        class:
+          "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light red",
+      }),
+      btnI = $("<i>").attr({ class: "material-icons" }).text("delete"),
+      cardReveal = $("<div>").attr("class", "card-reveal"),
+      revealSpan = $("<span>")
+        .attr("class", "card-title grey-text text-darken-4")
+        .text("Quick Look"),
+      revealSpanI = $("<i>")
+        .attr("class", "material-icons right")
+        .text("close"),
+      recipeNameH = $("<h6>")
+        .attr("id", "recipeName")
+        // .text(response.drinks[0].strDrink),
+        .text(drink.strDrink),
+      hr = $("<hr>"),
+      ul = $("<ul>"),
+      ingredients = $("<ul>")
+        .attr({
+          // id: "ingredientReveal" + apiRecall,
+          id: "ingredientReveal" + drink.idDrink,
+          style: "font-weight: bold",
+        })
+        .text("Ingredients: "),
+      br1 = $("<br>"),
+      instructions = $("<li>")
+        .attr({ id: "blurbReveal", style: "font-weight: bold" })
+        .text("Instructions: "),
+      instructionsSpan = $("<span>")
+        .attr({ style: "font-weight: lighter" })
+        // .text(response.drinks[0].strInstructions);
+        .text(drink.strInstructions);
 
-        // formatting and listing the ingredients for each drink
-        $.each(actualMeasurements, (index, value) => {
-          // have to check that null measurements do not show up
-          var ingredientToList = $("<li>").attr({
-            style: "font-weight: lighter",
-          });
-          value === null
-            ? ingredientToList.text(value)
-            : ingredientToList.text(value + " " + actualIngredients[index]);
-          $("#ingredientReveal" + apiRecall).append(ingredientToList);
-        });
-        // Accounting for any ingredients that do not have a measurement
-        if (actualIngredients.length > actualMeasurements.length) {
-          $.each(actualIngredients, (index, value) => {
-            var otherIngredient = $("<li>")
-              .attr({ style: "font-weight: lighter" })
-              .text(value);
-            $("#ingredientReveal" + apiRecall).append(otherIngredient);
-          });
-        }
-      },
+    // Begin appending everything together
+    cardImageDiv.append(cardImage);
+    deleteBtn.append(btnI);
+    cardContent.append(contentSpan, deleteBtn);
+    instructions.append(instructionsSpan);
+    ul.append(ingredients, br1, instructions);
+    revealSpan.append(revealSpanI);
+    cardReveal.append(revealSpan, recipeNameH, hr, ul);
+    card.append(cardImageDiv, cardContent, cardReveal);
+    col.append(card);
+
+    $("#saved-for-later").append(col);
+
+    // formatting and listing the ingredients for each drink
+    $.each(actualMeasurements, (index, value) => {
+      // have to check that null measurements do not show up
+      var ingredientToList = $("<li>").attr({
+        style: "font-weight: lighter",
+      });
+      value === null
+        ? ingredientToList.text(value)
+        : ingredientToList.text(value + " " + actualIngredients[index]);
+      // $("#ingredientReveal" + apiRecall).append(ingredientToList);
+      $("#ingredientReveal" + drink.idDrink).append(ingredientToList);
     });
+    // Accounting for any ingredients that do not have a measurement
+    if (actualIngredients.length > actualMeasurements.length) {
+      $.each(actualIngredients, (index, value) => {
+        var otherIngredient = $("<li>")
+          .attr({ style: "font-weight: lighter" })
+          .text(value);
+        // $("#ingredientReveal" + apiRecall).append(otherIngredient);
+        $("#ingredientReveal" + drink.idDrink).append(otherIngredient);
+      });
+    }
   }
 
   // function that takes an object apiRecall and puts in into the card creation function to append to the saved for later div
-  function appendFoodtoSaved(apiRecall) {
-    $.ajax({
-      type: "GET",
-      url:
-        "https://api.spoonacular.com/recipes/complexSearch?query&titleMatch=" +
-        apiRecall +
-        "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=" +
-        foodapi,
-      success: function (response) {
-        var col = $("<div>").attr({
-            class: "col s12 m6 l4",
-            id: response.results[0].id,
-          }),
-          card = $("<div>").attr("class", "card"),
-          cardImageDiv = $("<div>").attr(
-            "class",
-            "card-image waves-effect waves-block waves-light"
-          ),
-          cardImage = $("<img>").attr({
-            class: "activator responsive-img",
-            src: response.results[0].image,
-            alt: "image of " + response.results[0].title,
-          }),
-          cardContent = $("<div>").attr("class", "card-content"),
-          contentSpan = $("<span>")
-            .attr({
-              class: "activator grey-text text-darken-4 truncate",
-              style: "font-size: 16pt",
-            })
-            .text(response.results[0].title),
-          deleteBtn = $("<button>").attr({
-            id: "saveForLaterBtn",
-            "data-id": response.results[0].title,
-            "data-name": response.results[0].id,
-            name: "food",
-            class:
-              "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light red",
-          }),
-          btnI = $("<i>").attr({ class: "material-icons" }).text("delete"),
-          contentJlink = $("<a>")
-            .attr({
-              id: "jumplink",
-              href: response.results[0].sourceUrl,
-              target: "blank",
-            })
-            .text("See full recipe"),
-          cardReveal = $("<div>").attr("class", "card-reveal"),
-          revealSpan = $("<span>")
-            .attr("class", "card-title grey-text text-darken-4")
-            .text("Quick Look"),
-          revealSpanI = $("<i>")
-            .attr("class", "material-icons right")
-            .text("close"),
-          recipeNameH = $("<h6>")
-            .attr({ id: "recipeName" })
-            .text(response.results[0].title),
-          hr = $("<hr>"),
-          ul = $("<ul>"),
-          prepTime = $("<li>")
-            .attr({ id: "prepTimeReveal", style: "font-weight: bold" })
-            .text("Total time: "),
-          prepTimeSpan = $("<span>")
-            .attr({ style: "font-weight: lighter" })
-            .text(response.results[0].readyInMinutes + " minutes"),
-          br1 = $("<br>"),
-          ingredients = $("<ul>")
-            .attr({
-              id: "ingredientReveal" + apiRecall.replace(/ /g, ""),
-              style: "font-weight: bold",
-            })
-            .text("Ingredients: "),
-          br2 = $("<br>"),
-          description = $("<li>")
-            .attr({ id: "blurbReveal", style: "font-weight: bold" })
-            .text("Description: "),
-          descriptionSpan = $(
-            "<span>" + response.results[0].summary + "</span>"
-          ).attr({ style: "font-weight: lighter" });
+  function appendFoodtoSaved(localObj) {
+    // $.ajax({
+    //   type: "GET",
+    //   url:
+    //     "https://api.spoonacular.com/recipes/complexSearch?query&titleMatch=" +
+    //     apiRecall +
+    //     "&recipes&instructionsRequired=true&addRecipeInformation=true&apiKey=" +
+    //     foodapi,
+    //   success: function (response) {
+    let food = localObj[0];
 
-        // Append all the elements together for presentation
-        cardImageDiv.append(cardImage);
-        deleteBtn.append(btnI);
-        cardContent.append(contentSpan, deleteBtn);
-        prepTime.append(prepTimeSpan);
-        description.append(descriptionSpan);
-        ul.append(prepTime, br1, ingredients, br2, description);
-        revealSpan.append(revealSpanI);
-        cardReveal.append(revealSpan, recipeNameH, contentJlink, hr, ul);
-        card.append(cardImageDiv, cardContent, cardReveal);
-        col.append(card);
-        $("#saved-for-later").append(col);
+    var col = $("<div>").attr({
+        class: "col s12 m6 l4",
+        // id: response.results[0].id,
+        id: food.id,
+      }),
+      card = $("<div>").attr("class", "card"),
+      cardImageDiv = $("<div>").attr(
+        "class",
+        "card-image waves-effect waves-block waves-light"
+      ),
+      cardImage = $("<img>").attr({
+        class: "activator responsive-img",
+        // src: response.results[0].image,
+        src: food.image,
+        // alt: "image of " + response.results[0].title,
+        alt: "image of " + food.title,
+      }),
+      cardContent = $("<div>").attr("class", "card-content"),
+      contentSpan = $("<span>")
+        .attr({
+          class: "activator grey-text text-darken-4 truncate",
+          style: "font-size: 16pt",
+        })
+        // .text(response.results[0].title),
+        .text(food.title),
+      deleteBtn = $("<button>").attr({
+        id: "deleteBtn",
+        // "data-id": response.results[0].title,
+        "data-id": food.id,
+        // "data-name": response.results[0].id,
+        "data-name": food.title,
+        name: "food",
+        class:
+          "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light red",
+      }),
+      btnI = $("<i>").attr({ class: "material-icons" }).text("delete"),
+      contentJlink = $("<a>")
+        .attr({
+          id: "jumplink",
+          // href: response.results[0].sourceUrl,
+          href: food.sourceUrl,
+          target: "blank",
+        })
+        .text("See full recipe"),
+      cardReveal = $("<div>").attr("class", "card-reveal"),
+      revealSpan = $("<span>")
+        .attr("class", "card-title grey-text text-darken-4")
+        .text("Quick Look"),
+      revealSpanI = $("<i>")
+        .attr("class", "material-icons right")
+        .text("close"),
+      recipeNameH = $("<h6>")
+        .attr({ id: "recipeName" })
+        // .text(response.results[0].title),
+        .text(food.title),
+      hr = $("<hr>"),
+      ul = $("<ul>"),
+      prepTime = $("<li>")
+        .attr({ id: "prepTimeReveal", style: "font-weight: bold" })
+        .text("Total time: "),
+      prepTimeSpan = $("<span>")
+        .attr({ style: "font-weight: lighter" })
+        // .text(response.results[0].readyInMinutes + " minutes"),
+        .text(food.readyInMinutes + " minutes"),
+      br1 = $("<br>"),
+      ingredients = $("<ul>")
+        .attr({
+          // id: "ingredientReveal" + apiRecall.replace(/ /g, ""),
+          id: "ingredientReveal" + food.id,
+          style: "font-weight: bold",
+        })
+        .text("Ingredients: "),
+      br2 = $("<br>"),
+      description = $("<li>")
+        .attr({ id: "blurbReveal", style: "font-weight: bold" })
+        .text("Description: "),
+      descriptionSpan = $(
+        // "<span>" + response.results[0].summary + "</span>"
+        "<span>" + food.summary + "</span>"
+      ).attr({ style: "font-weight: lighter" });
 
-        // now finding, sorting, formatting, and listing all the ingredients for each item
-        var ingredientsList = findAllByKey(response.results[0], "ingredients");
-        // filter out any duplicate ingredients 
-        ingNoDupes = [...new Set(findAllByKey(ingredientsList, "name"))];
-        // formatting the list of ingredients.
-        $.each(ingNoDupes, (i, value) => {
-          i += 1;
-          var ingredientToList = $("<span>").attr({
-            style: "font-weight: lighter",
-          });
-          i !== ingNoDupes.length
-            ? ingredientToList.text(value + ", ")
-            : ingredientToList.text(value + ".");
-          $("#ingredientReveal" + apiRecall.replace(/ /g, "")).append(
-            ingredientToList
-          );
-        });
-      },
+    // Append all the elements together for presentation
+    cardImageDiv.append(cardImage);
+    deleteBtn.append(btnI);
+    cardContent.append(contentSpan, deleteBtn);
+    prepTime.append(prepTimeSpan);
+    description.append(descriptionSpan);
+    ul.append(prepTime, br1, ingredients, br2, description);
+    revealSpan.append(revealSpanI);
+    cardReveal.append(revealSpan, recipeNameH, contentJlink, hr, ul);
+    card.append(cardImageDiv, cardContent, cardReveal);
+    col.append(card);
+    $("#saved-for-later").append(col);
+
+    // now finding, sorting, formatting, and listing all the ingredients for each item
+    // var ingredientsList = findAllByKey(response.results[0], "ingredients");
+    var ingredientsList = findAllByKey(food, "ingredients");
+
+    // filter out any duplicate ingredients
+    ingNoDupes = [...new Set(findAllByKey(ingredientsList, "name"))];
+    // formatting the list of ingredients.
+    $.each(ingNoDupes, (i, value) => {
+      i += 1;
+      var ingredientToList = $("<span>").attr({
+        style: "font-weight: lighter",
+      });
+      i !== ingNoDupes.length
+        ? ingredientToList.text(value + ", ")
+        : ingredientToList.text(value + ".");
+      // $("#ingredientReveal" + apiRecall.replace(/ /g, "")).append(
+      $("#ingredientReveal" + food.id).append(ingredientToList);
     });
   }
 
   // INIT AND POPULATE SAVED MAY BE ABLE TO M
-  function init() {
+  init = () => {
+    currentResults = [];
+    localStorage.setItem("currentResults", JSON.stringify(currentResults));
+
     // Init checks local storage (assigned to the var 'history') and then sends any past saved items to the corresponding api call for the saved for later section)
     $.each(history, function (i, value) {
-      switch (value.type) {
-        case "food":
-          appendFoodtoSaved(value.APIcall);
-          break;
-        case "drink":
-          appendDrinktoSaved(value.APIcall);
-          break;
-      }
-    });
-  }
+      value[0].hasOwnProperty("idDrink")
+        ? appendDrinktoSaved(value)
+        : appendFoodtoSaved(value);
 
-  function populateSaved(searchVal) {
-    return history.forEach(function (el) {
-      if (el.type === "food" && el.APIcall === searchVal) {
-        appendFoodtoSaved(searchVal);
-      } else if (el.type === "drink" && el.APIcall === searchVal) {
-        appendDrinktoSaved(searchVal);
-      }
+      // switch (value.type) {
+      //   case "food":
+      //     appendFoodtoSaved(value.APIcall);
+      //     break;
+      //   case "drink":
+      //     appendDrinktoSaved(value.APIcall);
+      //     break;
+      // }
     });
-  }
+  };
+
+  // function populateSaved(searchVal) {
+  populateSaved = (localObj) => {
+    localObj[0].hasOwnProperty("idDrink")
+      ? appendDrinktoSaved(localObj)
+      : localObj[0].hasOwnProperty("title")
+      ? appendFoodtoSaved(localObj)
+      : M.toast({ html: "error" });
+  };
+  // return history.forEach(function (el) {
+  //   if (el.type === "food" && el.APIcall === searchVal) {
+  //     appendFoodtoSaved(searchVal);
+  //   } else if (el.type === "drink" && el.APIcall === searchVal) {
+  //     appendDrinktoSaved(searchVal);
+  //   }
+  // });
+  // }
 
   // function that saves things for later
-  function saveForLater(apiRecall, cardID, type) {
-    function checkValue(arr, objValue) {
-      return arr.some(function (el) {
-        return el.cardID === objValue;
-      });
+  // saveForLater = (apiRecall, cardID, type, objID) => {
+  saveForLater = (objID, type) => {
+    var objToSave;
+    switch (type) {
+      case "drink":
+        objToSave = currentResults.filter((obj) => {
+          if (obj.idDrink == objID) {
+            return true;
+          }
+        });
+        objToSave[0]["type"] = "drink";
+        objToSave[0]["id"] = objID;
+        break;
+      case "food":
+        objToSave = currentResults.filter((obj) => {
+          if (obj.id == objID) {
+            return true;
+          }
+        });
+        objToSave[0]["type"] = "food";
     }
-    if (!checkValue(history, cardID)) {
-      M.toast({ html: "Saved!", classes: "rounded toast" });
-      var obj = {
-        APIcall: apiRecall,
-        cardID: cardID,
-        type: type,
-      };
-      history.push(obj);
-      localStorage.setItem("Saved", JSON.stringify(history));
-      populateSaved(apiRecall);
-    }
-  }
+    checkValue = () => {
+      switch (type) {
+        case "drink":
+          return history.some(function (el) {
+            return el[0].idDrink === objID;
+          });
+        case "food":
+          return history.some((el) => {
+            return el[0].id === objID;
+          });
+      }
+    };
+    !checkValue()
+      ? (M.toast({ html: "Saved!", classes: "rounded toast" }),
+        history.push(objToSave),
+        localStorage.setItem("Saved", JSON.stringify(history)),
+        populateSaved(objToSave))
+      : M.toast({
+          html: "You can't save something twice!",
+          classes: "rounded toast",
+        });
 
-  function deleteFromHistory(deleteID) {
-    history = history.filter(function (obj) {
-      return obj.cardID !== deleteID;
+    // function checkValue(arr, objValue) {
+    //   return arr.some(function (el) {
+    //     return el.cardID === objValue;
+    //   });
+    // }
+    // if (!checkValue(history, cardID)) {
+    //   M.toast({ html: "Saved!", classes: "rounded toast" });
+    //   var obj = {
+    //     APIcall: apiRecall,
+    //     cardID: cardID,
+    //     type: type,
+    //   };
+    //   history.push(obj);
+    //   localStorage.setItem("Saved", JSON.stringify(history));
+    //   populateSaved(apiRecall);
+    // }
+  };
+
+  function deleteCard(deleteID) {
+    // history = history.filter(function (obj) {
+    // return obj.cardID !== deleteID;
+
+    history = history.filter((obj) => {
+      return obj[0].id != deleteID;
     });
+
+    // return obj.cardId !== deleteID;
+    // });
     localStorage.setItem("Saved", JSON.stringify(history));
     // Might be able to assign delete ID to the cards themselves and the use .remove()
     $("#" + deleteID).remove();
@@ -605,9 +703,18 @@ $(document).ready(function () {
 
   // for filtering the ingredients and measurements for the drinks
   function filterDrinkIngredients(poss, act, res, z) {
-    for (let i = 0; i < poss.length; i++) {
-      if (res.drinks[z][poss[i]] !== null) {
-        act.push(res.drinks[z][poss[i]]);
+    if (res.hasOwnProperty("drinks")) {
+      for (let i = 0; i < poss.length; i++) {
+        if (res.drinks[z][poss[i]] !== null) {
+          act.push(res.drinks[z][poss[i]]);
+        }
+      }
+    } else {
+      // THIS IF ELSE WAS NOT HERE BEFORE
+      for (let i = 0; i < poss.length; i++) {
+        if (res[poss[i]] !== null) {
+          act.push(res[poss[i]]);
+        }
       }
     }
   }
@@ -622,14 +729,18 @@ $(document).ready(function () {
     event.preventDefault();
     var apiRecall = $(this).attr("data-id"),
       cardID = $(this).attr("data-name").replace(/ /g, ""),
-      type = $(this).attr("name");
-    saveForLater(apiRecall, cardID, type);
+      type = $(this).attr("name"),
+      objID = $(this).attr("data-id");
+    // saveForLater(apiRecall, cardID, type, objID);
+    saveForLater(objID, type);
   });
 
   $("#saved-for-later").on("click", "button", function (event) {
     event.preventDefault();
-    var deleteID = $(this).attr("data-name").replace(/ /g, "");
-    deleteFromHistory(deleteID);
+    // var deleteID = $(this).attr("data-name").replace(/ /g, "");
+    var deleteID = $(this).attr("data-id"),
+      type = $(this).attr("name");
+    deleteCard(deleteID, type);
   });
 
   $("#results").on("click", "a", function () {
