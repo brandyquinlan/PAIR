@@ -65,9 +65,15 @@ textarea:focus {
 }
 
 
+.toast {
+    background-color: gray;
+}
+
+
 /* @media only screen and (max-width:500px) {
     #search-img {
         width: 200%;
         height: 200%;
     }
 } */
+
