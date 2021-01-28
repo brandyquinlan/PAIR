@@ -9,7 +9,7 @@ $(document).ready(function () {
   $(".fixed-action-btn").floatingActionButton();
 
   var history = JSON.parse(localStorage.getItem("Saved")) || [];
-  var foodapi = "39b1896909144a7ba69854d6540cfbaf";
+  var foodapi = "c83823571c724b7d87b5779bec163f14";
 
   // function for creating the html for the results obtained from the search for FOOD
   function getCuisines(event) {
@@ -117,21 +117,18 @@ $(document).ready(function () {
             response.results[i],
             "ingredients"
           );
-          // need to filter for ingredients first, and then use 'name'
-          // was getting an issue where other things in the main object with the key 'name' came up.
-          var ingredients = findAllByKey(ingredientsList, "name");
-          let ingNoDupes = [...new Set(ingredients)];
+          // filter our any duplicate ingredients
+          let ingNoDupes = [...new Set(findAllByKey(ingredientsList, "name"))];
           // formatting the list of ingredients.
           $.each(ingNoDupes, (index, value) => {
-            index = index + 1;
+            index += 1;
             var ingredientToList = $("<span>").attr({
               style: "font-weight: lighter",
             });
-            if (index !== ingNoDupes.length) {
-              ingredientToList.text(value + ", ");
-            } else if (index === ingNoDupes.length) {
-              ingredientToList.text(value + ".");
-            }
+            index !== ingNoDupes.length
+              ? ingredientToList.text(value + ", ")
+              : ingredientToList.text(value + ".");
+
             $("#ingredientReveal" + i).append(ingredientToList);
           });
         }
@@ -143,7 +140,7 @@ $(document).ready(function () {
           .text("Clear Results");
         $("#populate-results").append(clearResultsBtn);
       },
-      failure: function (error) {
+      error: function (error) {
         console.log(error);
       },
     });
@@ -287,7 +284,7 @@ $(document).ready(function () {
           .text("Clear Results");
         $("#populate-results").append(clearResultsBtn);
       },
-      failure: function (error) {
+      error: function (error) {
         console.log(error);
       },
     });
@@ -511,21 +508,17 @@ $(document).ready(function () {
 
         // now finding, sorting, formatting, and listing all the ingredients for each item
         var ingredientsList = findAllByKey(response.results[0], "ingredients");
-        // need to filter for ingredients first, and then use 'name'
-        // was getting an issue where other things in the main object with the key 'name' came up.
-        var ingredients = findAllByKey(ingredientsList, "name"),
-          ingNoDupes = [...new Set(ingredients)];
+        // filter out any duplicate ingredients 
+        ingNoDupes = [...new Set(findAllByKey(ingredientsList, "name"))];
         // formatting the list of ingredients.
         $.each(ingNoDupes, (i, value) => {
-          i = i + 1;
+          i += 1;
           var ingredientToList = $("<span>").attr({
             style: "font-weight: lighter",
           });
-          if (i !== ingNoDupes.length) {
-            ingredientToList.text(value + ", ");
-          } else if (i === ingNoDupes.length) {
-            ingredientToList.text(value + ".");
-          }
+          i !== ingNoDupes.length
+            ? ingredientToList.text(value + ", ")
+            : ingredientToList.text(value + ".");
           $("#ingredientReveal" + apiRecall.replace(/ /g, "")).append(
             ingredientToList
           );
