@@ -27,7 +27,8 @@ $(document).ready(function () {
       type: "GET",
       success: function (response) {
         // if there are no results for the searched value, alert and leave the function
-        if (response.results.length < 1) {
+        switch(response.results.length) {
+          case 0:
           M.toast({ html: "Sorry, no results.." });
           return;
         }
@@ -147,7 +148,8 @@ $(document).ready(function () {
         "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + searchVal,
       type: "GET",
       success: function (response) {
-        if (response.drinks === null) {
+        switch(response.drinks) {
+          case null:
           M.toast({ html: "Sorry, no results.." });
           return;
         }
