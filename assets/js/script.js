@@ -259,32 +259,24 @@ $(document).ready(function () {
           $("#populate-results").append(col);
 
           // formatting and listing the ingredients for each drink
-          for (let n = 0; n < actualMeasurements.length; n++) {
+          $.each(actualMeasurements, (index, value) => {
             // have to check that null measurements do not show up
-            if (actualMeasurements[n] == null) {
-              var ingredientToList = $("<li>")
-                .attr({ style: "font-weight: lighter" })
-                .text(actualIngredients[n]);
-              $("#ingredientReveal" + i).append(ingredientToList);
-            } else {
-              var ingredientToList = $("<li>")
-                .attr({ style: "font-weight: lighter" })
-                .text(actualMeasurements[n] + " " + actualIngredients[n]);
-              $("#ingredientReveal" + i).append(ingredientToList);
-            }
-          }
+            var ingredientToList = $("<li>").attr({
+              style: "font-weight: lighter",
+            });
+            value === null
+              ? ingredientToList.text(value)
+              : ingredientToList.text(value + " " + actualIngredients[index]);
+            $("#ingredientReveal" + i).append(ingredientToList);
+          });
           // Accounting for any ingredients that do not have a measurement
           if (actualIngredients.length > actualMeasurements.length) {
-            for (
-              let v = actualMeasurements.length;
-              v < actualIngredients.length;
-              v++
-            ) {
+            $.each(actualIngredients, (index, value) => {
               var otherIngredient = $("<li>")
                 .attr({ style: "font-weight: lighter" })
-                .text(actualIngredients[v]);
+                .text(value);
               $("#ingredientReveal" + i).append(otherIngredient);
-            }
+            });
           }
         }
         var clearResultsBtn = $("<a>")
@@ -406,13 +398,11 @@ $(document).ready(function () {
           var ingredientToList = $("<li>").attr({
             style: "font-weight: lighter",
           });
-
           value === null
             ? ingredientToList.text(value)
             : ingredientToList.text(value + " " + actualIngredients[index]);
           $("#ingredientReveal" + apiRecall).append(ingredientToList);
         });
-
         // Accounting for any ingredients that do not have a measurement
         if (actualIngredients.length > actualMeasurements.length) {
           $.each(actualIngredients, (index, value) => {
