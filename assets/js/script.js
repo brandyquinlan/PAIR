@@ -27,10 +27,10 @@ $(document).ready(function () {
       type: "GET",
       success: function (response) {
         // if there are no results for the searched value, alert and leave the function
-        switch(response.results.length) {
+        switch (response.results.length) {
           case 0:
-          M.toast({ html: "Sorry, no results.." });
-          return;
+            M.toast({ html: "Sorry, no results.." });
+            return;
         }
 
         for (var i = 0; i < response.results.length; i++) {
@@ -90,7 +90,7 @@ $(document).ready(function () {
             br1 = $("<br>"),
             ingredients = $("<ul>")
               .attr({ id: "ingredientReveal" + i, style: "font-weight: bold" })
-              .text("Ingredients:"),
+              .text("Ingredients: "),
             br2 = $("<br>"),
             description = $("<li>")
               .attr({ id: "blurbReveal", style: "font-weight: bold" })
@@ -122,12 +122,20 @@ $(document).ready(function () {
           var ingredients = findAllByKey(ingredientsList, "name");
           let ingNoDupes = [...new Set(ingredients)];
           // formatting the list of ingredients.
-          for (let j = 0; j < ingNoDupes.length; j++) {
-            var ingredientToList = $("<span>")
-              .attr({ style: "font-weight: lighter" })
-              .text(ingNoDupes[j]);
-            $("#ingredientReveal" + i).append(ingredientToList);
-          }
+           $.each(ingNoDupes, (index, value) => {
+             index = index + 1;
+             var ingredientToList = $("<span>").attr({
+               style: "font-weight: lighter",
+             });
+             if (index !== ingNoDupes.length) {
+               ingredientToList.text(value + ", ");
+             } else if (index === ingNoDupes.length) {
+               ingredientToList.text(value + ".");
+             }
+             $("#ingredientReveal" + i).append(
+               ingredientToList
+             );
+           });
         }
       },
       failure: function (error) {
@@ -148,23 +156,39 @@ $(document).ready(function () {
         "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + searchVal,
       type: "GET",
       success: function (response) {
-        switch(response.drinks) {
+        switch (response.drinks) {
           case null:
-          M.toast({ html: "Sorry, no results.." });
-          return;
+            M.toast({ html: "Sorry, no results.." });
+            return;
         }
 
         for (let i = 0; i < response.drinks.length; i++) {
           // getting ingredients
           // example:
-          let possibleIngredients = filterKeys(response.drinks[i], /strIngredient/);
+          let possibleIngredients = filterKeys(
+            response.drinks[i],
+            /strIngredient/
+          );
           var actualIngredients = [];
-          filterDrinkIngredients(possibleIngredients, actualIngredients, response, i);
+          filterDrinkIngredients(
+            possibleIngredients,
+            actualIngredients,
+            response,
+            i
+          );
 
           //getting measurements
-          let possibleMeasurements = filterKeys(response.drinks[i], /strMeasure/);
+          let possibleMeasurements = filterKeys(
+            response.drinks[i],
+            /strMeasure/
+          );
           var actualMeasurements = [];
-          filterDrinkIngredients(possibleMeasurements, actualMeasurements, response, i);
+          filterDrinkIngredients(
+            possibleMeasurements,
+            actualMeasurements,
+            response,
+            i
+          );
 
           // Begin creating all the elements with the necessary information
           var col = $("<div>").attr("class", "col s12 m6 l4"),
@@ -272,22 +296,34 @@ $(document).ready(function () {
         "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + apiRecall,
       type: "GET",
       success: function (response) {
-
         // getting ingredients
-        let possibleIngredients = filterKeys(response.drinks[0], /strIngredient/);
+        let possibleIngredients = filterKeys(
+          response.drinks[0],
+          /strIngredient/
+        );
         var actualIngredients = [];
-        filterDrinkIngredients(possibleIngredients, actualIngredients, response, 0);
+        filterDrinkIngredients(
+          possibleIngredients,
+          actualIngredients,
+          response,
+          0
+        );
 
         //getting measurements
         let possibleMeasurements = filterKeys(response.drinks[0], /strMeasure/);
         var actualMeasurements = [];
-        filterDrinkIngredients(possibleMeasurements, actualMeasurements, response, 0);
+        filterDrinkIngredients(
+          possibleMeasurements,
+          actualMeasurements,
+          response,
+          0
+        );
 
         // Begin creating all the elements with the necessary information
         var col = $("<div>").attr({
-          class: "col s12 m6 l4",
-          id: response.drinks[0].strDrink.replace(/ /g, ""),
-        }),
+            class: "col s12 m6 l4",
+            id: response.drinks[0].strDrink.replace(/ /g, ""),
+          }),
           card = $("<div>").attr({ class: "card" }),
           cardImageDiv = $("<div>").attr({
             class: "card-image waves-effect waves-block waves-light",
@@ -395,9 +431,9 @@ $(document).ready(function () {
         foodapi,
       success: function (response) {
         var col = $("<div>").attr({
-          class: "col s12 m6 l4",
-          id: response.results[0].id,
-        }),
+            class: "col s12 m6 l4",
+            id: response.results[0].id,
+          }),
           card = $("<div>").attr("class", "card"),
           cardImageDiv = $("<div>").attr(
             "class",
@@ -484,14 +520,21 @@ $(document).ready(function () {
         var ingredients = findAllByKey(ingredientsList, "name"),
           ingNoDupes = [...new Set(ingredients)];
         // formatting the list of ingredients.
-        for (let j = 0; j < ingNoDupes.length; j++) {
-          var ingredientToList = $("<span>")
-            .attr({ style: "font-weight: lighter" })
-            .text(ingNoDupes[j]);
+        $.each(ingNoDupes, (i, value) => {
+          i = i + 1;
+          console.log(i);
+          var ingredientToList = $("<span>").attr({
+            style: "font-weight: lighter",
+          });
+          if (i !== ingNoDupes.length) {
+            ingredientToList.text(value + ", ");
+          } else if (i === ingNoDupes.length) {
+            ingredientToList.text(value + ".");
+          }
           $("#ingredientReveal" + apiRecall.replace(/ /g, "")).append(
             ingredientToList
           );
-        }
+        });
       },
     });
   }
@@ -499,7 +542,7 @@ $(document).ready(function () {
   // INIT AND POPULATE SAVED MAY BE ABLE TO M
   function init() {
     // Init checks local storage (assigned to the var 'history') and then sends any past saved items to the corresponding api call for the saved for later section)
-    $.each(history, function (i, value) { 
+    $.each(history, function (i, value) {
       switch (value.type) {
         case "food":
           appendFoodtoSaved(value.APIcall);
@@ -507,7 +550,7 @@ $(document).ready(function () {
         case "drink":
           appendDrinktoSaved(value.APIcall);
           break;
-      };
+      }
     });
   }
 
@@ -558,8 +601,8 @@ $(document).ready(function () {
         key === keyToFind
           ? acc.concat(value)
           : typeof value === "object"
-            ? acc.concat(findAllByKey(value, keyToFind))
-            : acc,
+          ? acc.concat(findAllByKey(value, keyToFind))
+          : acc,
       []
     );
   }
@@ -576,7 +619,7 @@ $(document).ready(function () {
   function filterDrinkIngredients(poss, act, res, z) {
     for (let i = 0; i < poss.length; i++) {
       if (res.drinks[z][poss[i]] !== null) {
-        act.push(res.drinks[z][poss[i]])
+        act.push(res.drinks[z][poss[i]]);
       }
     }
   }
