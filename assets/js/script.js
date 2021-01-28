@@ -29,7 +29,7 @@ $(document).ready(function () {
         // if there are no results for the searched value, alert and leave the function
         switch (response.results.length) {
           case 0:
-            M.toast({ html: "Sorry, no results..", "classes": "rounded toast" });
+            M.toast({ html: "Sorry, no results..", classes: "rounded toast" });
             return;
         }
 
@@ -135,7 +135,7 @@ $(document).ready(function () {
             $("#ingredientReveal" + i).append(ingredientToList);
           });
         }
-        var clearResultsBtn = $("<button>")
+        var clearResultsBtn = $("<a>")
           .attr({
             class: "btn waves-effect red darken-4 right",
             id: "clear-results",
@@ -163,7 +163,7 @@ $(document).ready(function () {
       success: function (response) {
         switch (response.drinks) {
           case null:
-            M.toast({ html: "Sorry, no results..", "classes": "rounded toast" });
+            M.toast({ html: "Sorry, no results..", classes: "rounded toast" });
             return;
         }
 
@@ -287,7 +287,7 @@ $(document).ready(function () {
             }
           }
         }
-        var clearResultsBtn = $("<button>")
+        var clearResultsBtn = $("<a>")
           .attr({
             class: "btn waves-effect red darken-4 right",
             id: "clear-results",
@@ -401,32 +401,26 @@ $(document).ready(function () {
         $("#saved-for-later").append(col);
 
         // formatting and listing the ingredients for each drink
-        for (let n = 0; n < actualMeasurements.length; n++) {
+        $.each(actualMeasurements, (index, value) => {
           // have to check that null measurements do not show up
-          if (actualMeasurements[n] == null) {
-            var ingredientToList = $("<li>")
-              .attr({ style: "font-weight: lighter" })
-              .text(actualIngredients[n]);
-            $("#ingredientReveal" + apiRecall).append(ingredientToList);
-          } else {
-            var ingredientToList = $("<li>")
-              .attr({ style: "font-weight: lighter" })
-              .text(actualMeasurements[n] + " " + actualIngredients[n]);
-            $("#ingredientReveal" + apiRecall).append(ingredientToList);
-          }
-        }
+          var ingredientToList = $("<li>").attr({
+            style: "font-weight: lighter",
+          });
+
+          value === null
+            ? ingredientToList.text(value)
+            : ingredientToList.text(value + " " + actualIngredients[index]);
+          $("#ingredientReveal" + apiRecall).append(ingredientToList);
+        });
+
         // Accounting for any ingredients that do not have a measurement
         if (actualIngredients.length > actualMeasurements.length) {
-          for (
-            let v = actualMeasurements.length;
-            v < actualIngredients.length;
-            v++
-          ) {
+          $.each(actualIngredients, (index, value) => {
             var otherIngredient = $("<li>")
               .attr({ style: "font-weight: lighter" })
-              .text(actualIngredients[v]);
+              .text(value);
             $("#ingredientReveal" + apiRecall).append(otherIngredient);
-          }
+          });
         }
       },
     });
@@ -583,7 +577,7 @@ $(document).ready(function () {
       });
     }
     if (!checkValue(history, cardID)) {
-      M.toast({ html: "Saved!", "classes": "rounded toast" });
+      M.toast({ html: "Saved!", classes: "rounded toast" });
       var obj = {
         APIcall: apiRecall,
         cardID: cardID,
@@ -602,7 +596,7 @@ $(document).ready(function () {
     localStorage.setItem("Saved", JSON.stringify(history));
     // Might be able to assign delete ID to the cards themselves and the use .remove()
     $("#" + deleteID).remove();
-    M.toast({ html: "Deleted.", "classes": "rounded toast" });
+    M.toast({ html: "Deleted.", classes: "rounded toast" });
   }
 
   // handy functions for sorting through objects
@@ -641,7 +635,7 @@ $(document).ready(function () {
   $("#search-cuisines").on("click", getCuisines);
   $("#search-drinks").on("click", getDrinks);
 
-  $("#results").on("click", "#savedForLaterBtn", function (event) {
+  $("#results").on("click", "button", function (event) {
     event.preventDefault();
     var apiRecall = $(this).attr("data-id"),
       cardID = $(this).attr("data-name").replace(/ /g, ""),
@@ -655,8 +649,8 @@ $(document).ready(function () {
     deleteFromHistory(deleteID);
   });
 
-  $("#results").on("click", "#clear-results", function () {
+  $("#results").on("click", "a", function () {
     $("#populate-results").empty();
-    M.toast({ html: "Cleared!", "classes": "rounded toast" });
+    M.toast({ html: "Cleared!", classes: "rounded toast" });
   });
 });
