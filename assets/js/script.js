@@ -522,7 +522,6 @@ $(document).ready(function () {
         // formatting the list of ingredients.
         $.each(ingNoDupes, (i, value) => {
           i = i + 1;
-          console.log(i);
           var ingredientToList = $("<span>").attr({
             style: "font-weight: lighter",
           });
