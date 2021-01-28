@@ -8,14 +8,9 @@ $(document).ready(function () {
 
   $(".fixed-action-btn").floatingActionButton();
 
-<<<<<<< HEAD
   var history = JSON.parse(localStorage.getItem("Saved")) || [],
     currentResults = JSON.parse(localStorage.getItem("currentResults")) || [],
     foodapi = "2363a262f60e4280bebafc985ee630d9";
-=======
-  var history = JSON.parse(localStorage.getItem("Saved")) || [];
-  var foodapi = "b6ca4825fa75485c96dd5f81979fac6b";
->>>>>>> 8e8bcfb22f7c0efd2a547f391cb91856a8002168
 
   // function for creating the html for the results obtained from the search for FOOD
   function getCuisines(event) {
