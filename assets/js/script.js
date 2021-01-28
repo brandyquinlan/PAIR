@@ -90,7 +90,7 @@ $(document).ready(function () {
             br1 = $("<br>"),
             ingredients = $("<ul>")
               .attr({ id: "ingredientReveal" + i, style: "font-weight: bold" })
-              .text("Ingredients:"),
+              .text("Ingredients: "),
             br2 = $("<br>"),
             description = $("<li>")
               .attr({ id: "blurbReveal", style: "font-weight: bold" })
@@ -122,12 +122,20 @@ $(document).ready(function () {
           var ingredients = findAllByKey(ingredientsList, "name");
           let ingNoDupes = [...new Set(ingredients)];
           // formatting the list of ingredients.
-          for (let j = 0; j < ingNoDupes.length; j++) {
-            var ingredientToList = $("<span>")
-              .attr({ style: "font-weight: lighter" })
-              .text(ingNoDupes[j]);
-            $("#ingredientReveal" + i).append(ingredientToList);
-          }
+           $.each(ingNoDupes, (index, value) => {
+             index = index + 1;
+             var ingredientToList = $("<span>").attr({
+               style: "font-weight: lighter",
+             });
+             if (index !== ingNoDupes.length) {
+               ingredientToList.text(value + ", ");
+             } else if (index === ingNoDupes.length) {
+               ingredientToList.text(value + ".");
+             }
+             $("#ingredientReveal" + i).append(
+               ingredientToList
+             );
+           });
         }
       },
       failure: function (error) {
@@ -512,14 +520,21 @@ $(document).ready(function () {
         var ingredients = findAllByKey(ingredientsList, "name"),
           ingNoDupes = [...new Set(ingredients)];
         // formatting the list of ingredients.
-        for (let j = 0; j < ingNoDupes.length; j++) {
-          var ingredientToList = $("<span>")
-            .attr({ style: "font-weight: lighter" })
-            .text(ingNoDupes[j]);
+        $.each(ingNoDupes, (i, value) => {
+          i = i + 1;
+          console.log(i);
+          var ingredientToList = $("<span>").attr({
+            style: "font-weight: lighter",
+          });
+          if (i !== ingNoDupes.length) {
+            ingredientToList.text(value + ", ");
+          } else if (i === ingNoDupes.length) {
+            ingredientToList.text(value + ".");
+          }
           $("#ingredientReveal" + apiRecall.replace(/ /g, "")).append(
             ingredientToList
           );
-        }
+        });
       },
     });
   }
