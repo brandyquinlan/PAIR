@@ -27,10 +27,10 @@ $(document).ready(function () {
       type: "GET",
       success: function (response) {
         // if there are no results for the searched value, alert and leave the function
-        switch(response.results.length) {
+        switch (response.results.length) {
           case 0:
-          M.toast({ html: "Sorry, no results.." });
-          return;
+            M.toast({ html: "Sorry, no results.." });
+            return;
         }
 
         for (var i = 0; i < response.results.length; i++) {
@@ -148,10 +148,10 @@ $(document).ready(function () {
         "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + searchVal,
       type: "GET",
       success: function (response) {
-        switch(response.drinks) {
+        switch (response.drinks) {
           case null:
-          M.toast({ html: "Sorry, no results.." });
-          return;
+            M.toast({ html: "Sorry, no results.." });
+            return;
         }
 
         for (let i = 0; i < response.drinks.length; i++) {
@@ -499,7 +499,7 @@ $(document).ready(function () {
   // INIT AND POPULATE SAVED MAY BE ABLE TO M
   function init() {
     // Init checks local storage (assigned to the var 'history') and then sends any past saved items to the corresponding api call for the saved for later section)
-    $.each(history, function (i, value) { 
+    $.each(history, function (i, value) {
       switch (value.type) {
         case "food":
           appendFoodtoSaved(value.APIcall);
