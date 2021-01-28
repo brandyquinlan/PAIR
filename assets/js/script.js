@@ -157,14 +157,30 @@ $(document).ready(function () {
         for (let i = 0; i < response.drinks.length; i++) {
           // getting ingredients
           // example:
-          let possibleIngredients = filterKeys(response.drinks[i], /strIngredient/);
+          let possibleIngredients = filterKeys(
+            response.drinks[i],
+            /strIngredient/
+          );
           var actualIngredients = [];
-          filterDrinkIngredients(possibleIngredients, actualIngredients, response, i);
+          filterDrinkIngredients(
+            possibleIngredients,
+            actualIngredients,
+            response,
+            i
+          );
 
           //getting measurements
-          let possibleMeasurements = filterKeys(response.drinks[i], /strMeasure/);
+          let possibleMeasurements = filterKeys(
+            response.drinks[i],
+            /strMeasure/
+          );
           var actualMeasurements = [];
-          filterDrinkIngredients(possibleMeasurements, actualMeasurements, response, i);
+          filterDrinkIngredients(
+            possibleMeasurements,
+            actualMeasurements,
+            response,
+            i
+          );
 
           // Begin creating all the elements with the necessary information
           var col = $("<div>").attr("class", "col s12 m6 l4"),
@@ -272,22 +288,34 @@ $(document).ready(function () {
         "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + apiRecall,
       type: "GET",
       success: function (response) {
-
         // getting ingredients
-        let possibleIngredients = filterKeys(response.drinks[0], /strIngredient/);
+        let possibleIngredients = filterKeys(
+          response.drinks[0],
+          /strIngredient/
+        );
         var actualIngredients = [];
-        filterDrinkIngredients(possibleIngredients, actualIngredients, response, 0);
+        filterDrinkIngredients(
+          possibleIngredients,
+          actualIngredients,
+          response,
+          0
+        );
 
         //getting measurements
         let possibleMeasurements = filterKeys(response.drinks[0], /strMeasure/);
         var actualMeasurements = [];
-        filterDrinkIngredients(possibleMeasurements, actualMeasurements, response, 0);
+        filterDrinkIngredients(
+          possibleMeasurements,
+          actualMeasurements,
+          response,
+          0
+        );
 
         // Begin creating all the elements with the necessary information
         var col = $("<div>").attr({
-          class: "col s12 m6 l4",
-          id: response.drinks[0].strDrink.replace(/ /g, ""),
-        }),
+            class: "col s12 m6 l4",
+            id: response.drinks[0].strDrink.replace(/ /g, ""),
+          }),
           card = $("<div>").attr({ class: "card" }),
           cardImageDiv = $("<div>").attr({
             class: "card-image waves-effect waves-block waves-light",
@@ -395,9 +423,9 @@ $(document).ready(function () {
         foodapi,
       success: function (response) {
         var col = $("<div>").attr({
-          class: "col s12 m6 l4",
-          id: response.results[0].id,
-        }),
+            class: "col s12 m6 l4",
+            id: response.results[0].id,
+          }),
           card = $("<div>").attr("class", "card"),
           cardImageDiv = $("<div>").attr(
             "class",
@@ -507,7 +535,7 @@ $(document).ready(function () {
         case "drink":
           appendDrinktoSaved(value.APIcall);
           break;
-      };
+      }
     });
   }
 
@@ -558,8 +586,8 @@ $(document).ready(function () {
         key === keyToFind
           ? acc.concat(value)
           : typeof value === "object"
-            ? acc.concat(findAllByKey(value, keyToFind))
-            : acc,
+          ? acc.concat(findAllByKey(value, keyToFind))
+          : acc,
       []
     );
   }
@@ -576,7 +604,7 @@ $(document).ready(function () {
   function filterDrinkIngredients(poss, act, res, z) {
     for (let i = 0; i < poss.length; i++) {
       if (res.drinks[z][poss[i]] !== null) {
-        act.push(res.drinks[z][poss[i]])
+        act.push(res.drinks[z][poss[i]]);
       }
     }
   }
