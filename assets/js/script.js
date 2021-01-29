@@ -191,8 +191,8 @@ $(document).ready(function () {
           currentResults.push(currentDrink);
 
           // getting measurements and ingredients
-          let actualIngredients = parseProps(currentDrink, /strIngredient/),
-            actualMeasurements = parseProps(currentDrink, /strMeasure/);
+          let actualIngredients = parseProperty(currentDrink, /strIngredient/),
+            actualMeasurements = parseProperty(currentDrink, /strMeasure/);
 
           // Begin creating all the elements with the necessary information
           var col = $("<div>").attr("class", "col s12 m6 l4"),
@@ -270,7 +270,7 @@ $(document).ready(function () {
           });
           // Accounting for any ingredients that do not have a measurement
           if (actualIngredients.length > actualMeasurements.length) {
-            $.each(actualIngredients, (index, value) => {
+            $.each(actualIngredients, (_, value) => {
               var lastIngredient = $("<li>")
                 .attr({ style: "font-weight: lighter" })
                 .text(value);
@@ -300,8 +300,8 @@ $(document).ready(function () {
     // assinging the object to a more accessible variable
     let drink = localObj[0],
       // getting measurements and ingredients
-      actualIngredients = parseProps(drink, /strIngredient/),
-      actualMeasurements = parseProps(drink, /strMeasure/);
+      actualIngredients = parseProperty(drink, /strIngredient/),
+      actualMeasurements = parseProperty(drink, /strMeasure/);
 
     // Begin creating all the elements with the necessary information
     var col = $("<div>").attr({
@@ -383,7 +383,7 @@ $(document).ready(function () {
     });
     // Accounting for any ingredients that do not have a measurement
     if (actualIngredients.length > actualMeasurements.length) {
-      $.each(actualIngredients, (index, value) => {
+      $.each(actualIngredients, (_, value) => {
         var lastIngredient = $("<li>")
           .attr({ style: "font-weight: lighter" })
           .text(value);
@@ -486,12 +486,12 @@ $(document).ready(function () {
     // filter one more time to remove any duplicate ingredients
     ingNoDupes = [...new Set(findAllByKey(ingredientsList, "name"))];
     // formatting the list of ingredients.
-    $.each(ingNoDupes, (i, value) => {
-      i += 1;
+    $.each(ingNoDupes, (index, value) => {
+      index += 1;
       var ingredientToList = $("<span>").attr({
         style: "font-weight: lighter",
       });
-      i !== ingNoDupes.length
+      index !== ingNoDupes.length
         ? ingredientToList.text(value + ", ")
         : ingredientToList.text(value + ".");
       $("#ingredientReveal" + food.id).append(ingredientToList);
@@ -505,7 +505,7 @@ $(document).ready(function () {
     localStorage.setItem("currentResults", JSON.stringify(currentResults));
 
     // Init checks local storage (assigned to the var 'history') and then sends any past saved items to the corresponding api call for the saved for later section)
-    $.each(history, function (index, value) {
+    $.each(history, function (_, value) {
       switch (value[0].type) {
         case "drink":
           appendDrinktoSaved(value);
@@ -591,24 +591,15 @@ $(document).ready(function () {
   }
 
   // for filtering the ingredients and measurements for the drinks
-  parseProps = (obj, filter) => {
+  parseProperty = (obj, filter) => {
     let actual = [],
       keys = [];
     for (key in obj) {
       if (filter.test(key) && obj[key] !== null) keys.push(key);
     }
-    // first if is for the getDrinks function, that needs to loop the function (hence .drinks[] and argument z)
-    if (obj.hasOwnProperty("drinks")) {
-      $.each(keys, (_, value) => {
-        actual.push(obj[value]);
-      });
-      // else statement is for the saved for later section, which does not need to loop
-    } else {
-      // THIS IF ELSE WAS NOT HERE BEFORE
-      $.each(keys, (_, value) => {
-        actual.push(obj[value]);
-      });
-    }
+    $.each(keys, (_, value) => {
+      actual.push(obj[value]);
+    });
     return actual;
   };
 
