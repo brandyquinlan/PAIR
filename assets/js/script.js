@@ -53,7 +53,7 @@ $(document).ready(function () {
               "card-image waves-effect waves-block waves-light"
             ),
             cardImage = $("<img>").attr({
-              class: "activator responsive-img",
+              class: "activator",
               src: response.results[i].image,
               alt: "image of " + response.results[i].title,
             }),
@@ -201,7 +201,7 @@ $(document).ready(function () {
               class: "card-image waves-effect waves-block waves-light",
             }),
             cardImage = $("<img>").attr({
-              class: "activator responsive-img",
+              class: "activator",
               src: currentDrink.strDrinkThumb,
               alt: "image of food",
             }),
@@ -313,7 +313,7 @@ $(document).ready(function () {
         class: "card-image waves-effect waves-block waves-light",
       }),
       cardImage = $("<img>").attr({
-        class: "activator responsive-img",
+        class: "activator",
         src: drink.strDrinkThumb,
         alt: "image of food",
       }),
@@ -408,7 +408,7 @@ $(document).ready(function () {
         "card-image waves-effect waves-block waves-light"
       ),
       cardImage = $("<img>").attr({
-        class: "activator responsive-img",
+        class: "activator",
         src: food.image,
         alt: "image of " + food.title,
       }),
