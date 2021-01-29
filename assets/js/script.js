@@ -549,28 +549,22 @@ $(document).ready(function () {
         });
         objToSave[0]["type"] = "food";
     }
-    // might be able to clean this up
-    checkHistory = () => {
-      switch (type) {
-        case "drink":
-          return history.some(function (el) {
-            return el[0].idDrink === objID;
-          });
-        case "food":
-          return history.some((el) => {
-            return el[0].id === objID;
-          });
-      }
-    };
-    !checkHistory()
-      ? (M.toast({ html: "Saved!", classes: "rounded toast" }),
+    // check local storage for the item you are trying to save, so that you cannot save things multiple times
+    if (
+      history.some(function (el) {
+        return el[0].id === objID;
+      })
+    ) {
+      M.toast({
+        html: "You can't save something twice!",
+        classes: "rounded toast",
+      });
+    } else {
+      M.toast({ html: "Saved!", classes: "rounded toast" }),
         history.push(objToSave),
         localStorage.setItem("Saved", JSON.stringify(history)),
-        populateSaved(objToSave))
-      : M.toast({
-          html: "You can't save something twice!",
-          classes: "rounded toast",
-        });
+        populateSaved(objToSave);
+    }
   };
 
   // function that handles the deletion of cards, both from the local storage and the saved-for-later div
