@@ -14,48 +14,48 @@ This project was a collaborative effort between the listed contributors. Using A
 
 One of the most important parts of a collaborative project is setting, following and regularly comparing against a User Story and Acceptance Criteria. Pair's build criteria is listed as follows:
 
+---
+## User Story
 
-### User Story
+> AS AN authenticated user
+> I WANT to use an app to locate food and drink recipes
+> SO THAT I can do meal planning
 
-> AS AN authenticated user  
-> I WANT to use an app to locate food and drink recipes  
-> SO THAT I can do meal planning  
+---
+## Acceptance Criteria
 
-
-## Aceptance Criteria
-
-> As an authenticated user...  
-> WHEN I log into the app  
-> THEN I can explore food or drink recipes  
->     
-> WHEN I am looking for a specific dish   
-> THEN I can use a search box to pull recipes related to my search terms     
-> WHEN I select a cuisine  
-> THEN I can see an image and short descriptions for 10 different results for that cuisine  
-> WHEN I select a specific dish  
-> THEN I see a the ingredients, prep-time estimate, and instructions  
-> WHEN I find a recipe that I want to use again  
-> THEN I can save that recipe in the app
+> As an authenticated user...
+> WHEN I log into the app
+>   THEN I can explore food or drink recipes
+>
+> WHEN I am looking for a specific dish
+>   THEN I can use a search box to pull recipes related to my search terms
+> WHEN I select a cuisine
+>   THEN I can see an image and short descriptions for 10 different results for that cuisine
+> WHEN I select a specific dish
+>    THEN I see a the ingredients, prep-time estimate, and instructions
+> WHEN I find a recipe that I want to use again
+>   THEN I can save that recipe in the app
 > WHEN I am done with a saved recipe
-> THEN I can click a delete button to remove it from the list    
->    
-> WHEN I am looking for a specific drink   
-> THEN I can use a search box to pull recipes related to my search terms  
-> WHEN I select a category  
-> THEN I can see an image and short descriptions for 10 different results for that drink category  
-> WHEN I select a specific drink  
-> THEN I see a the ingredients, prep-time estimate, and instructions  
-> WHEN I find a recipe that I want to use again  
-> THEN I can save that recipe in the app 
+>   THEN I can click a delete button to remove it from the list
+>
+> WHEN I am looking for a specific drink
+>   THEN I can use a search box to pull recipes related to my search terms
+> WHEN I select a category
+>   THEN I can see an image and short descriptions for 10 different results for that drink category
+> WHEN I select a specific drink
+>    THEN I see a the ingredients, prep-time estimate, and instructions
+> WHEN I find a recipe that I want to use again
+>   THEN I can save that recipe in the app
 > WHEN I am done with a saved drink
-> THEN I can click a delete button to remove it from the list 
+>   THEN I can click a delete button to remove it from the list
 
-
-### Wireframe Examples: Early Creative Processing
+---
+## Wireframe Examples: Early Creative Processing
 
 ![Wireframe: Version 1](assets/wireframes/wireframe_v1.png)
 
-Creating a wireframe to mock up UI design for the initial build helps nail down the main components and functionality a project requires. We start with Version 1, a simple concept of a single page. In our following development sessions we decided to build out secondary pages for generated results and saved "favorites." The Version 2 wireframes below demonstrate these changes. 
+Creating a wireframe to mock up UI design for the initial build helps nail down the main components and functionality a project requires. We start with Version 1, a simple concept of a single page. In our following development sessions we decided to build out secondary pages for generated results and saved "favorites." The Version 2 wireframes below demonstrate these changes.
 
 ![Wireframe: Version 2: Landing Page](assets/wireframes/wireframe_v2_landing.jpg)
 
@@ -71,16 +71,13 @@ Results Page Concept            |  Favorites Page Concept
 ---
 ## Contributors
 
-
-> Steve Babb  
-> Keaton Brewster  
-> Kat Buchanan  
-> Brandy Quinlan  
-
+> Steve Babb
+> Keaton Brewster
+> Kat Buchanan
+> Brandy Quinlan
 
 ---
-## Credits
-
+### Credits
 
 ### :sparkles: [Materialize CSS](https://materializecss.com/)
 ### :fork_and_knife: [Spoonacular API](https://spoonacular.com/)
