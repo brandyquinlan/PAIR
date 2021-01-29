@@ -499,7 +499,7 @@ $(document).ready(function () {
   }
 
   // INIT AND POPULATE SAVED MAY BE ABLE TO MERGED STILL
-  init = () => {
+  function init() {
     // make sure that on page load there is nothing in the current results div
     currentResults = [];
     localStorage.setItem("currentResults", JSON.stringify(currentResults));
@@ -514,10 +514,10 @@ $(document).ready(function () {
           appendFoodtoSaved(value);
       }
     });
-  };
+  }
 
   // This might be able to be cleaned up
-  populateSaved = (localObj) => {
+  function populateSaved(localObj) {
     switch (localObj[0].type) {
       case "drink":
         appendDrinktoSaved(localObj);
@@ -525,10 +525,10 @@ $(document).ready(function () {
       case "food":
         appendFoodtoSaved(localObj);
     }
-  };
+  }
 
   // function to save items to the saved for later container
-  saveForLater = (objID, type) => {
+  function saveForLater(objID, type) {
     var objToSave;
     // check the type of object that will be saved, and assign it its object from the api call, as well as custom properties to help with the delete function
     switch (type) {
@@ -565,7 +565,7 @@ $(document).ready(function () {
         localStorage.setItem("Saved", JSON.stringify(history)),
         populateSaved(objToSave);
     }
-  };
+  }
 
   // function that handles the deletion of cards, both from the local storage and the saved-for-later div
   function deleteCard(deleteID) {
@@ -591,7 +591,7 @@ $(document).ready(function () {
   }
 
   // for filtering the ingredients and measurements for the drinks
-  parseProperty = (obj, filter) => {
+  function parseProperty(obj, filter) {
     let actual = [],
       keys = [];
     for (key in obj) {
@@ -601,9 +601,8 @@ $(document).ready(function () {
       actual.push(obj[value]);
     });
     return actual;
-  };
+  }
 
-  // called on page load to load all previously saved items
   init();
 
   $("#search-cuisines").on("click", getCuisines);
