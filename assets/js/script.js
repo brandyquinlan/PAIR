@@ -185,34 +185,14 @@ $(document).ready(function () {
 
         // loop  through the results and create a card for each one
         for (let i = 0; i < response.drinks.length; i++) {
+          // making the obj under evaluation more accessible
+          let currentDrink = response.drinks[i];
           // update current results array
-          currentResults.push(response.drinks[i]);
+          currentResults.push(currentDrink);
 
-          // getting ingredients for the drink
-          let possibleIngredients = filterKeys(
-            response.drinks[i],
-            /strIngredient/
-          );
-          var actualIngredients = [];
-          filterDrinkIngredients(
-            possibleIngredients,
-            actualIngredients,
-            response,
-            i
-          );
-
-          // getting measurements for the ingredients
-          let possibleMeasurements = filterKeys(
-            response.drinks[i],
-            /strMeasure/
-          );
-          var actualMeasurements = [];
-          filterDrinkIngredients(
-            possibleMeasurements,
-            actualMeasurements,
-            response,
-            i
-          );
+          // getting measurements and ingredients
+          let actualIngredients = parseProps(currentDrink, /strIngredient/),
+            actualMeasurements = parseProps(currentDrink, /strMeasure/);
 
           // Begin creating all the elements with the necessary information
           var col = $("<div>").attr("class", "col s12 m6 l4"),
@@ -222,7 +202,7 @@ $(document).ready(function () {
             }),
             cardImage = $("<img>").attr({
               class: "activator responsive-img",
-              src: response.drinks[i].strDrinkThumb,
+              src: currentDrink.strDrinkThumb,
               alt: "image of food",
             }),
             cardContent = $("<div>").attr("class", "card-content"),
@@ -231,11 +211,11 @@ $(document).ready(function () {
                 class: "activator grey-text text-darken-4 truncate",
                 style: "font-size: 16pt",
               })
-              .text(response.drinks[i].strDrink),
+              .text(currentDrink.strDrink),
             saveBtn = $("<button>").attr({
               id: "saveForLaterBtn",
-              "data-id": response.drinks[i].idDrink,
-              "data-name": response.drinks[i].strDrink,
+              "data-id": currentDrink.idDrink,
+              "data-name": currentDrink.strDrink,
               name: "drink",
               class:
                 "btn-floating btn-small fixed-action-btn1 halfway-fab waves-effect waves-light indigo lighten-3",
@@ -250,7 +230,7 @@ $(document).ready(function () {
               .text("close"),
             recipeNameH = $("<h6>")
               .attr("id", "recipeName")
-              .text(response.drinks[i].strDrink),
+              .text(currentDrink.strDrink),
             hr = $("<hr>"),
             ul = $("<ul>"),
             ingredients = $("<ul>")
@@ -262,7 +242,7 @@ $(document).ready(function () {
               .text("Instructions: "),
             instructionsSpan = $("<span>")
               .attr({ style: "font-weight: lighter" })
-              .text(response.drinks[i].strInstructions);
+              .text(currentDrink.strInstructions);
 
           // Begin appending everything together
           cardImageDiv.append(cardImage);
@@ -318,17 +298,10 @@ $(document).ready(function () {
   // function that takes an object and puts in into the card creation function to append to the saved for later div
   function appendDrinktoSaved(localObj) {
     // assinging the object to a more accessible variable
-    let drink = localObj[0];
-
-    // getting ingredients for drink
-    let possibleIngredients = filterKeys(drink, /strIngredient/);
-    var actualIngredients = [];
-    filterDrinkIngredients(possibleIngredients, actualIngredients, drink, 0);
-
-    //getting measurements for ingredients
-    let possibleMeasurements = filterKeys(drink, /strMeasure/);
-    var actualMeasurements = [];
-    filterDrinkIngredients(possibleMeasurements, actualMeasurements, drink, 0);
+    let drink = localObj[0],
+      // getting measurements and ingredients
+      actualIngredients = parseProps(drink, /strIngredient/),
+      actualMeasurements = parseProps(drink, /strMeasure/);
 
     // Begin creating all the elements with the necessary information
     var col = $("<div>").attr({
@@ -545,11 +518,13 @@ $(document).ready(function () {
 
   // This might be able to be cleaned up
   populateSaved = (localObj) => {
-    localObj[0].hasOwnProperty("idDrink")
-      ? appendDrinktoSaved(localObj)
-      : localObj[0].hasOwnProperty("title")
-      ? appendFoodtoSaved(localObj)
-      : M.toast({ html: "error" });
+    switch (localObj[0].type) {
+      case "drink":
+        appendDrinktoSaved(localObj);
+        break;
+      case "food":
+        appendFoodtoSaved(localObj);
+    }
   };
 
   // function to save items to the saved for later container
@@ -575,7 +550,7 @@ $(document).ready(function () {
         objToSave[0]["type"] = "food";
     }
     // might be able to clean this up
-    checkValue = () => {
+    checkHistory = () => {
       switch (type) {
         case "drink":
           return history.some(function (el) {
@@ -587,7 +562,7 @@ $(document).ready(function () {
           });
       }
     };
-    !checkValue()
+    !checkHistory()
       ? (M.toast({ html: "Saved!", classes: "rounded toast" }),
         history.push(objToSave),
         localStorage.setItem("Saved", JSON.stringify(history)),
@@ -621,33 +596,27 @@ $(document).ready(function () {
     );
   }
 
-  // more object sorting functions
-  function filterKeys(obj, filter) {
-    let keys = [];
-    for (key in obj)
-      if (obj.hasOwnProperty(key) && filter.test(key)) keys.push(key);
-    return keys;
-  }
-
   // for filtering the ingredients and measurements for the drinks
-  function filterDrinkIngredients(poss, act, res, z) {
+  parseProps = (obj, filter) => {
+    let actual = [],
+      keys = [];
+    for (key in obj) {
+      if (filter.test(key) && obj[key] !== null) keys.push(key);
+    }
     // first if is for the getDrinks function, that needs to loop the function (hence .drinks[] and argument z)
-    if (res.hasOwnProperty("drinks")) {
-      for (let i = 0; i < poss.length; i++) {
-        if (res.drinks[z][poss[i]] !== null) {
-          act.push(res.drinks[z][poss[i]]);
-        }
-      }
+    if (obj.hasOwnProperty("drinks")) {
+      $.each(keys, (_, value) => {
+        actual.push(obj[value]);
+      });
       // else statement is for the saved for later section, which does not need to loop
     } else {
       // THIS IF ELSE WAS NOT HERE BEFORE
-      for (let i = 0; i < poss.length; i++) {
-        if (res[poss[i]] !== null) {
-          act.push(res[poss[i]]);
-        }
-      }
+      $.each(keys, (_, value) => {
+        actual.push(obj[value]);
+      });
     }
-  }
+    return actual;
+  };
 
   // called on page load to load all previously saved items
   init();
