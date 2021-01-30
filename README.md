@@ -70,23 +70,16 @@ By using the Materialize CSS Framework, along with media queries, we are able to
 
 ---
 ## Large Screens             
-<img src="/assets/Screenshots/readme_large-screen.png" width="1000">  
+<img src="/assets/Screenshots/readme_large-screen.png" width="1000">   
 
-<<<<<<< HEAD
-> Steve Babb  
-> Keaton Brewster  
-> Kat Buchanan  
-> Brandy Quinlan  
-=======
 ---
 ## Tablet and Mobile Screens
->>>>>>> 4f3a3ef30ab242bfd9ca935320b032b1341dcfdd
 
 | Tablet                     |  Mobile
 :-------------------------:|:-------------------------:
 <img src="/assets/Screenshots/readme_tablet.png" width="650">  |  <img src="/assets/Screenshots/readme_mobile.png" width="350">
----
 
+---
 ## Contributors
 ```
 Steve Babb
@@ -94,6 +87,11 @@ Keaton Brewster
 Kat Buchanan
 Brandy Quinlan
 ```
+---
+## URL and Repo Locations
+The url for the site is: (https://brandyquinlan.github.io/PAIR/)<br>
+The repo is located here: (https://github.com/brandyquinlan/PAIR/)
+
 ---
 ### Credits
 
