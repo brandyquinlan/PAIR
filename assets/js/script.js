@@ -625,5 +625,7 @@ $(document).ready(function () {
   $("#results").on("click", "#clear-results", function () {
     $("#populate-results").empty();
     M.toast({ html: "Cleared!", classes: "rounded toast" });
+    currentResults = [];
+    localStorage.setItem("currentResults", JSON.stringify(currentResults));
   });
 });
