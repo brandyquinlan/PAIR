@@ -622,7 +622,7 @@ $(document).ready(function () {
     deleteCard(deleteID, type);
   });
 
-  $("#results").on("click", "a", function () {
+  $("#results").on("click", "#clear-results", function () {
     $("#populate-results").empty();
     M.toast({ html: "Cleared!", classes: "rounded toast" });
   });
