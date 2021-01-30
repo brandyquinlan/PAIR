@@ -5,7 +5,7 @@
 ### Pair is a dynamic and mobile-responsive web application that lets a user search for food and cocktail recipes from separate databases and curate the results in one place. Pair is an essential tool for anyone looking for inspiration in the kitchen or behind the bar.
 
 ### Link to Deployed Project:
-* https://brandyquinlan.github.io/Project1/
+* https://brandyquinlan.github.io/PAIR/
 
 ---
 ## Method and Approach
@@ -16,40 +16,38 @@ One of the most important parts of a collaborative project is setting, following
 
 ---
 ## User Story
-
-> AS AN authenticated user
-> I WANT to use an app to locate food and drink recipes
-> SO THAT I can do meal planning
-
+```
+AS AN authenticated user
+I WANT to use an app to locate food and drink recipes
+SO THAT I can do meal planning
+```
 ---
 ## Acceptance Criteria
-
-> As an authenticated user...
-> WHEN I log into the app
->   THEN I can explore food or drink recipes
->
-> WHEN I am looking for a specific dish
->   THEN I can use a search box to pull recipes related to my search terms
-> WHEN I select a cuisine
->   THEN I can see an image and short descriptions for 10 different results for that cuisine
-> WHEN I select a specific dish
->    THEN I see a the ingredients, prep-time estimate, and instructions
-> WHEN I find a recipe that I want to use again
->   THEN I can save that recipe in the app
-> WHEN I am done with a saved recipe
->   THEN I can click a delete button to remove it from the list
->
-> WHEN I am looking for a specific drink
->   THEN I can use a search box to pull recipes related to my search terms
-> WHEN I select a category
->   THEN I can see an image and short descriptions for 10 different results for that drink category
-> WHEN I select a specific drink
->    THEN I see a the ingredients, prep-time estimate, and instructions
-> WHEN I find a recipe that I want to use again
->   THEN I can save that recipe in the app
-> WHEN I am done with a saved drink
->   THEN I can click a delete button to remove it from the list
-
+```
+As an authenticated user...
+WHEN I log into the app
+  THEN I can explore food or drink recipes
+WHEN I am looking for a specific dish
+  THEN I can use a search box to pull recipes related to my search terms
+WHEN I select a cuisine
+  THEN I can see an image and short descriptions for 10 different results for that cuisine
+WHEN I select a specific dish
+   THEN I see a the ingredients, prep-time estimate, and instructions
+WHEN I find a recipe that I want to use again
+  THEN I can save that recipe in the app
+WHEN I am done with a saved recipe
+  THEN I can click a delete button to remove it from the list
+WHEN I am looking for a specific drink
+  THEN I can use a search box to pull recipes related to my search terms
+WHEN I select a category
+  THEN I can see an image and short descriptions for 10 different results for that drink category
+WHEN I select a specific drink
+   THEN I see a the ingredients, prep-time estimate, and instructions
+WHEN I find a recipe that I want to use again
+  THEN I can save that recipe in the app
+WHEN I am done with a saved drink
+  THEN I can click a delete button to remove it from the list
+```
 ---
 ## Wireframe Examples: Early Creative Processing
 
@@ -66,16 +64,36 @@ Results Page Concept            |  Favorites Page Concept
 ---
 ## Usage and Functionality
 
-(insert screenshots and walk-through of final product)
+## PAIR Responsiveness: 
+
+By using the Materialize CSS Framework, along with media queries, we are able to develop PAIR as a fully responsive site. Below are views from large-sized screens, medium-sized tablet screens and small mobile screens.
 
 ---
-## Contributors
+## Large Screens             
+<img src="/assets/Screenshots/readme_large-screen.png" width="1000">  
 
+<<<<<<< HEAD
 > Steve Babb  
 > Keaton Brewster  
 > Kat Buchanan  
 > Brandy Quinlan  
+=======
+---
+## Tablet and Mobile Screens
+>>>>>>> 4f3a3ef30ab242bfd9ca935320b032b1341dcfdd
 
+| Tablet                     |  Mobile
+:-------------------------:|:-------------------------:
+<img src="/assets/Screenshots/readme_tablet.png" width="650">  |  <img src="/assets/Screenshots/readme_mobile.png" width="350">
+---
+
+## Contributors
+```
+Steve Babb
+Keaton Brewster
+Kat Buchanan
+Brandy Quinlan
+```
 ---
 ### Credits
 
