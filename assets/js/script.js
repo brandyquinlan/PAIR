@@ -573,7 +573,7 @@ $(document).ready(function () {
       return obj[0].id != deleteID;
     });
     localStorage.setItem("Saved", JSON.stringify(history));
-    $("#" + deleteID).remove();
+    $("#" + deleteID).fadeOut(200);
     M.toast({ html: "Deleted.", classes: "rounded toast" });
   }
 
