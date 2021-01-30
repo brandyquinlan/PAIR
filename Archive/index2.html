@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Links -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PAIR</title>
+</head>
+
+<body class="scrollspy" id="home">
+
+    <!-- Navbar -->
+    <nav class="navbar-fixed grey">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo"><img src="assets/img/PAIR.png" width="100px" alt="PAIR Logo"></a>
+                <a href="#" data-target="mobile-nav" class="sidenav-trigger">
+                    <i class="material-icons">menu</i>
+                </a>
+                <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a href="#home">Home</a>
+                    </li>
+                    <li>
+                        <a href="#search">Search</a>
+                    </li>
+                    <li>
+                        <a href="#gallery">Gallery</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <ul class="sidenav" id="mobile-nav">
+        <li>
+            <a href="#home">Home</a>
+        </li>
+        <li>
+            <a href="#search">Search</a>
+        </li>
+        <li>
+            <a href="#gallery">Gallery</a>
+        </li>
+    </ul>
+
+    <!-- Section: Background and Search-->
+    <section class="card iris img-responsive">
+        <div class="card transparent z-depth-5 img-responsive">
+        </div>
+        <div id="search" class="section section-search transparent black-text scrollspy">
+            <div class="container">
+                <div class="row">
+                    <div class="col-s12 m4"></div>
+                    <h3>Find Recipes</h3>
+                    <div class="input-field materialize-textarea">
+                        <input type="text" class="white grey-text autocomplete" id="autocomplete-input" length="120" placeholder="Mexican, Margarita, etc...">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-s12 m4"></div>
+                    <div class="button">
+                        <!-- changed the cuisines a-tag below to a button tag to make it operative -->
+                        <a class="waves-effect white black-text btn" id="cuisineSearch">Cuisines</a>
+                        <a class="waves-effect white black-text btn">Drinks</a>
+                        <!-- commented out the "search" button as it was confusing with cuisines and drinks also present -->
+                        <!-- <button class="btn-search waves-effect black white-text btn">SEARCH</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Gallery -->
+    <section id="gallery" class="section section-gallery scrollspy">
+        <div class="container">
+            <h4 class="center">Gallery
+            </h4>
+            <!-- row 1 -->
+            <div class="row">
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?pie" alt="pizza" class="materialboxed responsive-img">
+                </div>
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?chinese,food" alt="" class="materialboxed responsive-img">
+                </div>
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?italian food" alt="" class="materialboxed responsive-img">
+                </div>
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?pizza" alt="" class="materialboxed responsive-img">
+                </div>
+            </div>
+            <!-- row 2 -->
+            <div class="row">
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?bacon" alt="" class="materialboxed responsive-img">
+                </div>
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?cheeseburger" alt="" class="materialboxed responsive-img">
+                </div>
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?nachos" alt="" class="materialboxed responsive-img">
+                </div>
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?fruit" alt="" class="materialboxed responsive-img">
+                </div>
+            </div>
+            <!-- row 3 -->
+            <div class="row">
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?cocktail" alt="" class="materialboxed responsive-img">
+                </div>
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?salad" alt="" class="materialboxed responsive-img">
+                </div>
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?noodles" alt="" class="materialboxed responsive-img">
+                </div>
+                <div class="col s12 m3">
+                    <img src="https://source.unsplash.com/1600x900/?steak" alt="" class="materialboxed responsive-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="section black white-text valign-wrapper center-align">
+        <p class="flow-text center-align">PAIR &copy; 2021</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script src="script2.js"></script>
+
+</body>
+
+</html>
