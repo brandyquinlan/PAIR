@@ -71,10 +71,10 @@ Results Page Concept            |  Favorites Page Concept
 ---
 ## Contributors
 
-> Steve Babb
-> Keaton Brewster
-> Kat Buchanan
-> Brandy Quinlan
+> Steve Babb  
+> Keaton Brewster  
+> Kat Buchanan  
+> Brandy Quinlan  
 
 ---
 ### Credits
